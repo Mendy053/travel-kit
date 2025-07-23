@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>תוכנית טיול לתאילנד</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Google Fonts - Varela Round for Hebrew */
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+    body {
+      font-family: 'Varela Round', sans-serif;
+      /* Default text direction for Hebrew */
+      direction: rtl;
+    }
+    /* Custom styles for the header background image */
+    .header-bg {
+      background-image: url('https://www.go-thailand.co.il/wp-content/uploads/2024/04/Depositphotos_211257662_XL-scaled.jpg');
+      background-position: center center;
+      background-size: cover;
+    }
+    /* Keyframe animation for fade-in effect */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.7s ease-in-out;
+    }
+    /* Custom styles from the user's provided HTML */
+    .tag {
+      display: inline-block;
+      background: #e1f5fe;
+      color: #0277bd;
+      padding: 0.2em 0.6em;
+      border-radius: 6px;
+      font-size: 0.85em;
+      margin-right: 0.5em; /* Adjusted for RTL */
+    }
+    a {
+      color: #007b9e;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8em;
+      }
+      main {
+        padding: 1em;
+      }
+    }
+  </style>
+</head>
+<body class="bg-blue-50 text-gray-800 antialiased">
+
+  <header class="header-bg h-72 flex items-center justify-center text-center text-white shadow-lg rounded-b-xl">
+    <h1 class="text-4xl md:text-5xl font-bold drop-shadow-lg">הטיול שלנו לתאילנד 🌴</h1>
+  </header>
+
+  <main class="p-4 md:p-8 max-w-4xl mx-auto">
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">✈️</span> טיסות בינלאומיות
+      </h2>
+      <div class="mb-4 flex items-center justify-between">
+        <span class="inline-block bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full">PNR: IHJVZY</span>
+        <a href="international.pdf" target="_blank" class="flex items-center bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 shadow-md">
+          <span class="ml-2">📄</span>
+          <span>הורד מסמך טיסה</span>
+        </a>
+      </div>
+
+      <div class="border-b border-gray-200 pb-4 mb-4">
+        <h3 class="text-xl font-semibold text-gray-700 mb-3 flex items-center">
+          <span class="ml-2">🛫</span> יציאה
+        </h3>
+        <ul class="list-none p-0 space-y-4 text-lg">
+          <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="flex items-center text-lg font-semibold text-gray-700 mb-2">
+              <span class="text-cyan-600 ml-2">✈️</span> תל אביב (TLV) ← אדיס אבבה (ADD)
+            </div>
+            <div class="flex flex-wrap justify-between items-center text-base">
+              <div><span class="text-gray-500 ml-1">🗓️</span><strong>תאריך: </strong>4/08/2025</div>
+              <div><span class="text-gray-500 ml-1">⏰</span><strong>המראה: </strong>10:00  |  <strong>נחיתה: </strong>14:15</div>
+            </div>
+          </li>
+          <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="flex items-center text-lg font-semibold text-gray-700 mb-2">
+              <span class="text-cyan-600 ml-2">✈️</span> אדיס אבבה (ADD) ← בנגקוק (BKK)
+            </div>
+            <div class="flex flex-wrap justify-between items-center text-base">
+              <div><span class="text-gray-500 ml-1">🗓️</span><strong>תאריך: </strong>4/08/2025 (לילה)</div>
+              <div><span class="text-gray-500 ml-1">⏰</span><strong>המראה: </strong>23:55  |  <strong>נחיתה: </strong>13:15 (5/08)</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="border-b border-gray-200 pb-4 mb-4">
+        <h3 class="text-xl font-semibold text-gray-700 mb-3 flex items-center">
+          <span class="ml-2">🛬</span> חזור
+        </h3>
+        <ul class="list-none p-0 space-y-4 text-lg">
+          <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="flex items-center text-lg font-semibold text-gray-700 mb-2">
+              <span class="text-cyan-600 ml-2">✈️</span> בנגקוק (BKK) ← אדיס אבבה (ADD)
+            </div>
+            <div class="flex flex-wrap justify-between items-center text-base">
+              <div><span class="text-gray-500 ml-1">🗓️</span><strong>תאריך: </strong>21/08/2025 (רביעי בלילה)</div>
+              <div><span class="text-gray-500 ml-1">⏰</span><strong>המראה: </strong>00:55  |  <strong>נחיתה: </strong>04:55</div>
+            </div>
+          </li>
+          <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="flex items-center text-lg font-semibold text-gray-700 mb-2">
+              <span class="text-cyan-600 ml-2">✈️</span> אדיס אבבה (ADD) ← תל אביב (TLV)
+            </div>
+            <div class="flex flex-wrap justify-between items-center text-base">
+              <div><span class="text-gray-500 ml-1">🗓️</span><strong>תאריך: </strong>21/08/2025</div>
+              <div><span class="text-gray-500 ml-1">⏰</span><strong>המראה: </strong>16:35  |  <strong>נחיתה: </strong>21:10</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="pt-4">
+        <ul class="list-none p-0 space-y-2 text-lg">
+          <li class="flex items-center">
+            <span class="text-cyan-600 ml-2">👥</span>
+            <strong>נוסעים: </strong>שרה יהודית שמידט, שמואל אדרעי
+          </li>
+          <li class="flex items-center">
+            <span class="text-cyan-600 ml-2">🧳</span>
+            <strong>כבודה: </strong>2×23 ק"ג + תיקי יד 7 ק"ג
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🛫</span> טיסות פנימיות
+      </h2>
+      <div class="mb-4 flex items-center justify-between">
+        <span class="inline-block bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full">PNR: 92AXU5</span>
+        <a href="inner.pdf" target="_blank" class="flex items-center bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 shadow-md">
+          <span class="ml-2">📄</span>
+          <span>הורד מסמך טיסה</span>
+        </a>
+      </div>
+      <ul class="list-none p-0 space-y-4 text-lg">
+        <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="flex items-center text-lg font-semibold text-gray-700 mb-2">
+              <span class="text-cyan-600 ml-2">✈️</span> בנגקוק (BKK) ← קוסמוי (USM)
+            </div>
+            <div class="flex flex-wrap justify-between items-center text-base">
+              <div><span class="text-gray-500 ml-1">🗓️</span><strong>תאריך: </strong>10/08/2025</div>
+              <div><span class="text-gray-500 ml-1">⏰</span><strong>המראה: </strong>07:10  |  <strong>נחיתה: </strong>08:15</div>
+            </div>
+          </li>
+          <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="flex items-center text-lg font-semibold text-gray-700 mb-2">
+              <span class="text-cyan-600 ml-2">✈️</span> קוסמוי (USM) ← בנגקוק (DMK)
+            </div>
+            <div class="flex flex-wrap justify-between items-center text-base">
+              <div><span class="text-gray-500 ml-1">🗓️</span><strong>תאריך: </strong>20/08/2025</div>
+              <div><span class="text-gray-500 ml-1">⏰</span><strong>המראה: </strong>06:55  |  <strong>נחיתה: </strong>08:25</div>
+            </div>
+          </li>
+        <li class="flex items-center mt-4">
+          <span class="text-cyan-600 ml-2">🧳</span>
+          <strong>כבודה: </strong>20 ק"ג + 5 ק"ג תיק יד
+        </li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🏨</span> מלונות
+      </h2>
+      <ul class="list-none p-0 space-y-3 text-lg">
+        <li class="flex flex-col md:flex-row md:items-center">
+          <span class="text-cyan-600 ml-2 mb-1 md:mb-0">📍</span>
+          <a href="https://maps.app.goo.gl/n4mtkp9JSdQBVtXN7" target="_blank" class="text-blue-700 hover:underline font-semibold">Chillax Heritage, בנגקוק</a>
+          <span class="mr-2"> | </span> 25/07 – 05/08 | לינה בלבד
+        </li>
+        <li class="flex flex-col md:flex-row md:items-center">
+          <span class="text-cyan-600 ml-2 mb-1 md:mb-0">📍</span>
+          <a href="https://maps.app.goo.gl/FxKTnK8M5CTrCVgg6" target="_blank" class="text-blue-700 hover:underline font-semibold">Vannee Golden Sands, קופנגן</a>
+          <span class="mr-2"> | </span> 10/08 – 13/08 | לינה + ארוחת בוקר
+        </li>
+        <li class="flex flex-col md:flex-row md:items-center">
+          <span class="text-cyan-600 ml-2 mb-1 md:mb-0">📍</span>
+          <a href="https://maps.app.goo.gl/5k4zgCUDZWsnxuHZA" target="_blank" class="text-blue-700 hover:underline font-semibold">Le Murraya, קוסמוי</a>
+          <span class="mr-2"> | </span> 13/08 – 20/08 | לינה בלבד
+        </li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🚢</span> תחבורה ונסיעות
+      </h2>
+      <ul class="list-none p-0 space-y-2 text-lg">
+        <li class="flex items-center">
+          <span class="text-cyan-600 ml-2">➡️</span>
+          מעבורת קוסמוי ← קופנגן (10/08) וחזרה (13/08)
+        </li>
+        <li class="flex items-center">
+          <span class="text-cyan-600 ml-2">🚕</span>
+          שאטלים מנמל תעופה למלונות - לתאם עצמאית
+        </li>
+        <li class="flex items-center">
+          <span class="text-cyan-600 ml-2">🚗</span>
+          אפשרות לרכב שכור / מוניות מקומיות
+        </li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">📆</span> לוח זמנים עיקרי
+      </h2>
+      <ul class="list-disc pr-6 space-y-2 text-lg">
+        <li><strong>4-5/08:</strong> הגעה לבנגקוק, התאקלמות</li>
+        <li><strong>6-7/08:</strong> טיולים בעיר, שווקים וקניות</li>
+        <li><strong>8/08:</strong> טיול יום לקנצ'נבורי</li>
+        <li><strong>9-10/08:</strong> שבת בבית חב"ד בנגקוק</li>
+        <li><strong>10/08:</strong> טיסה לקוסמוי, מעבורת לקופנגן</li>
+        <li><strong>11-12/08:</strong> טיולי שטח: טרקטורונים / ג׳יפים בקופנגן</li>
+        <li><strong>13/08:</strong> חזרה לקוסמוי, מעבר למלון Le Murraya</li>
+        <li><strong>14/08:</strong> טיול אופנועי ים + שנורקלינג באי החזירים (בבוקר)</li>
+        <li><strong>15-16/08:</strong> שבת בבית חב"ד קוסמוי, מנוחה, מסאז׳ מסאז׳ מסאז׳, שוקי לילה</li>
+        <li><strong>17/08:</strong> חווה שיקומית לפילים בקוסמוי</li>
+        <li><strong>18/08:</strong> טיול 42 האיים - Ang Thong National Marine Park</li>
+        <li><strong>19/08:</strong> טיול דיג מקומי / חוף חופשי</li>
+        <li><strong>20/08:</strong> טיסה חזרה לבנגקוק</li>
+        <li><strong>21/08 (בלילה):</strong> טיסת חזור בינלאומית לתל אביב</li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">💡</span> המלצות
+      </h2>
+      <ul class="list-disc pr-6 space-y-2 text-lg">
+        <li>להגיע לאחר פסטיבל הפול מון (9/08 בקופנגן)</li>
+        <li>טיולים מומלצים: קנצ'נבורי (יום או יומיים), אומגות, אופנועי ים, טרקטורונים</li>
+        <li>ציוד חובה: נעליים סגורות, בגד ים, כובע, קרם הגנה, <strong>מעיל גשם</strong></li>
+        <li><strong>מסאז׳ מסאז׳ מסאז׳</strong> – חובה בתאילנד</li>
+        <li>הצטיידו במזומן קטן לטיפים ותחבורה</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
