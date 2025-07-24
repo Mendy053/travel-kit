@@ -8,6 +8,7 @@
   <meta property="og:image" content="bkg.jpg" />
   <title>קיט טיול | תאילנד 2025 - אדרעי</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* Google Fonts - Varela Round for Hebrew */
     @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
@@ -16,6 +17,130 @@
       /* Default text direction for Hebrew */
       direction: rtl;
     }
+    
+    /* Loading Screen Styles */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+    
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .loading-logo {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 3px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      z-index: 10000;
+      transition: all 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+    
+    .loading-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    
+    .loading-logo.animating {
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    
+    .loading-logo.fade-out {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+    
+    .loading-bar-container {
+      width: 200px;
+      height: 4px;
+      background-color: #e0e0e0;
+      border-radius: 2px;
+      overflow: visible;
+      margin-bottom: 30px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    
+    .loading-bar {
+      height: 100%;
+      background: transparent;
+      border-radius: 2px;
+      width: 100%;
+    }
+    
+    .loading-plane {
+      position: absolute;
+      top: -8px;
+      right: 200px;
+      color: #A89B73;
+      font-size: 16px;
+      animation: plane-move var(--loading-duration, 3s) linear forwards;
+    }
+    
+    @keyframes plane-move {
+      from {
+        right: 200px;
+      }
+      to {
+        right: -5px;
+      }
+    }
+    
+    .loading-text {
+      color: #666;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    /* Main content - hidden initially */
+    .main-content {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
+    }
+    
+    .main-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
     /* Custom styles for the header background image */
     .header-bg {
       background-image: url('bkg.jpg');
@@ -36,6 +161,12 @@
       padding: 1.5px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
       margin-bottom: 200px;
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
+    }
+    
+    .logo-container.visible {
+      opacity: 1;
     }
     .logo-container img {
       width: 100%;
@@ -105,22 +236,57 @@
         right: 15px;
         padding: 4px 12px;
       }
+      .loading-logo {
+        width: 120px;
+        height: 120px;
+        top: 35%;
+      }
+      .loading-logo.animating {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .loading-content {
+        top: 50%;
+        gap: 8px;
+      }
     }
   </style>
 </head>
 <body class="bg-blue-50 text-gray-800 antialiased">
 
-  <header class="header-bg h-72 flex items-center justify-center text-center text-white shadow-lg rounded-b-xl">
-    <div class="logo-container">
-      <img src="logo.jpg" alt="לוגו">
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <div class="loading-bar-container">
+        <div class="loading-bar" id="loadingBar"></div>
+        <div class="loading-plane" id="loadingPlane">
+          <i class="fas fa-plane"></i>
+        </div>
+      </div>
+      <div class="loading-text">תכינו דרכונים...</div>
     </div>
-    <div class="contact-info">
-      הודיה אוריאן • 054-8792582
-    </div>
-    <h1 class="text-4xl md:text-5xl font-bold drop-shadow-lg">תאילנד 2025 </br>אדרעי</h1>
-  </header>
+  </div>
 
-  <main class="p-4 md:p-8 max-w-4xl mx-auto">
+  <!-- Loading Logo (separate from loading screen) -->
+  <div class="loading-logo" id="loadingLogo">
+    <img src="logo.jpg" alt="לוגו">
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <header class="header-bg h-72 flex items-center justify-center text-center text-white shadow-lg rounded-b-xl">
+      <div class="logo-container">
+        <img src="logo.jpg" alt="לוגו">
+      </div>
+      <div class="contact-info">
+        הודיה אוריאן • 054-8792582
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold drop-shadow-lg">תאילנד 2025 </br>אדרעי</h1>
+    </header>
+
+    <main class="p-4 md:p-8 max-w-4xl mx-auto">
 
     <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
       <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
@@ -315,5 +481,47 @@
       </ul>
     </section>
   </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loadingScreen = document.getElementById('loadingScreen');
+      const loadingLogo = document.getElementById('loadingLogo');
+      const loadingPlane = document.getElementById('loadingPlane');
+      const mainContent = document.getElementById('mainContent');
+      const headerLogo = document.querySelector('.logo-container');
+      
+      // Generate random loading duration between 2-7 seconds
+      const loadingDuration = Math.random() * 5000 + 2000; // 2000-7000ms
+      
+      // Set CSS variable for plane animation
+      loadingPlane.style.setProperty('--loading-duration', loadingDuration + 'ms');
+      
+      // Start loading
+      setTimeout(() => {
+        // Start logo animation to header position
+        loadingLogo.classList.add('animating');
+        
+        // Hide loading screen with 0.5s fade during animation
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+        }, 700); // Hide loading screen 0.5s before animation completes
+        
+        // Show main content after animation completes
+        setTimeout(() => {
+          mainContent.classList.add('visible');
+          
+          // Show the header logo after the animated logo reaches its position
+          setTimeout(() => {
+            headerLogo.classList.add('visible');
+            // Hide the loading logo with fade effect after header logo appears
+            setTimeout(() => {
+              loadingLogo.classList.add('fade-out');
+            }, 200);
+          }, 300);
+        }, 1200); // Match the logo animation duration
+      }, loadingDuration);
+    });
+  </script>
 </body>
 </html>
