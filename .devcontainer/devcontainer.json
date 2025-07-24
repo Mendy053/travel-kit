@@ -1,0 +1,12 @@
+{
+  "name": "Node.js Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:latest",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+  "postCreateCommand": "npm install -g ngrok",
+  "forwardPorts": [3000],
+  "remoteUser": "node"
+}
