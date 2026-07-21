@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="מונטנגרו 2026" />
+  <meta property="og:description" content="מונטנגרו 2026 - אוראן הודיה ויהונתן נחום" />
+  <meta property="og:image" content="bkg.jpg" />
+  <title>קיט טיול | מונטנגרו 2026 - אוראן הודיה ויהונתן נחום</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Google Fonts - Varela Round for Hebrew */
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+    body {
+      font-family: 'Varela Round', sans-serif;
+      /* Default text direction for Hebrew */
+      direction: rtl;
+    }
+    
+    /* Loading Screen Styles */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+    
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .loading-logo {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 3px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      z-index: 10000;
+      transition: all 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+    
+    .loading-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    
+    .loading-logo.animating {
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    
+    .loading-logo.fade-out {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+    
+    .loading-bar-container {
+      width: 200px;
+      height: 4px;
+      background-color: #e0e0e0;
+      border-radius: 2px;
+      overflow: visible;
+      margin-bottom: 30px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    
+    .loading-bar {
+      height: 100%;
+      background: transparent;
+      border-radius: 2px;
+      width: 100%;
+    }
+    
+    .loading-plane {
+      position: absolute;
+      top: -8px;
+      right: 200px;
+      color: #A89B73;
+      font-size: 16px;
+      animation: plane-move var(--loading-duration, 3s) linear forwards;
+    }
+    
+    @keyframes plane-move {
+      from {
+        right: 200px;
+      }
+      to {
+        right: -5px;
+      }
+    }
+    
+    .loading-text {
+      color: #666;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    /* Main content - hidden initially */
+    .main-content {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
+    }
+    
+    .main-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Custom styles for the header background image */
+    .header-bg {
+      background-image: url('bkg.jpg');
+      background-position: center center;
+      background-size: cover;
+      position: relative;
+    }
+    /* Logo styling */
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 200px;
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
+    }
+    
+    .logo-container.visible {
+      opacity: 1;
+    }
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    /* Contact info styling */
+    .contact-info {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(0,0,0,0.45);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    /* Keyframe animation for fade-in effect */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.7s ease-in-out;
+    }
+    /* Custom styles from the user's provided HTML */
+    .tag {
+      display: inline-block;
+      background: #e1f5fe;
+      color: #0277bd;
+      padding: 0.2em 0.6em;
+      border-radius: 6px;
+      font-size: 0.85em;
+      margin-right: 0.5em; /* Adjusted for RTL */
+    }
+    a {
+      color: #007b9e;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h1{
+      color: white;
+  -webkit-text-stroke: 0.5px #A89B73;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8em;
+        color: white;
+  -webkit-text-stroke: 0.5px #A89B73;
+      }
+      main {
+        padding: 1em;
+      }
+      .logo-container {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .contact-info {
+        font-size: 12px;
+        bottom: 15px;
+        right: 15px;
+        padding: 4px 12px;
+      }
+      .loading-logo {
+        width: 120px;
+        height: 120px;
+        top: 35%;
+      }
+      .loading-logo.animating {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .loading-content {
+        top: 50%;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body class="bg-blue-50 text-gray-800 antialiased">
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <div class="loading-bar-container">
+        <div class="loading-bar" id="loadingBar"></div>
+        <div class="loading-plane" id="loadingPlane">
+          <i class="fas fa-plane"></i>
+        </div>
+      </div>
+      <div class="loading-text">תכינו דרכונים...</div>
+    </div>
+  </div>
+
+  <!-- Loading Logo (separate from loading screen) -->
+  <div class="loading-logo" id="loadingLogo">
+    <img src="logo.jpg" alt="לוגו">
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <header class="header-bg h-72 flex items-center justify-center text-center text-white shadow-lg rounded-b-xl">
+      <div class="logo-container">
+        <img src="logo.jpg" alt="לוגו">
+      </div>
+      <div class="contact-info">
+        הודיה אוריאן • 054-8792582
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold drop-shadow-lg">מונטנגרו 2026 </br>אוראן ויהונתן</h1>
+    </header>
+
+    <main class="p-4 md:p-8 max-w-4xl mx-auto">
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">✈️</span> טיסות בינלאומיות
+      </h2>
+      <div class="mb-4">
+        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md font-semibold mb-3"><strong>דרישה:</strong> יש לוודא כי תוקף הדרכון הינו 6 חודשים לפחות ממועד היציאה מהארץ, וכי הדרכון מכיל לפחות דף ריק אחד.</div>
+        <p class="text-lg">פרטי טיסות בינלאומיות (חולץ מתוך קבצי ה-PDF):</p>
+        <div class="overflow-x-auto mt-4">
+          <table class="min-w-full text-right text-sm">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="px-3 py-2">קטע</th>
+                <th class="px-3 py-2">חברת תעופה</th>
+                <th class="px-3 py-2">מס' טיסה</th>
+                <th class="px-3 py-2">תאריך</th>
+                <th class="px-3 py-2">מ־</th>
+                <th class="px-3 py-2">ל־</th>
+                <th class="px-3 py-2">המראה</th>
+                <th class="px-3 py-2">נחיתה</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t">
+                <td class="px-3 py-2">יציאה</td>
+                <td class="px-3 py-2">Arkia</td>
+                <td class="px-3 py-2">IZ367</td>
+                <td class="px-3 py-2">10/08/2026</td>
+                <td class="px-3 py-2">TLV (Ben Gurion)</td>
+                <td class="px-3 py-2">TIV (Tivat Airport, מונטנגרו)</td>
+                <td class="px-3 py-2">04:50</td>
+                <td class="px-3 py-2">07:00</td>
+              </tr>
+              <tr class="border-t">
+                <td class="px-3 py-2">חזרה</td>
+                <td class="px-3 py-2">Arkia</td>
+                <td class="px-3 py-2">IZ368</td>
+                <td class="px-3 py-2">13/08/2026</td>
+                <td class="px-3 py-2">TIV (Tivat Airport)</td>
+                <td class="px-3 py-2">TLV (Ben Gurion)</td>
+                <td class="px-3 py-2">17:10</td>
+                <td class="px-3 py-2">21:00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold">PNR</div>
+            <div class="text-sm text-gray-600">5608403</div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold">כבודה</div>
+            <div class="text-sm text-gray-600">מזוודה 1x20kg לכל נוסע, לכל כיוון</div>
+          </div>
+        </div>
+        <div class="mt-3 flex flex-col gap-1">
+          <a href="files/779256-he.pdf" target="_blank" class="text-blue-700 hover:underline">פתח הזמנת טיסות מלאה (779256-he.pdf)</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h3 class="text-2xl font-semibold mb-3">נוסעים וכבודה</h3>
+      <ul class="list-none p-0 space-y-2 text-lg">
+        <li><strong>נוסעים:</strong> אוראן הודיה שרון בן חיים (ת. לידה 17/06/2005), יהונתן שרון נחום (ת. לידה 06/11/2000)</li>
+        <li><strong>כבודה לכל כיוון:</strong> מזוודה 1x20kg לכל נוסע</li>
+        <li><strong>ארוחה:</strong> לא מוגשת ארוחה בטיסות</li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🏨</span> מלונות
+      </h2>
+      <ul class="list-none p-0 space-y-3 text-lg">
+        <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+          <img src="files/hotel-harmonia-budva.jpg" alt="Hotel Harmonia by Dukley" class="w-full rounded-md shadow-sm mb-3" />
+          <div class="font-semibold">Hotel Harmonia by Dukley</div>
+          <div class="text-sm text-gray-600 mt-1">חדר: Superior Room (Garden View)</div>
+          <div class="text-sm text-gray-600 mt-1">כניסה: 10/08/2026 | יציאה: 13/08/2026 (3 לילות) | בסיס אירוח: לינה וארוחת בוקר | 2 מבוגרים</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: Zavala Peninsula, בודווה | טל': 382-69-121250 | sales@harmoniahotel.com</div>
+          <div class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-2">חשוב: ארוחת הבוקר כשרה, מוגשת במסעדה הכשרה של המלון.</div>
+          <div class="text-sm text-gray-600 mt-2">צ'ק-אין: 15:00 | צ'ק-אאוט: 12:00</div>
+          <div class="text-sm text-gray-600 mt-1">שימו לב: הגישה לחוף Harmonia Beach מושעית כרגע, תינתן גישה חלופית לחוף</div>
+          <div class="text-sm text-gray-600 mt-1">קיים תשלום מס עירייה/מלון פר אדם ללילה, ישירות במלון</div>
+          <div class="text-sm text-gray-600 mt-1">חדר Superior אינו זמין להזמנות עם ילדים מתחת לגיל 12</div>
+          <a href="files/779238-he.pdf" target="_blank" class="text-blue-700 hover:underline mt-2 inline-block">פתח קובץ הזמנה</a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🚢</span> תחבורה ונסיעות
+      </h2>
+      <ul class="list-none p-0 space-y-2 text-lg">
+        <li class="flex items-center">
+          <span class="text-cyan-600 ml-2">✈️</span>
+          שדה התעופה טיווט (TIV) קרוב לבודווה - כרבע שעה נסיעה למלון
+        </li>
+        <li class="flex items-center">
+          <span class="text-cyan-600 ml-2">🚕</span>
+          מומלץ לתאם הסעה או מונית מראש מהשדה למלון
+        </li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">📆</span> לוח זמנים עיקרי
+      </h2>
+      <div class="prose text-lg">
+        <p>להלן לוח הזמנים המבוסס על ההזמנות ועל ההמלצות שהתקבלו:</p>
+        <ol class="list-decimal pr-6 space-y-2 mt-4">
+          <li><strong>10/08/2026:</strong> טיסה מת"א (TLV) לטיווט (TIV), מונטנגרו — Arkia (IZ367), 04:50-07:00</li>
+          <li><strong>יום 1 (10/08):</strong> הגעה, התארגנות במלון, סיור בעיר העתיקה של בודווה ושווקים</li>
+          <li><strong>יום 2 (11/08):</strong> טיול נופים וטרקטורונים (קוואד)</li>
+          <li><strong>יום 3 (12/08):</strong> טיול לקניון וספא בערב</li>
+          <li><strong>יום 4 (13/08):</strong> יום רגוע בחוף והתארגנות לטיסה</li>
+          <li><strong>13/08/2026:</strong> טיסת חזרה מטיווט (TIV) לת"א (TLV) — Arkia (IZ368), 17:10-21:00</li>
+        </ol>
+        <p class="mt-4">למידע מפורט על זמני המראות ונחיתות עיינו במסמכי ה-PDF המצורפים.</p>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">💡</span> המלצות
+      </h2>
+      <ul class="list-disc pr-6 space-y-2 text-lg">
+        <li><strong>יום 1 —</strong> להסתובב בעיר העתיקה של בודווה, אולי שווקים ולחקור את האזור</li>
+        <li><strong>יום 2 —</strong> טיול נופים וטרקטורונים (קוואד)</li>
+        <li><strong>יום 3 —</strong> קניון ואת הספא בערב</li>
+        <li><strong>יום 4 —</strong> חוף ברוגע והתארגנות לטיסה</li>
+      </ul>
+
+      <h3 class="text-xl font-semibold mt-6 mb-3">אנשי קשר מומלצים באזור</h3>
+      <ul class="list-none p-0 space-y-2 text-lg">
+        <li class="p-3 bg-gray-50 rounded-lg shadow-sm"><strong>Budva Quad Adventures</strong> (טרקטורונים) — <a href="https://wa.me/38268322923" target="_blank" class="text-blue-700 hover:underline" dir="ltr">+382 68 322 923</a></li>
+        <li class="p-3 bg-gray-50 rounded-lg shadow-sm"><strong>אילן מונטנגרו</strong> (מדריך מקומי) — <a href="https://wa.me/38269609224" target="_blank" class="text-blue-700 hover:underline" dir="ltr">+382 69 609 224</a></li>
+        <li class="p-3 bg-gray-50 rounded-lg shadow-sm"><strong>טניה טיולים מונטנגרו</strong> — <a href="https://wa.me/972523044407" target="_blank" class="text-blue-700 hover:underline" dir="ltr">052-304-4407</a></li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🎒</span> אוכל ופק"ל
+      </h2>
+      <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md font-semibold mb-4">ארוחת הבוקר במלון כשרה ומוגשת במסעדה הכשרה של המלון — אין צורך לדאוג לארוחת בוקר עצמאית.</div>
+      <p class="text-lg">אם זה לא פק"ל אז זה לא יהיה בישולים - אם רוצים אוכל זמין בחדר, מומלץ להביא:</p>
+      <ul class="list-disc pr-6 mt-2 space-y-1 text-lg">
+        <li>לחמניות, טורטיות</li>
+        <li>נקניקים</li>
+        <li>ממרחים כמו מיונז, קטשופ, איולי, שום (יש גם בסופרמרקטים במקום; אפשר גם לקנות מראש בסופר בארץ)</li>
+        <li>טונה</li>
+        <li>ירקות ופירות — יש בכל מקום</li>
+        <li>סכין, מזלג וכף/כפית אמיתיים (לא חובה אבל נוח), וכן קצת כלים חד-פעמיים יעזור</li>
+        <li>חטיפים, מנה חמה, עוגיות ונשנושים - תמיד טוב</li>
+      </ul>
+      <p class="text-sm text-gray-600 mt-3">לארוחת הבוקר כבר יש הכל במלון (כשר), כך שלא חובה להביא חלב וכדומה.</p>
+    </section>
+
+      <section class="bg-white p-6 md:p-8 mt-6 rounded-xl shadow-lg animate-fadeIn">
+        <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+          <span class="ml-2">📎</span> קבצים מצורפים
+        </h2>
+        <ul class="list-none p-0 space-y-3 text-lg">
+          <li>
+            <a href="files/779256-he.pdf" target="_blank" class="text-blue-700 hover:underline">779256-he.pdf</a>
+            <div class="text-sm text-gray-600">אישורי טיסות בינלאומיות (Arkia) — TLV↔TIV, 10/08/2026 ו-13/08/2026. PNR: 5608403.</div>
+          </li>
+          <li>
+            <a href="files/779238-he.pdf" target="_blank" class="text-blue-700 hover:underline">779238-he.pdf</a>
+            <div class="text-sm text-gray-600">הזמנת מלון Hotel Harmonia by Dukley — כניסה: 10/08/2026, יציאה: 13/08/2026.</div>
+          </li>
+        </ul>
+      </section>
+  </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loadingScreen = document.getElementById('loadingScreen');
+      const loadingLogo = document.getElementById('loadingLogo');
+      const loadingPlane = document.getElementById('loadingPlane');
+      const mainContent = document.getElementById('mainContent');
+      const headerLogo = document.querySelector('.logo-container');
+      
+      // Generate random loading duration between 2-7 seconds
+      const loadingDuration = Math.random() * 5000 + 2000; // 2000-7000ms
+      
+      // Set CSS variable for plane animation
+      loadingPlane.style.setProperty('--loading-duration', loadingDuration + 'ms');
+      
+      // Start loading
+      setTimeout(() => {
+        // Start logo animation to header position
+        loadingLogo.classList.add('animating');
+        
+        // Hide loading screen with 0.5s fade during animation
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+        }, 700); // Hide loading screen 0.5s before animation completes
+        
+        // Show main content after animation completes
+        setTimeout(() => {
+          mainContent.classList.add('visible');
+          
+          // Show the header logo after the animated logo reaches its position
+          setTimeout(() => {
+            headerLogo.classList.add('visible');
+            // Hide the loading logo with fade effect after header logo appears
+            setTimeout(() => {
+              loadingLogo.classList.add('fade-out');
+            }, 200);
+          }, 300);
+        }, 1200); // Match the logo animation duration
+      }, loadingDuration);
+    });
+  </script>
+</body>
+</html>
