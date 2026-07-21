@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="אוסטריה 2026" />
+  <meta property="og:description" content="אוסטריה 2026 - שלומי יצחק דוד" />
+  <meta property="og:image" content="bkg.jpg" />
+  <title>קיט טיול | אוסטריה 2026 - שלומי יצחק דוד</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Google Fonts - Varela Round for Hebrew */
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+    body {
+      font-family: 'Varela Round', sans-serif;
+      /* Default text direction for Hebrew */
+      direction: rtl;
+    }
+    
+    /* Loading Screen Styles */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+    
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .loading-logo {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 3px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      z-index: 10000;
+      transition: all 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+    
+    .loading-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    
+    .loading-logo.animating {
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    
+    .loading-logo.fade-out {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+    
+    .loading-bar-container {
+      width: 200px;
+      height: 4px;
+      background-color: #e0e0e0;
+      border-radius: 2px;
+      overflow: visible;
+      margin-bottom: 30px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    
+    .loading-bar {
+      height: 100%;
+      background: transparent;
+      border-radius: 2px;
+      width: 100%;
+    }
+    
+    .loading-plane {
+      position: absolute;
+      top: -8px;
+      right: 200px;
+      color: #A89B73;
+      font-size: 16px;
+      animation: plane-move var(--loading-duration, 3s) linear forwards;
+    }
+    
+    @keyframes plane-move {
+      from {
+        right: 200px;
+      }
+      to {
+        right: -5px;
+      }
+    }
+    
+    .loading-text {
+      color: #666;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    /* Main content - hidden initially */
+    .main-content {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
+    }
+    
+    .main-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Custom styles for the header background image */
+    .header-bg {
+      background-image: url('bkg.jpg');
+      background-position: center center;
+      background-size: cover;
+      position: relative;
+    }
+    /* Logo styling */
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 200px;
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
+    }
+    
+    .logo-container.visible {
+      opacity: 1;
+    }
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    /* Contact info styling */
+    .contact-info {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(0,0,0,0.45);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    /* Keyframe animation for fade-in effect */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.7s ease-in-out;
+    }
+    /* Custom styles from the user's provided HTML */
+    .tag {
+      display: inline-block;
+      background: #e1f5fe;
+      color: #0277bd;
+      padding: 0.2em 0.6em;
+      border-radius: 6px;
+      font-size: 0.85em;
+      margin-right: 0.5em; /* Adjusted for RTL */
+    }
+    a {
+      color: #007b9e;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h1{
+      color: white;
+  -webkit-text-stroke: 0.5px #A89B73;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8em;
+        color: white;
+  -webkit-text-stroke: 0.5px #A89B73;
+      }
+      main {
+        padding: 1em;
+      }
+      .logo-container {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .contact-info {
+        font-size: 12px;
+        bottom: 15px;
+        right: 15px;
+        padding: 4px 12px;
+      }
+      .loading-logo {
+        width: 120px;
+        height: 120px;
+        top: 35%;
+      }
+      .loading-logo.animating {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .loading-content {
+        top: 50%;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body class="bg-blue-50 text-gray-800 antialiased">
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <div class="loading-bar-container">
+        <div class="loading-bar" id="loadingBar"></div>
+        <div class="loading-plane" id="loadingPlane">
+          <i class="fas fa-plane"></i>
+        </div>
+      </div>
+      <div class="loading-text">תכינו דרכונים...</div>
+    </div>
+  </div>
+
+  <!-- Loading Logo (separate from loading screen) -->
+  <div class="loading-logo" id="loadingLogo">
+    <img src="logo.jpg" alt="לוגו">
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <header class="header-bg h-72 flex items-center justify-center text-center text-white shadow-lg rounded-b-xl">
+      <div class="logo-container">
+        <img src="logo.jpg" alt="לוגו">
+      </div>
+      <div class="contact-info">
+        הודיה אוריאן • 054-8792582
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold drop-shadow-lg">אוסטריה 2026 </br>שלומי יצחק דוד</h1>
+    </header>
+
+    <main class="p-4 md:p-8 max-w-4xl mx-auto">
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">✈️</span> טיסות בינלאומיות
+      </h2>
+      <div class="mb-4">
+        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md font-semibold mb-3"><strong>דרישה:</strong> יש לוודא כי תוקף הדרכון הינו 6 חודשים לפחות ממועד היציאה מהארץ, וכי הדרכון מכיל לפחות דף ריק אחד.</div>
+        <p class="text-lg">פרטי טיסות בינלאומיות (חולץ מתוך קבצי ה-PDF):</p>
+        <div class="overflow-x-auto mt-4">
+          <table class="min-w-full text-right text-sm">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="px-3 py-2">קטע</th>
+                <th class="px-3 py-2">חברת תעופה</th>
+                <th class="px-3 py-2">מס' טיסה</th>
+                <th class="px-3 py-2">תאריך</th>
+                <th class="px-3 py-2">מ־</th>
+                <th class="px-3 py-2">ל־</th>
+                <th class="px-3 py-2">המראה</th>
+                <th class="px-3 py-2">נחיתה</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t">
+                <td class="px-3 py-2">יציאה</td>
+                <td class="px-3 py-2">El Al</td>
+                <td class="px-3 py-2">LY5193</td>
+                <td class="px-3 py-2">03/08/2026</td>
+                <td class="px-3 py-2">TLV (Ben Gurion)</td>
+                <td class="px-3 py-2">SZG (W. A. Mozart Airport, זלצבורג)</td>
+                <td class="px-3 py-2">05:00</td>
+                <td class="px-3 py-2">07:50</td>
+              </tr>
+              <tr class="border-t">
+                <td class="px-3 py-2">חזרה</td>
+                <td class="px-3 py-2">El Al</td>
+                <td class="px-3 py-2">LY5194</td>
+                <td class="px-3 py-2">07/08/2026</td>
+                <td class="px-3 py-2">SZG (W. A. Mozart Airport)</td>
+                <td class="px-3 py-2">TLV (Ben Gurion, Terminal 3)</td>
+                <td class="px-3 py-2">08:55</td>
+                <td class="px-3 py-2">13:25</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold">PNR</div>
+            <div class="text-sm text-gray-600">5650804 (יציאה), 8B8SK4 (חזרה)</div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold">תעודת טיסה (eTicket)</div>
+            <div class="text-sm text-gray-600">1143945977954 (שלומי יצחק דוד)</div>
+          </div>
+        </div>
+        <div class="mt-3 flex flex-col gap-1">
+          <a href="files/844890-he.pdf" target="_blank" class="text-blue-700 hover:underline">פתח הזמנת טיסות מלאה (844890-he.pdf)</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h3 class="text-2xl font-semibold mb-3">נוסעים וכבודה</h3>
+      <ul class="list-none p-0 space-y-2 text-lg">
+        <li><strong>נוסע:</strong> שלומי יצחק דוד (מבוגר, ת. לידה 29/06/2005)</li>
+        <li><strong>eTicket:</strong> 1143945977954</li>
+        <li><strong>כבודה לכל כיוון:</strong> תיק יד 1x8kg + מזוודה 1x23kg</li>
+        <li><strong>ארוחה:</strong> לא מוגשת ארוחה בטיסות (טיסה קצרה)</li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🏨</span> מלונות
+      </h2>
+      <ul class="list-none p-0 space-y-3 text-lg">
+        <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+          <div class="font-semibold">Ferienwelt Kesselgrub — (844905-he.pdf)</div>
+          <div class="text-sm text-gray-600 mt-1">חדר: Large Twin Bed Single Room (Seelen - Balance 1)</div>
+          <div class="text-sm text-gray-600 mt-1">כניסה: 03/08/2026 | יציאה: 04/08/2026 (לילה אחד) | בסיס אירוח: חצי פנסיון</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: Lackengasse 1 | טל': 43-6452-5232 | info@kesselgrub.at</div>
+          <div class="text-sm text-gray-600 mt-1">ביטול חינם עד 28/07/2026</div>
+          <a href="files/844905-he.pdf" target="_blank" class="text-blue-700 hover:underline mt-2 inline-block">פתח קובץ הזמנה</a>
+        </li>
+
+        <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+          <div class="font-semibold">Landhotel Laudersbach — (844952-he.pdf)</div>
+          <div class="text-sm text-gray-600 mt-1">חדר: Comfort Plus Double Room</div>
+          <div class="text-sm text-gray-600 mt-1">כניסה: 04/08/2026 | יציאה: 07/08/2026 (3 לילות) | בסיס אירוח: לינה וארוחת בוקר</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: Sinnhub 1 | טל': (43) 64526075 | info@laudersbach.at</div>
+          <div class="text-sm text-gray-600 mt-1"><strong>שימו לב:</strong> הזמנה לא ניתנת לביטול</div>
+          <a href="files/844952-he.pdf" target="_blank" class="text-blue-700 hover:underline mt-2 inline-block">פתח קובץ הזמנה</a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🚢</span> תחבורה ונסיעות
+      </h2>
+      <ul class="list-none p-0 space-y-2 text-lg">
+        <li class="flex items-center">
+          <span class="text-cyan-600 ml-2">🚗</span>
+          מומלץ רכב שכור לנסיעה בין אזור זלצבורג לחבל טירול
+        </li>
+        <li class="flex items-center">
+          <span class="text-cyan-600 ml-2">🚕</span>
+          העברה משדה התעופה בזלצבורג (SZG) למלון Ferienwelt Kesselgrub - לתאם מראש מול המלון
+        </li>
+        <li class="flex items-center">
+          <span class="text-cyan-600 ml-2">🚆</span>
+          Landhotel Laudersbach מציע העברות מתחנת הרכבת (ייתכן תשלום נוסף) - יש ליצור קשר עם המלון עם פרטי ההגעה מראש
+        </li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">📆</span> לוח זמנים עיקרי
+      </h2>
+      <div class="prose text-lg">
+        <p>להלן לוח הזמנים המבוסס על ההזמנות שהופקו מתוך הקבצים:</p>
+        <ol class="list-decimal pr-6 space-y-2 mt-4">
+          <li><strong>03/08/2026:</strong> טיסה מת"א (TLV) לזלצבורג (SZG) — El Al (LY5193), 05:00-07:50</li>
+          <li><strong>03/08/2026 - 04/08/2026:</strong> לינה ב-Ferienwelt Kesselgrub (חצי פנסיון)</li>
+          <li><strong>04/08/2026 - 07/08/2026:</strong> לינה ב-Landhotel Laudersbach, 3 לילות (לינה וארוחת בוקר)</li>
+          <li><strong>07/08/2026:</strong> טיסת חזרה מזלצבורג (SZG) לת"א (TLV) — El Al (LY5194), 08:55-13:25</li>
+        </ol>
+        <p class="mt-4">למידע מפורט על זמני המראות ונחיתות עיינו במסמכי ה-PDF המצורפים.</p>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">💡</span> המלצות
+      </h2>
+      <ul class="list-disc pr-6 space-y-2 text-lg">
+        <li>
+          <a href="https://maps.app.goo.gl/JgyyVv4o9Jqdtd1dA?g_st=aw" target="_blank" class="text-blue-700 hover:underline"><strong>חוף סטרובל (Strobl)</strong></a> — מקום וואו, מים צלולים ברמות!
+        </li>
+        <li><strong>המדרגות לשום מקום והגשר התלוי</strong> — חובה!</li>
+        <li><strong>האלשטט (Hallstatt) ואגם גוסאו (Gosau)</strong> — יעד ציורי מומלץ</li>
+        <li><strong>סכר קפרון (Kaprun)</strong> — חובה</li>
+        <li><strong>אגם ג'גרסי (Jägersee)</strong> ליד פלאכאו — אגם יפיפה, אפשר להקיף אותו בזמן קצר</li>
+        <li><strong>ציוד חובה:</strong> נעלי הליכה נוחות, בגד ים, כובע, קרם הגנה, משקפי שמש, מתאם חשמל לתקע אירופאי (Type F, 230V)</li>
+        <li>הצטיידו במזומן/אשראי לתשלומים קטנים בטירול ובזלצבורג</li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🍽️</span> אוכל כשר בחבל זלצבורג וטירול
+      </h2>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">מסעדה כשרה — אלפין שלדמינג</h3>
+        <p class="text-lg">עונה חדשה, שף חדש וקונספט חדש. בכשרות הרב אמינוב והרב שלזינגר (בהשגחת הרב גרוס).</p>
+        <ul class="list-none p-0 space-y-1 mt-2 text-lg">
+          <li>🍳 בוקר (בופה חלבי): 07:30–10:00</li>
+          <li>🥩 צהריים וערב (בשרי ופרווה): 15:00–21:30</li>
+          <li>הרשמה לסעודות שבת: <a href="https://koshertruck-at.sumupstore.com/" target="_blank" class="text-blue-700 hover:underline">koshertruck-at.sumupstore.com</a></li>
+          <li>מיקום: <a href="https://maps.app.goo.gl/m6GnhizSD9wnUhpu9?g_st=aw" target="_blank" class="text-blue-700 hover:underline">פתח במפות Google</a></li>
+          <li>קבוצת וואטסאפ לעדכונים: <a href="https://chat.whatsapp.com/Iszjsb8YgXKF79dhe9sv6Y?mode=ems_copy_c" target="_blank" class="text-blue-700 hover:underline">הצטרפות לקבוצה</a></li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">מוצרי בסיס וסופרים כשרים</h3>
+        <p class="text-lg">ניתן לרכוש מוצרים בסיסיים (שתייה, שמנים, פסטה, אורז, תבלינים, דגני בוקר, קפה ועוד) בסופרמרקטים באזורי ההרים לפי חוברות הכשרות.</p>
+        <ul class="list-disc pr-6 mt-2 text-lg">
+          <li><strong>לה מהדרין</strong> — משלוח UPS מווינה לכל רחבי אוסטריה תוך 1–3 ימים. טל׳ 4319092299+, office@lamehadrin.com</li>
+          <li><strong>כושר פור יו</strong> — הזמנת מוצרים אונליין לכל אוסטריה: <a href="https://www.kosher4u.eu/" target="_blank" class="text-blue-700 hover:underline">kosher4u.eu</a></li>
+          <li><strong>כושר טירול</strong> — מוצרי חלב, חומוס ובשרים ברשת אמפרייס בעיירות זלצבורג וטירול (בפלאכאו צפויה מחלקה מורחבת)</li>
+        </ul>
+        <div class="mt-4 flex justify-center">
+          <img src="files/kosher-market-salzburg.jpg" alt="מיני-מרקט כשר בזלצבורג" class="w-full md:w-1/2 rounded-md shadow-sm mx-auto" />
+        </div>
+        <div class="text-sm text-gray-600 mt-2 text-center">מיני-מרקט כשר באיסוף עצמי בזלצבורג — שעות פעילות 08:00–16:00, תיאום מראש בלבד: +43 676 83181850</div>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">לחם, בשרים ואוכל מוכן</h3>
+        <ul class="list-disc pr-6 mt-2 text-lg">
+          <li><strong>לחם בטירול:</strong> לחם, לחמניות וחלות טריות בכשרות בד"ץ אגודת אחים ציריך, אספקה יומית (למעט שבת). מיקומים: גלטור, פיס, טוקס. מייל: kbreadtirol26@gmail.com</li>
+          <li><strong>בשרים ודגים:</strong> בהכשר הרב וייס או הרב אמינוב — <a href="https://docs.google.com/forms/d/11EYXMOOsQiY7nFg-h7NZDoUwPQT2A1fJAklFbLULfUE/viewform?edit_requested=true" target="_blank" class="text-blue-700 hover:underline">טופס הזמנה</a>; וכן דרך כושר טירול (הכשר הגרמ"א וייס, וינה): <a href="https://koshertirol.com/order?food=frozen" target="_blank" class="text-blue-700 hover:underline">koshertirol.com</a></li>
+          <li><strong>אוכל מוכן מווינה:</strong> בכשרות הרב יעקב חוטבלי, מדי יום. טל׳ 050-684-6613; ואוכל מוכן לשבת דרך <a href="https://koshertirol.com/" target="_blank" class="text-blue-700 hover:underline">koshertirol.com</a></li>
+        </ul>
+        <div class="mt-4 flex justify-center">
+          <img src="files/kosher-prepared-food-alps.jpg" alt="אוכל כשר מוכן בהרים" class="w-full md:w-1/2 rounded-md shadow-sm mx-auto" />
+        </div>
+        <div class="text-sm text-gray-600 mt-2 text-center">אוכל כשר, טרי ומשובח בכשרות מהודרת עד לצריף בקריישברג — תור עולם: 053-313-4140, bit.ly/Kosherfood26</div>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold mb-2">משלוחים לכל אוסטריה</h3>
+        <p class="text-lg">LaMehadrin — משלוחים לכל רחבי אוסטריה (UPS), משלוח רגיל 2-3 ימי עסקים או אקספרס תוך 24 שעות. Taborstraße 48A, 1020 Wien | 01-9092299 | office@lamehadrin.com | <a href="https://shop.lamehadrin.com/" target="_blank" class="text-blue-700 hover:underline">shop.lamehadrin.com</a></p>
+        <div class="mt-4 flex justify-center">
+          <img src="files/kosher-delivery-austria.jpg" alt="משלוחי לה מהדרין לכל אוסטריה" class="w-full md:w-1/2 rounded-md shadow-sm mx-auto" />
+        </div>
+      </div>
+    </section>
+
+      <section class="bg-white p-6 md:p-8 mt-6 rounded-xl shadow-lg animate-fadeIn">
+        <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+          <span class="ml-2">📎</span> קבצים מצורפים
+        </h2>
+        <ul class="list-none p-0 space-y-3 text-lg">
+          <li>
+            <a href="files/844890-he.pdf" target="_blank" class="text-blue-700 hover:underline">844890-he.pdf</a>
+            <div class="text-sm text-gray-600">אישורי טיסות בינלאומיות (El Al) — TLV↔SZG, 03/08/2026 ו-07/08/2026. PNR: 5650804 / 8B8SK4.</div>
+          </li>
+          <li>
+            <a href="files/844905-he.pdf" target="_blank" class="text-blue-700 hover:underline">844905-he.pdf</a>
+            <div class="text-sm text-gray-600">הזמנת מלון Ferienwelt Kesselgrub — כניסה: 03/08/2026, יציאה: 04/08/2026. ניתן לבטל עד 28/07/2026.</div>
+          </li>
+          <li>
+            <a href="files/844952-he.pdf" target="_blank" class="text-blue-700 hover:underline">844952-he.pdf</a>
+            <div class="text-sm text-gray-600">הזמנת מלון Landhotel Laudersbach — כניסה: 04/08/2026, יציאה: 07/08/2026. הזמנה לא ניתנת לביטול.</div>
+          </li>
+        </ul>
+      </section>
+  </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loadingScreen = document.getElementById('loadingScreen');
+      const loadingLogo = document.getElementById('loadingLogo');
+      const loadingPlane = document.getElementById('loadingPlane');
+      const mainContent = document.getElementById('mainContent');
+      const headerLogo = document.querySelector('.logo-container');
+      
+      // Generate random loading duration between 2-7 seconds
+      const loadingDuration = Math.random() * 5000 + 2000; // 2000-7000ms
+      
+      // Set CSS variable for plane animation
+      loadingPlane.style.setProperty('--loading-duration', loadingDuration + 'ms');
+      
+      // Start loading
+      setTimeout(() => {
+        // Start logo animation to header position
+        loadingLogo.classList.add('animating');
+        
+        // Hide loading screen with 0.5s fade during animation
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+        }, 700); // Hide loading screen 0.5s before animation completes
+        
+        // Show main content after animation completes
+        setTimeout(() => {
+          mainContent.classList.add('visible');
+          
+          // Show the header logo after the animated logo reaches its position
+          setTimeout(() => {
+            headerLogo.classList.add('visible');
+            // Hide the loading logo with fade effect after header logo appears
+            setTimeout(() => {
+              loadingLogo.classList.add('fade-out');
+            }, 200);
+          }, 300);
+        }, 1200); // Match the logo animation duration
+      }, loadingDuration);
+    });
+  </script>
+</body>
+</html>
