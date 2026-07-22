@@ -252,6 +252,60 @@
         gap: 8px;
       }
     }
+
+    /* AI Disclaimer Modal */
+    .ai-disclaimer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.55);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+    .ai-disclaimer-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .ai-disclaimer-box {
+      background: white;
+      border-radius: 16px;
+      padding: 28px 24px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .ai-disclaimer-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .ai-disclaimer-text {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .ai-disclaimer-button {
+      background-color: #A89B73;
+      color: white;
+      border: none;
+      padding: 10px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: 'Varela Round', sans-serif;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .ai-disclaimer-button:hover {
+      background-color: #8f8360;
+    }
   </style>
 </head>
 <body class="bg-blue-50 text-gray-800 antialiased">
@@ -272,6 +326,15 @@
   <!-- Loading Logo (separate from loading screen) -->
   <div class="loading-logo" id="loadingLogo">
     <img src="logo.jpg" alt="לוגו">
+  </div>
+
+  <!-- AI Disclaimer Modal -->
+  <div class="ai-disclaimer-overlay" id="aiDisclaimerOverlay">
+    <div class="ai-disclaimer-box">
+      <div class="ai-disclaimer-icon">⚠️</div>
+      <div class="ai-disclaimer-text">המידע בדף זה הופק בסיוע בינה מלאכותית ועשוי להכיל אי-דיוקים. יש לוודא כל פרט מול הספקים ומול הודיה אוריאן טרוול.</div>
+      <button class="ai-disclaimer-button" id="aiDisclaimerConfirm">הבנתי</button>
+    </div>
   </div>
 
   <!-- Main Content -->
@@ -468,6 +531,12 @@
       const loadingPlane = document.getElementById('loadingPlane');
       const mainContent = document.getElementById('mainContent');
       const headerLogo = document.querySelector('.logo-container');
+      const aiDisclaimerOverlay = document.getElementById('aiDisclaimerOverlay');
+      const aiDisclaimerConfirm = document.getElementById('aiDisclaimerConfirm');
+
+      aiDisclaimerConfirm.addEventListener('click', () => {
+        aiDisclaimerOverlay.classList.remove('visible');
+      });
       
       // Generate random loading duration between 2-7 seconds
       const loadingDuration = Math.random() * 5000 + 2000; // 2000-7000ms
@@ -488,6 +557,7 @@
         // Show main content after animation completes
         setTimeout(() => {
           mainContent.classList.add('visible');
+          aiDisclaimerOverlay.classList.add('visible');
           
           // Show the header logo after the animated logo reaches its position
           setTimeout(() => {
