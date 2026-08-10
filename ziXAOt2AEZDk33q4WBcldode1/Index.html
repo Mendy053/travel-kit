@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="בודפשט 2026" />
+  <meta property="og:description" content="בודפשט 2026 - יהודית מלכה וינר ומוריה סופיר" />
+  <meta property="og:image" content="bkg.jpg" />
+  <title>קיט טיול | בודפשט 2026 - יהודית מלכה וינר ומוריה סופיר</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Google Fonts - Varela Round for Hebrew */
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+    body {
+      font-family: 'Varela Round', sans-serif;
+      /* Default text direction for Hebrew */
+      direction: rtl;
+    }
+    
+    /* Loading Screen Styles */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+    
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .loading-logo {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 3px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      z-index: 10000;
+      transition: all 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+    
+    .loading-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    
+    .loading-logo.animating {
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    
+    .loading-logo.fade-out {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+    
+    .loading-bar-container {
+      width: 200px;
+      height: 4px;
+      background-color: #e0e0e0;
+      border-radius: 2px;
+      overflow: visible;
+      margin-bottom: 30px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    
+    .loading-bar {
+      height: 100%;
+      background: transparent;
+      border-radius: 2px;
+      width: 100%;
+    }
+    
+    .loading-plane {
+      position: absolute;
+      top: -8px;
+      right: 200px;
+      color: #A89B73;
+      font-size: 16px;
+      animation: plane-move var(--loading-duration, 3s) linear forwards;
+    }
+    
+    @keyframes plane-move {
+      from {
+        right: 200px;
+      }
+      to {
+        right: -5px;
+      }
+    }
+    
+    .loading-text {
+      color: #666;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    /* Main content - hidden initially */
+    .main-content {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
+    }
+    
+    .main-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Custom styles for the header background image */
+    .header-bg {
+      background-image: url('bkg.jpg');
+      background-position: center center;
+      background-size: cover;
+      position: relative;
+    }
+    /* Logo styling */
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 200px;
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
+    }
+    
+    .logo-container.visible {
+      opacity: 1;
+    }
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    /* Contact info styling */
+    .contact-info {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(0,0,0,0.45);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    /* Keyframe animation for fade-in effect */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.7s ease-in-out;
+    }
+    /* Custom styles from the user's provided HTML */
+    .tag {
+      display: inline-block;
+      background: #e1f5fe;
+      color: #0277bd;
+      padding: 0.2em 0.6em;
+      border-radius: 6px;
+      font-size: 0.85em;
+      margin-right: 0.5em; /* Adjusted for RTL */
+    }
+    a {
+      color: #007b9e;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h1{
+      color: white;
+  -webkit-text-stroke: 0.5px #A89B73;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8em;
+        color: white;
+  -webkit-text-stroke: 0.5px #A89B73;
+      }
+      main {
+        padding: 1em;
+      }
+      .logo-container {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .contact-info {
+        font-size: 12px;
+        bottom: 15px;
+        right: 15px;
+        padding: 4px 12px;
+      }
+      .loading-logo {
+        width: 120px;
+        height: 120px;
+        top: 35%;
+      }
+      .loading-logo.animating {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .loading-content {
+        top: 50%;
+        gap: 8px;
+      }
+    }
+
+    /* AI Disclaimer Modal */
+    .ai-disclaimer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.55);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+    .ai-disclaimer-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .ai-disclaimer-box {
+      background: white;
+      border-radius: 16px;
+      padding: 28px 24px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .ai-disclaimer-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .ai-disclaimer-text {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .ai-disclaimer-button {
+      background-color: #A89B73;
+      color: white;
+      border: none;
+      padding: 10px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: 'Varela Round', sans-serif;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .ai-disclaimer-button:hover {
+      background-color: #8f8360;
+    }
+  </style>
+</head>
+<body class="bg-blue-50 text-gray-800 antialiased">
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <div class="loading-bar-container">
+        <div class="loading-bar" id="loadingBar"></div>
+        <div class="loading-plane" id="loadingPlane">
+          <i class="fas fa-plane"></i>
+        </div>
+      </div>
+      <div class="loading-text">תכינו דרכונים...</div>
+    </div>
+  </div>
+
+  <!-- Loading Logo (separate from loading screen) -->
+  <div class="loading-logo" id="loadingLogo">
+    <img src="logo.jpg" alt="לוגו">
+  </div>
+
+  <!-- AI Disclaimer Modal -->
+  <div class="ai-disclaimer-overlay" id="aiDisclaimerOverlay">
+    <div class="ai-disclaimer-box">
+      <div class="ai-disclaimer-icon">⚠️</div>
+      <div class="ai-disclaimer-text">המידע בדף זה הופק בסיוע בינה מלאכותית ועשוי להכיל אי-דיוקים. יש לוודא מול הקבצים המקוריים שהתקבלו בסגירת הטיול, הספקים או H.O Travel.</div>
+      <button class="ai-disclaimer-button" id="aiDisclaimerConfirm">הבנתי</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <header class="header-bg h-72 flex items-center justify-center text-center text-white shadow-lg rounded-b-xl">
+      <div class="logo-container">
+        <img src="logo.jpg" alt="לוגו">
+      </div>
+      <div class="contact-info">
+        הודיה אוריאן • 054-8792582
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold drop-shadow-lg">בודפשט 2026 </br>יהודית ומוריה</h1>
+    </header>
+
+    <main class="p-4 md:p-8 max-w-4xl mx-auto">
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">✈️</span> טיסות בינלאומיות
+      </h2>
+      <div class="mb-4">
+        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md font-semibold mb-3"><strong>דרישה:</strong> יש לוודא כי תוקף הדרכון הינו 6 חודשים לפחות ממועד היציאה מהארץ, וכי הדרכון מכיל לפחות דף ריק אחד.</div>
+        <p class="text-lg">פרטי טיסות בינלאומיות:</p>
+        <div class="overflow-x-auto mt-4">
+          <table class="min-w-full text-right text-sm">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="px-3 py-2">קטע</th>
+                <th class="px-3 py-2">חברת תעופה</th>
+                <th class="px-3 py-2">מס' טיסה</th>
+                <th class="px-3 py-2">תאריך</th>
+                <th class="px-3 py-2">מ־</th>
+                <th class="px-3 py-2">ל־</th>
+                <th class="px-3 py-2">המראה</th>
+                <th class="px-3 py-2">נחיתה</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t">
+                <td class="px-3 py-2">יציאה</td>
+                <td class="px-3 py-2">Arkia</td>
+                <td class="px-3 py-2">IZ291</td>
+                <td class="px-3 py-2">23/08/2026</td>
+                <td class="px-3 py-2">TLV (Ben Gurion)</td>
+                <td class="px-3 py-2">BUD (Ferihegy, בודפשט)</td>
+                <td class="px-3 py-2">16:35</td>
+                <td class="px-3 py-2">19:10</td>
+              </tr>
+              <tr class="border-t">
+                <td class="px-3 py-2">חזרה</td>
+                <td class="px-3 py-2">Israir</td>
+                <td class="px-3 py-2">6H726</td>
+                <td class="px-3 py-2">27/08/2026</td>
+                <td class="px-3 py-2">BUD (Ferihegy)</td>
+                <td class="px-3 py-2">TLV (Ben Gurion)</td>
+                <td class="px-3 py-2">19:30</td>
+                <td class="px-3 py-2">23:40</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold">PNR</div>
+            <div class="text-sm text-gray-600">13711867 (יציאה), 4736732 (חזרה)</div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold">כבודה</div>
+            <div class="text-sm text-gray-600">יציאה (Arkia): כבודת יד 1x8kg לנוסע. חזרה (Israir): חבילה אחת (1 piece) לנוסע, לפי מדיניות משקל חברת התעופה</div>
+          </div>
+        </div>
+        <div class="mt-3 flex flex-col gap-1">
+          <a href="files/859966-he.pdf" target="_blank" class="text-blue-700 hover:underline">פתח הזמנת טיסות מלאה (859966-he.pdf)</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h3 class="text-2xl font-semibold mb-3">נוסעים וכבודה</h3>
+      <ul class="list-none p-0 space-y-2 text-lg">
+        <li><strong>נוסעות:</strong> Yehudit Malka Wiener (ת. לידה 14/10/2005), Moria Soufir (ת. לידה 30/03/2005)</li>
+        <li><strong>כבודה:</strong> יציאה (Arkia) - כבודת יד 1x8kg לנוסעת; חזרה (Israir) - חבילה אחת לנוסעת לפי מדיניות משקל חברת התעופה</li>
+        <li><strong>ארוחה:</strong> לא מוגשת ארוחה בטיסת החזרה</li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🏨</span> מלונות
+      </h2>
+      <ul class="list-none p-0 space-y-3 text-lg">
+        <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+          <img src="files/hotel-leonardo-budapest.jpg" alt="Leonardo Boutique Hotel Budapest M Square" class="w-full rounded-md shadow-sm mb-3" />
+          <div class="font-semibold">Leonardo Boutique Hotel Budapest M Square</div>
+          <div class="text-sm text-gray-600 mt-1">חדר: Superior Room</div>
+          <div class="text-sm text-gray-600 mt-1">כניסה: 23/08/2026 | יציאה: 27/08/2026 (4 לילות) | בסיס אירוח: לינה בלבד | 2 מבוגרות</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: Madách Tér 2, בודפשט | טל': <span dir="ltr">36-1-8016300</span> | info.boutiquebudapest@leonardo-hotels.com</div>
+          <div class="text-sm text-gray-600 mt-2">איש קשר בהזמנה: Yehudit Malka Wiener</div>
+          <div class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-2">שימו לב: הזמנה לא ניתנת לביטול</div>
+          <div class="text-sm text-gray-600 mt-2">מס עירוני משוער: 4% מעלות ההזמנה, ישולם במלון בעת ההגעה</div>
+          <div class="text-sm text-gray-600 mt-1">קבלת מפתחות/צ'ק-אין: משעה 14:00 | צ'ק-אאוט: עד 11:00 | נדרשת תעודה מזהה בהגעה</div>
+          <div class="text-sm text-gray-600 mt-1">אין חניה במלון; אירוח LGBTIQ friendly; לא מתקבלות מסיבות רווקות/רווקים</div>
+          <a href="files/859976-he.pdf" target="_blank" class="text-blue-700 hover:underline mt-2 inline-block">פתח קובץ הזמנה</a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🚕</span> תחבורה, מטבע וסים - טיפים מעשיים
+      </h2>
+
+      <div class="mb-5">
+        <h3 class="text-xl font-semibold mb-2">מוניות</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>יש להשתמש רק במוניות חוקיות - מונית צהובה, עם שלט TAXI על הגג, מונה פעיל ולוחית רישוי צהובה</li>
+          <li>אין לעלות על מונית ברחוב אקראי - יש להזמין דרך אפליקציה או טלפון</li>
+          <li>אפליקציות מומלצות: <strong>Bolt</strong> (הכי נוחה, אמינה וזולה), <strong>Főtaxi</strong> (טובה גם בשדה התעופה), City Taxi / 6x6 Taxi</li>
+          <li class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-base font-semibold">אין Uber בבודפשט! מי שמציע "Uber" או נסיעה פרטית ברחוב - כנראה נוכל</li>
+          <li>בשדה התעופה: יש לגשת לעמדת Főtaxi ביציאה, אין צורך לחפש נהג באופן עצמאי</li>
+        </ul>
+      </div>
+
+      <div class="mb-5">
+        <h3 class="text-xl font-semibold mb-2">המרת מטבע</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>המטבע המקומי הוא פורינט הונגרי (HUF) - לא משתמשים ביורו, למעט מקומות תיירותיים מאוד (ואז בשער גרוע)</li>
+          <li>לא כדאי להמיר בשדה התעופה או בעמדות תיירותיות מרכזיות (כמו רחוב ואצי) - השער גרוע</li>
+          <li>כדאי לחפש בתי חלפנות עם שלט "No Commission", ולוודא שהפער בין שער קנייה למכירה נמוך</li>
+          <li>מומלץ להוציא מעט מזומן ולהשתמש בעיקר באשראי; כ-20,000-30,000 פורינט לאדם מספיקים לנסיעות, טיפים ודברים קטנים</li>
+          <li>רוב המסעדות, החנויות והמוזיאונים מכבדים כרטיסי אשראי/דביט</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold mb-2">כרטיס סים</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>בשדה התעופה - דוכני חברות תקשורת, נוח אך מעט יקר יותר</li>
+          <li>בקניונים/חנויות בעיר - זול יותר (למשל בקניון Arena Mall או WestEnd)</li>
+          <li>חנויות רשמיות: Telenor, Telekom, Yettel (בעבר Telenor)</li>
+          <li>מחירים: סים מקומי עם 5-10 ג'יגה כ-5-10 אירו; סים עם שיחות ואינטרנט ללא הגבלה כ-15-20 אירו</li>
+          <li>נדרש דרכון לרישום הסים (חוק מקומי)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">📆</span> לוח זמנים עיקרי
+      </h2>
+      <div class="prose text-lg">
+        <p>להלן לוח הזמנים המבוסס על ההזמנות שהופקו מתוך הקבצים:</p>
+        <ol class="list-decimal pr-6 space-y-2 mt-4">
+          <li><strong>23/08/2026:</strong> טיסה מת"א (TLV) לבודפשט (BUD) — Arkia (IZ291), 16:35-19:10</li>
+          <li><strong>23/08/2026 - 27/08/2026:</strong> לינה במלון Leonardo Boutique Hotel Budapest M Square, 4 לילות (לינה בלבד)</li>
+          <li><strong>27/08/2026:</strong> טיסת חזרה מבודפשט (BUD) לת"א (TLV) — Israir (6H726), 19:30-23:40</li>
+        </ol>
+        <p class="mt-4">למידע מפורט על זמני המראות ונחיתות עיינו במסמכי ה-PDF המצורפים.</p>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">💡</span> אתרים ואטרקציות מומלצות
+      </h2>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🏰 אתרים ואטרקציות מרכזיות</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>גבעת המצודה (Castle Hill)</strong> — כולל את טירת בודה (Buda Castle), גלריית האמנות הלאומית והמוזיאון ההיסטורי. נוף מרהיב לעיר ולנהר הדנובה</li>
+          <li><strong>מצודת הדייגים (Fisherman's Bastion)</strong> — מבנה לבן ומעוטר עם נופים פנורמיים לגשר השלשלאות ולבניין הפרלמנט</li>
+          <li><strong>בניין הפרלמנט ההונגרי</strong> — אחד המבנים המרשימים באירופה. ניתן לסייר בפנים - מומלץ להזמין כרטיסים מראש</li>
+          <li><strong>בית הכנסת הגדול ברחוב דוהאני</strong> — בית הכנסת הגדול ביותר באירופה, כולל מוזיאון יהדות ואנדרטה לזכר השואה</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🌉 גשרים ונופים</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>גשר השלשלאות (Chain Bridge)</strong> — מחבר בין בודה לפשט, מואר בלילה, חוויה רומנטית</li>
+          <li><strong>טיילת הדנובה (Danube Promenade)</strong> — הליכה לאורך הנהר עם נוף מדהים, במיוחד בשקיעה</li>
+          <li><strong>שייט על נהר הדנובה בשקיעה</strong> — מומלץ במיוחד</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🛁 מרחצאות ומנוחה</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>מרחצאות סצ'ני (Széchenyi Baths)</strong> — מרחצאות תרמיים מפורסמים באוויר הפתוח, כיף במיוחד בחורף כשיש אדים מהמים</li>
+          <li><strong>מרחצאות גלרט (Gellért Baths)</strong> — חוויה יותר אותנטית ואדריכלות מהממת</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🌳 טבע ונוף</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>גבעת גלרט (Gellért Hill) והאנדרטה לחירות</strong> — תצפית מדהימה על כל העיר</li>
+          <li><strong>אי מרגיט (Margaret Island)</strong> — פארק ירוק בלב הדנובה, אידיאלי לפיקניק, אופניים והליכה</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold mb-2">🛍️ שווקים וקניות</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>השוק המרכזי (Central Market Hall)</strong> — מקום מצוין לטעום אוכל מקומי ולקנות מזכרות</li>
+          <li><strong>רחוב ואצי (Váci utca)</strong> — רחוב קניות תיירותי עם מסעדות, חנויות ובתי קפה</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🧭</span> הדרכה מקומית - משפחת בנאי
+      </h2>
+      <div class="p-4 bg-gray-50 rounded-lg shadow-sm">
+        <p class="text-lg">משפחת בנאי הינה משפחה ישראלית עם שורשים הונגרים, החיה כ-23 שנה בהונגריה עם ותק של 10 שנים בהדרכת קבוצות ישראלים בבודפשט ובהונגריה. הם ישמחו להדריך אתכם ולשתף אתכם בידע הרב שיש להם, ומעבר לכך לתת זווית ייחודית ממבט ראייה ישראלית-הונגרית על הונגריה - האנשים, התרבות, ההיסטוריה, הכלכלה והחברה המקומית - הכל באווירה חמה, קלילה, כיפית ונעימה.</p>
+        <p class="text-lg mt-2">מומלץ: טיול לאורך גדת הדנובה בהדרכת משפחת בנאי.</p>
+        <div class="mt-3">
+          <a href="https://wa.me/36703603559" target="_blank" class="text-blue-700 hover:underline" dir="ltr">+36 70 360 3559</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🍽️</span> כל מה שכשר ומהודר בבודפשט
+      </h2>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🥩 בשרי</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>חנה</strong> — (התאחדות הרבנים) — <a href="https://maps.app.goo.gl/w4sKB3h5RsgDnK7y8" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>כרמל</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/DMnSTQbCgasRRzpT8" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>מרקש</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/UrQ5efa39egjXLv1A" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🌭 סטריט פוד בשרי</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>נתאווהלו</strong> — (הרב יזדי) — <a href="https://maps.app.goo.gl/knx9ULZ33641AjGF6" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>אש'יז</strong> — (הרב רוטנברג) — <a href="https://maps.app.goo.gl/wwhQg1KpgDn7UyRk9" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>חומוס בר</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/s7zf4GLHCJoUUEkG7" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>פלאפל בר</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/VeSmGG2FsJMAMTaWA" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>שוק הכרמל</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/p9khi21bco4UxZFj9" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">☕ חלבי</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>קפה תמר</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/ouNxRe8PVvBYLWxJ8" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>ברוקלין בייגל</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/Zhka4PtAdwbCcArB7" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>קפה תל אביב</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/XDbzWvi9yprRh2Ar7" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🥖 מכולות ומאפיות</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>כשר מרקט</strong> — (כשרויות שונות) — <a href="https://maps.app.goo.gl/ZDU5wA5tBVUXz2dA7" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>מאפייה אפטאון</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/G69KrredkWKuUwRv9" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>עגלת מאפים</strong> — (הרב אוברלנדר, ארוז בלבד) — <a href="https://maps.app.goo.gl/WF7HJtXa1RPsU4Qc8" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li>אוטומט סנדוויצ'ים כשר בקניון ארנה (Arena Mall)</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold mb-2">✡️ מניינים (שחרית, מנחה, ערבית) ומקווה</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>בית חב"ד המרכזי קרן אור</strong> — (הרב רסקין) — <a href="https://maps.app.goo.gl/Wdo3Kcf5tTh2C7zs6" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>עדת יראים</strong>, קזינצי — <a href="https://maps.app.goo.gl/2heaxdh6f41JVAje7" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>חברה ש"ס</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/KuU4gxdRDFKdJeW96" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
+          <li><strong>מקווה</strong> — Kazinczy u. 16</li>
+        </ul>
+      </div>
+    </section>
+
+      <section class="bg-white p-6 md:p-8 mt-6 rounded-xl shadow-lg animate-fadeIn">
+        <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+          <span class="ml-2">📎</span> קבצים מצורפים
+        </h2>
+        <ul class="list-none p-0 space-y-3 text-lg">
+          <li>
+            <a href="files/859966-he.pdf" target="_blank" class="text-blue-700 hover:underline">859966-he.pdf</a>
+            <div class="text-sm text-gray-600">אישורי טיסות (Arkia / Israir) — TLV↔BUD, 23/08/2026 ו-27/08/2026. PNR: 13711867 / 4736732.</div>
+          </li>
+          <li>
+            <a href="files/859976-he.pdf" target="_blank" class="text-blue-700 hover:underline">859976-he.pdf</a>
+            <div class="text-sm text-gray-600">הזמנת מלון Leonardo Boutique Hotel Budapest M Square — כניסה: 23/08/2026, יציאה: 27/08/2026. הזמנה לא ניתנת לביטול.</div>
+          </li>
+        </ul>
+      </section>
+  </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loadingScreen = document.getElementById('loadingScreen');
+      const loadingLogo = document.getElementById('loadingLogo');
+      const loadingPlane = document.getElementById('loadingPlane');
+      const mainContent = document.getElementById('mainContent');
+      const headerLogo = document.querySelector('.logo-container');
+      const aiDisclaimerOverlay = document.getElementById('aiDisclaimerOverlay');
+      const aiDisclaimerConfirm = document.getElementById('aiDisclaimerConfirm');
+
+      aiDisclaimerConfirm.addEventListener('click', () => {
+        aiDisclaimerOverlay.classList.remove('visible');
+      });
+      
+      // Generate random loading duration between 2-7 seconds
+      const loadingDuration = Math.random() * 5000 + 2000; // 2000-7000ms
+      
+      // Set CSS variable for plane animation
+      loadingPlane.style.setProperty('--loading-duration', loadingDuration + 'ms');
+      
+      // Start loading
+      setTimeout(() => {
+        // Start logo animation to header position
+        loadingLogo.classList.add('animating');
+        
+        // Hide loading screen with 0.5s fade during animation
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+        }, 700); // Hide loading screen 0.5s before animation completes
+        
+        // Show main content after animation completes
+        setTimeout(() => {
+          mainContent.classList.add('visible');
+          aiDisclaimerOverlay.classList.add('visible');
+          
+          // Show the header logo after the animated logo reaches its position
+          setTimeout(() => {
+            headerLogo.classList.add('visible');
+            // Hide the loading logo with fade effect after header logo appears
+            setTimeout(() => {
+              loadingLogo.classList.add('fade-out');
+            }, 200);
+          }, 300);
+        }, 1200); // Match the logo animation duration
+      }, loadingDuration);
+    });
+  </script>
+</body>
+</html>
