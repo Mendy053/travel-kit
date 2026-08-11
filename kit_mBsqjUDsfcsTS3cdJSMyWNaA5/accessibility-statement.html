@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>תודה שנסעתם עם H.O Travel</title>
+  <title>הצהרת נגישות | H.O Travel</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
@@ -12,12 +12,12 @@
       direction: rtl;
     }
     .logo-circle {
-      width: 110px;
-      height: 110px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
       background-color: #A89B73;
       padding: 4px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
     .logo-circle img {
       width: 100%;
@@ -88,7 +88,7 @@
     }
   </style>
 </head>
-<body class="bg-blue-50 text-gray-800 antialiased min-h-screen flex items-center justify-center p-6">
+<body class="bg-blue-50 text-gray-800 antialiased">
   <!-- Accessibility Toolbar (IS 5568 / WCAG 2.1 AA) -->
   <button id="a11y-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="a11y-panel" aria-label="תפריט נגישות" title="תפריט נגישות">♿</button>
   <div id="a11y-panel" role="dialog" aria-label="אפשרויות נגישות">
@@ -100,7 +100,7 @@
     <button class="a11y-btn" id="a11y-links" type="button" aria-pressed="false">🔗 הדגשת קישורים</button>
     <button class="a11y-btn" id="a11y-motion" type="button" aria-pressed="false">⏸ עצירת אנימציות</button>
     <button class="a11y-btn" id="a11y-reset" type="button" aria-pressed="false">↺ איפוס הגדרות</button>
-    <a href="/kit_K6cMERPmKLO01BFilPtgB7TjA/accessibility-statement.html" class="a11y-btn a11y-statement-link">📄 הצהרת נגישות</a>
+    <a href="accessibility-statement.html" class="a11y-btn a11y-statement-link">📄 הצהרת נגישות</a>
   </div>
   <script>
   (function() {
@@ -205,15 +205,58 @@
   </script>
   <!-- End Accessibility Toolbar -->
 
-  <div class="max-w-md w-full bg-white rounded-2xl shadow-lg p-8 text-center">
-    <div class="logo-circle mx-auto mb-6">
-      <img src="/logo.jpg" alt="H.O Travel">
+  <main class="max-w-3xl mx-auto p-6 md:p-10">
+    <div class="flex items-center gap-4 mb-8">
+      <div class="logo-circle">
+        <img src="logo.jpg" alt="H.O Travel">
+      </div>
+      <h1 class="text-3xl font-bold text-cyan-700">הצהרת נגישות</h1>
     </div>
-    <h1 class="text-3xl font-bold text-cyan-700 mb-3">תודה שנסעתם איתנו! ✈️</h1>
-    <p class="text-lg mb-2">מקווים שנהניתם מהטיול ושצברתם חוויות..</p>
-    <p class="text-gray-600 mb-4">קיט הטיול הזה כבר אינו זמין. לתיאום הטיול הבא שלכם או לכל שאלה, נשמח שתפנו אלינו.</p>
-    <div class="mt-6 text-gray-700 font-semibold">הודיה אוריאן • 054-8792582</div>
-    <div class="mt-4 text-sm"><a href="/kit_K6cMERPmKLO01BFilPtgB7TjA/accessibility-statement.html" class="underline text-cyan-700">הצהרת נגישות</a></div>
-  </div>
+
+    <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 space-y-6 text-lg leading-relaxed">
+      <section>
+        <h2 class="text-xl font-bold text-cyan-700 mb-2">כללי</h2>
+        <p>הודיה אוריאן טרוול (H.O Travel) רואה חשיבות רבה במתן שירות שוויוני ונגיש לכלל לקוחותיה, לרבות אנשים עם מוגבלות. אתר זה (קיטי הטיול המקוונים) פועל לעמידה בדרישות תקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע"ג-2013, ובהתאם לתקן הישראלי ת"י 5568 המבוסס על הנחיות WCAG 2.1 ברמת AA.</p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-cyan-700 mb-2">אמצעי הנגישות שהוטמעו באתר</h2>
+        <ul class="list-disc pr-6 space-y-1">
+          <li>תפריט נגישות צף (סמל ♿) הזמין בכל עמוד, המאפשר:</li>
+          <ul class="list-disc pr-6 space-y-1 mt-1">
+            <li>הגדלה והקטנה של גודל הטקסט</li>
+            <li>מעבר לתצוגת ניגודיות גבוהה (שחור-לבן)</li>
+            <li>הדגשת קישורים בעמוד</li>
+            <li>עצירת אנימציות ומעברים</li>
+            <li>איפוס כלל ההתאמות בלחיצה אחת</li>
+          </ul>
+          <li>תמיכה בניווט וניתוב תפריט הנגישות באמצעות מקלדת (כולל סגירה באמצעות מקש Escape)</li>
+          <li>תגיות ARIA ותיאורים מילוליים לרכיבי הממשק המרכזיים</li>
+          <li>מבנה עמוד סמנטי עם כותרות היררכיות</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-cyan-700 mb-2">הגבלות ידועות</h2>
+        <p>חרף מאמצינו, ייתכן שיתגלו חלקים באתר שטרם הונגשו במלואם. אנו ממשיכים לפעול לשיפור הנגישות באופן שוטף.</p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-cyan-700 mb-2">פנייה בנושא נגישות</h2>
+        <p>נתקלתם בבעיית נגישות באתר, או שיש לכם הצעות לשיפור? נשמח שתפנו אלינו:</p>
+        <ul class="list-none space-y-1 mt-2">
+          <li><strong>רכזת נגישות:</strong> הודיה אוריאן</li>
+          <li><strong>טלפון:</strong> <span dir="ltr">054-8792582</span></li>
+          <li><strong>דוא"ל:</strong> hodaya869@gmail.com</li>
+          <li><strong>WhatsApp:</strong> <a href="https://wa.me/972525923563" target="_blank" class="text-blue-700 hover:underline">972525923563+</a></li>
+        </ul>
+        <p class="mt-2">אנו נעשה כמיטב יכולתנו לטפל בכל פנייה בהקדם האפשרי.</p>
+      </section>
+
+      <section>
+        <p class="text-sm text-gray-500">הצהרת נגישות זו עודכנה לאחרונה בתאריך 11/08/2026.</p>
+      </section>
+    </div>
+  </main>
 </body>
 </html>
