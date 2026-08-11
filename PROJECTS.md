@@ -2,31 +2,31 @@
 
 מסמך זה מרכז את כל קיטי הטיול (תיקיות הלקוחות) בריפו, לפי סדר יצירה.
 
-| # | קוד תיקייה | לקוח | תיאור קצר | בתוקף עד |
-|---|---|---|---|---|
-| 1 | `kit_D422BRQ4djGiofHm7B3UG0ZvP` | שמואל ושרה אדרעי | תאילנד 2025 - בנגקוק, קוסמוי וקופנגן | 23/08/2025 |
-| 2 | `kit_VB55MpT3JwExUNvzk5kXeDX7E` | יותם דוד ויהודה בלס | תאילנד 2026 - בנגקוק, קוסמוי וקופנגן | 04/02/2026 |
-| 3 | `kit_Cud5p9lStXETlMnyiOjCT52CL` | יותם דוד ויהודה בלס | תאילנד 2026 - עותק של פרויקט 2, שימש כתבנית לפרויקט 4 | 04/02/2026 |
-| 4 | `kit_YSBn978vJhsDAKNqjbx4uPvDs` | שלומי יצחק דוד | אוסטריה 2026 - זלצבורג וטירול (שלדמינג) | 09/08/2026 |
-| 5 | `kit_TUGPICKWf4ncBLzBIKnfOg4Nf` | אוראן הודיה ויהונתן נחום | מונטנגרו 2026 - בודווה | 15/08/2026 |
-| 6 | `kit_mBsqjUDsfcsTS3cdJSMyWNaA5` | משפחת גברילוב (Janet, Doniel, Lia) | יוון 2026 - אתונה, כולל טיולי יום לאגינה ולאגם וווליאגמני | 09/08/2026 |
-| 7 | `kit_ziXAOt2AEZDk33q4WBcldode1` | יהודית מלכה וינר ומוריה סופיר | בודפשט 2026 - כולל הדרכה מקומית של משפחת בנאי | 29/08/2026 |
-| 8 | `kit_K6cMERPmKLO01BFilPtgB7TjA` | תמר לוי לדקני ושרה לוי לדקני | בודפשט 2026 - עותק של פרויקט 7, מלון 7seasons Apartments | 15/08/2026 |
-| 9 | `kit_koXSCyp8vuU1HlNpra2bbCys2` | משפחת שלו (יהודית, מאיר ותינוקם דוד ישי) | יוון 2026 - חלקידה (Chalkida, אי אויה), מלון Brown Beach Chalkida Resort - ריזורט כשר, עם עצירה באתונה בהלוך/חזור | 11/09/2026 |
+| # | קוד תיקייה | לקוח | תיאור קצר | בתוקף עד | קישור |
+|---|---|---|---|---|---|
+| 1 | `kit_D422BRQ4djGiofHm7B3UG0ZvP` | שמואל ושרה אדרעי | תאילנד 2025 - בנגקוק, קוסמוי וקופנגן | 23/08/2025 | https://ho-travel.netlify.app/kit_D422BRQ4djGiofHm7B3UG0ZvP/Index.html |
+| 2 | `kit_VB55MpT3JwExUNvzk5kXeDX7E` | יותם דוד ויהודה בלס | תאילנד 2026 - בנגקוק, קוסמוי וקופנגן | 04/02/2026 | https://ho-travel.netlify.app/kit_VB55MpT3JwExUNvzk5kXeDX7E/Index.html |
+| 3 | `kit_Cud5p9lStXETlMnyiOjCT52CL` | יותם דוד ויהודה בלס | תאילנד 2026 - עותק של פרויקט 2, שימש כתבנית לפרויקט 4 | 04/02/2026 | https://ho-travel.netlify.app/kit_Cud5p9lStXETlMnyiOjCT52CL/Index.html |
+| 4 | `kit_YSBn978vJhsDAKNqjbx4uPvDs` | שלומי יצחק דוד | אוסטריה 2026 - זלצבורג וטירול (שלדמינג) | 09/08/2026 | https://ho-travel.netlify.app/kit_YSBn978vJhsDAKNqjbx4uPvDs/Index.html |
+| 5 | `kit_TUGPICKWf4ncBLzBIKnfOg4Nf` | אוראן הודיה ויהונתן נחום | מונטנגרו 2026 - בודווה | 15/08/2026 | https://ho-travel.netlify.app/kit_TUGPICKWf4ncBLzBIKnfOg4Nf/Index.html |
+| 6 | `kit_mBsqjUDsfcsTS3cdJSMyWNaA5` | משפחת גברילוב (Janet, Doniel, Lia) | יוון 2026 - אתונה, כולל טיולי יום לאגינה ולאגם וווליאגמני | 09/08/2026 | https://ho-travel.netlify.app/kit_mBsqjUDsfcsTS3cdJSMyWNaA5/Index.html |
+| 7 | `kit_ziXAOt2AEZDk33q4WBcldode1` | יהודית מלכה וינר ומוריה סופיר | בודפשט 2026 - כולל הדרכה מקומית של משפחת בנאי | 29/08/2026 | https://ho-travel.netlify.app/kit_ziXAOt2AEZDk33q4WBcldode1/Index.html |
+| 8 | `kit_K6cMERPmKLO01BFilPtgB7TjA` | תמר לוי לדקני ושרה לוי לדקני | בודפשט 2026 - עותק של פרויקט 7, מלון 7seasons Apartments | 15/08/2026 | https://ho-travel.netlify.app/kit_K6cMERPmKLO01BFilPtgB7TjA/Index.html |
+| 9 | `kit_koXSCyp8vuU1HlNpra2bbCys2` | משפחת שלו (יהודית, מאיר ותינוקם דוד ישי) | יוון 2026 - חלקידה (Chalkida, אי אויה), מלון Brown Beach Chalkida Resort - ריזורט כשר, עם עצירה באתונה בהלוך/חזור | 11/09/2026 | https://ho-travel.netlify.app/kit_koXSCyp8vuU1HlNpra2bbCys2/Index.html |
 
 ## תהליך עבודה
 
 - כל תיקייה היא קיט טיול עצמאי (`Index.html`, `bkg.jpg`, `logo.jpg`, `files/`, `scripts/`) לפי אותה תבנית עיצובית.
 - **מעכשיו והלאה**, בעת יצירת קיט חדש - יוצרים אותו כעותק של **התיקייה האחרונה שנוצרה** (הרשומה האחרונה בטבלה למעלה), אלא אם צוין אחרת במפורש.
 - קוד התיקייה: `kit_` + מחרוזת אקראית בת 25 תווים (אותיות ומספרים בלבד). התחילית `kit_` היא חובה - היא מה שמאפשר גישה לתיקייה דרך אתר ה-Netyfy המאוחד (ראו סעיף הבא).
-- בכל יצירת פרויקט חדש יש להוסיף שורה לטבלה למעלה: מספר סידורי, קוד התיקייה, שם הלקוח, תיאור קצר של היעד/תאריכים, ותאריך התוקף (ראו "מנגנון תפוגה" למטה).
+- בכל יצירת פרויקט חדש יש להוסיף שורה לטבלה למעלה: מספר סידורי, קוד התיקייה, שם הלקוח, תיאור קצר של היעד/תאריכים, תאריך התוקף (ראו "מנגנון תפוגה" למטה), והקישור לקיט (`https://ho-travel.netlify.app/kit_<קוד>/Index.html`).
 
 ## אחסון (Netlify)
 
 - פרויקטים 1-8 פורסמו במקור כל אחד כאתר Netlify נפרד - אלה נשארים כפי שהם, בלי שינוי.
 - **מעכשיו והלאה**: אתר Netlify אחד מחובר לריפו הזה (ענף `main`), עם `netlify.toml` בשורש. כל תיקיית קיט חדשה נגישה אוטומטית ברגע שהיא נדחפת ל-main - אין צורך ביצירת פרויקט Netlify חדש בכל פעם.
 - **בקרת גישה**: `netlify.toml` מגדיר רשימת היתר (allow-list) - רק נתיבים שמתחילים ב-`/kit_` וכן `/thank-you.html`, `/404.html`, `/logo.jpg` נגישים. כל בקשה אחרת (כולל לקבצים אמיתיים כמו `PROJECTS.md` או תיקיית `app/`) מנותבת בכוח (`force = true`) לעמוד `404.html`.
-- קישור לדוגמה: `https://<שם-האתר>.netlify.app/kit_<קוד>/Index.html`
+- שם האתר המאוחד: `ho-travel.netlify.app`. קישור לדוגמה: `https://ho-travel.netlify.app/kit_<קוד>/Index.html`
 - חשוב: יש לשמור על ה-`I` הגדולה במילה `Index.html` בקישורים שנשלחים ללקוחות (השרת רגיש לרישיות).
 
 ## מנגנון תפוגה אוטומטית
