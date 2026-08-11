@@ -642,6 +642,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      const KIT_EXPIRY = new Date('2026-02-04T00:00:00+03:00');
       const loadingScreen = document.getElementById('loadingScreen');
       const loadingLogo = document.getElementById('loadingLogo');
       const loadingPlane = document.getElementById('loadingPlane');
@@ -672,6 +673,10 @@
         
         // Show main content after animation completes
         setTimeout(() => {
+          if (new Date() >= KIT_EXPIRY) {
+            window.location.replace('../thank-you.html');
+            return;
+          }
           mainContent.classList.add('visible');
           aiDisclaimerOverlay.classList.add('visible');
           

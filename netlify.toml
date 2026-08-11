@@ -1,2 +1,32 @@
 [build]
   publish = "."
+
+# Allow-list: only kit_* folders and the two shared utility pages are
+# publicly reachable. Everything else (including real files like
+# PROJECTS.md, netlify.toml, app/*) force-redirects to 404.html.
+
+[[redirects]]
+  from = "/kit_*"
+  to = "/kit_:splat"
+  status = 200
+
+[[redirects]]
+  from = "/thank-you.html"
+  to = "/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/404.html"
+  to = "/404.html"
+  status = 200
+
+[[redirects]]
+  from = "/logo.jpg"
+  to = "/logo.jpg"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+  force = true
