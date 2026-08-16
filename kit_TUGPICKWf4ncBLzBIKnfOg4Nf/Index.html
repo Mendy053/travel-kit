@@ -16,6 +16,15 @@
       font-family: 'Varela Round', sans-serif;
       /* Default text direction for Hebrew */
       direction: rtl;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+    /* Selection allowed only on titles/names/addresses - not on descriptive body text */
+    h1, h2, h3, h4, .font-bold, .font-semibold, .copyable {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      user-select: text;
     }
     
     /* Loading Screen Styles */
