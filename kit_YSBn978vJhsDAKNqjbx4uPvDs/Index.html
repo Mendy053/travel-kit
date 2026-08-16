@@ -313,6 +313,47 @@
     .ai-disclaimer-button:hover {
       background-color: #645d45;
     }
+
+    /* Copy-to-clipboard fields */
+    .copyable {
+      cursor: pointer;
+      border-bottom: 1px dashed #0e7490;
+      border-radius: 3px;
+      transition: background-color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .copyable:hover, .copyable:focus {
+      background-color: rgba(14, 116, 144, 0.1);
+      outline: none;
+    }
+    .copyable:active {
+      background-color: rgba(14, 116, 144, 0.2);
+    }
+    .copyable svg {
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+    #copyToast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1f2937;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 10060;
+    }
+    #copyToast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
   </style>
   <style id="a11y-styles">
     #a11y-toggle {
@@ -493,6 +534,52 @@
   </script>
   <!-- End Accessibility Toolbar -->
 
+  <!-- Copy-to-clipboard for addresses / PNR / flight numbers etc. -->
+  <div id="copyToast" role="status" aria-live="polite"></div>
+  <script>
+  (function() {
+    var toast = document.getElementById('copyToast');
+    var toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2000);
+    }
+    function copyValue(el) {
+      var text = el.getAttribute('data-copy') || el.textContent.trim();
+      function done(ok) {
+        showToast(ok ? 'הועתק ללוח: ' + text : 'לא ניתן להעתיק');
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() { done(true); }, function() { done(false); });
+      } else {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          done(true);
+        } catch (e) {
+          done(false);
+        }
+      }
+    }
+    document.addEventListener('click', function(e) {
+      var el = e.target.closest('.copyable');
+      if (el) copyValue(el);
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var el = e.target.closest('.copyable');
+      if (el) { e.preventDefault(); copyValue(el); }
+    });
+  })();
+  </script>
 
   <!-- Loading Screen -->
   <div class="loading-screen" id="loadingScreen">
@@ -560,7 +647,7 @@
               <tr class="border-t">
                 <td class="px-3 py-2">יציאה</td>
                 <td class="px-3 py-2">El Al</td>
-                <td class="px-3 py-2">LY5193</td>
+                <td class="px-3 py-2"><span class="copyable" role="button" tabindex="0" aria-label="העתק מספר טיסה ללוח">LY5193<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></td>
                 <td class="px-3 py-2">03/08/2026</td>
                 <td class="px-3 py-2">TLV (Ben Gurion)</td>
                 <td class="px-3 py-2">SZG (W. A. Mozart Airport, זלצבורג)</td>
@@ -570,7 +657,7 @@
               <tr class="border-t">
                 <td class="px-3 py-2">חזרה</td>
                 <td class="px-3 py-2">El Al</td>
-                <td class="px-3 py-2">LY5194</td>
+                <td class="px-3 py-2"><span class="copyable" role="button" tabindex="0" aria-label="העתק מספר טיסה ללוח">LY5194<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></td>
                 <td class="px-3 py-2">07/08/2026</td>
                 <td class="px-3 py-2">SZG (W. A. Mozart Airport)</td>
                 <td class="px-3 py-2">TLV (Ben Gurion, Terminal 3)</td>
@@ -584,7 +671,7 @@
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="p-3 bg-gray-50 rounded-lg">
             <div class="font-semibold">PNR</div>
-            <div class="text-sm text-gray-600">5650804 (יציאה), 8B8SK4 (חזרה)</div>
+            <div class="text-sm text-gray-600"><span class="copyable" role="button" tabindex="0" aria-label="העתק PNR ללוח">5650804<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> (יציאה), <span class="copyable" role="button" tabindex="0" aria-label="העתק PNR ללוח">8B8SK4<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> (חזרה)</div>
           </div>
           <div class="p-3 bg-gray-50 rounded-lg">
             <div class="font-semibold">תעודת טיסה (eTicket)</div>
@@ -617,7 +704,7 @@
           <div class="font-semibold">Ferienwelt Kesselgrub</div>
           <div class="text-sm text-gray-600 mt-1">חדר: Large Twin Bed Single Room (Seelen - Balance 1)</div>
           <div class="text-sm text-gray-600 mt-1">כניסה: 03/08/2026 | יציאה: 04/08/2026 (לילה אחד) | בסיס אירוח: חצי פנסיון</div>
-          <div class="text-sm text-gray-600 mt-1">כתובת: Lackengasse 1 | טל': 43-6452-5232 | info@kesselgrub.at</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Lackengasse 1<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">43-6452-5232<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | <span class="copyable" role="button" tabindex="0" aria-label="העתק אימייל ללוח">info@kesselgrub.at<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
           <div class="text-sm text-gray-600 mt-1">ביטול חינם עד 28/07/2026</div>
           <a href="files/844905-he.pdf" target="_blank" class="text-blue-700 hover:underline mt-2 inline-block">פתח קובץ הזמנה</a>
         </li>
@@ -627,7 +714,7 @@
           <div class="font-semibold">Landhotel Laudersbach</div>
           <div class="text-sm text-gray-600 mt-1">חדר: Comfort Plus Double Room</div>
           <div class="text-sm text-gray-600 mt-1">כניסה: 04/08/2026 | יציאה: 07/08/2026 (3 לילות) | בסיס אירוח: לינה וארוחת בוקר</div>
-          <div class="text-sm text-gray-600 mt-1">כתובת: Sinnhub 1 | טל': (43) 64526075 | info@laudersbach.at</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Sinnhub 1<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">(43) 64526075<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | <span class="copyable" role="button" tabindex="0" aria-label="העתק אימייל ללוח">info@laudersbach.at<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
           <div class="text-sm text-gray-600 mt-1"><strong>שימו לב:</strong> הזמנה לא ניתנת לביטול</div>
           <a href="files/844952-he.pdf" target="_blank" class="text-blue-700 hover:underline mt-2 inline-block">פתח קובץ הזמנה</a>
         </li>
