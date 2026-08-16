@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="חלקידה 2026" />
+  <meta property="og:description" content="חלקידה, יוון - איילה ולורין" />
+  <meta property="og:image" content="bkg.jpg" />
+  <title>קיט טיול | חלקידה, יוון 2026 - איילה ולורין</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Google Fonts - Varela Round for Hebrew */
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+    body {
+      font-family: 'Varela Round', sans-serif;
+      /* Default text direction for Hebrew */
+      direction: rtl;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+    /* Selection allowed only on titles/names/addresses - not on descriptive body text */
+    h1, h2, h3, h4, strong, .font-bold, .font-semibold, .copyable {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      user-select: text;
+    }
+    
+    /* Loading Screen Styles */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+    
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .loading-logo {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 3px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      z-index: 10000;
+      transition: all 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+    
+    .loading-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    
+    .loading-logo.animating {
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    
+    .loading-logo.fade-out {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+    
+    .loading-bar-container {
+      width: 200px;
+      height: 4px;
+      background-color: #e0e0e0;
+      border-radius: 2px;
+      overflow: visible;
+      margin-bottom: 30px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    
+    .loading-bar {
+      height: 100%;
+      background: transparent;
+      border-radius: 2px;
+      width: 100%;
+    }
+    
+    .loading-plane {
+      position: absolute;
+      top: -8px;
+      right: 200px;
+      color: #A89B73;
+      font-size: 16px;
+      animation: plane-move var(--loading-duration, 3s) linear forwards;
+    }
+    
+    @keyframes plane-move {
+      from {
+        right: 200px;
+      }
+      to {
+        right: -5px;
+      }
+    }
+    
+    .loading-text {
+      color: #666;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    /* Main content - hidden initially */
+    .main-content {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
+    }
+    
+    .main-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Custom styles for the header background image */
+    .header-bg {
+      background-image: url('bkg.jpg');
+      background-position: center center;
+      background-size: cover;
+      position: relative;
+    }
+    .header-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65));
+      border-radius: inherit;
+    }
+    /* Logo styling */
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 200px;
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
+    }
+    
+    .logo-container.visible {
+      opacity: 1;
+    }
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    /* Contact info styling */
+    .contact-info {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(0,0,0,0.45);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    /* Keyframe animation for fade-in effect */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.7s ease-in-out;
+    }
+    /* Custom styles from the user's provided HTML */
+    .tag {
+      display: inline-block;
+      background: #e1f5fe;
+      color: #0277bd;
+      padding: 0.2em 0.6em;
+      border-radius: 6px;
+      font-size: 0.85em;
+      margin-right: 0.5em; /* Adjusted for RTL */
+    }
+    a {
+      color: #007b9e;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h1{
+      color: white;
+  -webkit-text-stroke: 0.5px #A89B73;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8em;
+        color: white;
+  -webkit-text-stroke: 0.5px #A89B73;
+      }
+      main {
+        padding: 1em;
+      }
+      .logo-container {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .contact-info {
+        font-size: 12px;
+        bottom: 15px;
+        right: 15px;
+        padding: 4px 12px;
+      }
+      .loading-logo {
+        width: 120px;
+        height: 120px;
+        top: 35%;
+      }
+      .loading-logo.animating {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .loading-content {
+        top: 50%;
+        gap: 8px;
+      }
+    }
+
+    /* AI Disclaimer Modal */
+    .ai-disclaimer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.55);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+    .ai-disclaimer-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .ai-disclaimer-box {
+      background: white;
+      border-radius: 16px;
+      padding: 28px 24px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .ai-disclaimer-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .ai-disclaimer-text {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .ai-disclaimer-button {
+      background-color: #756c50;
+      color: white;
+      border: none;
+      padding: 10px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: 'Varela Round', sans-serif;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .ai-disclaimer-button:hover {
+      background-color: #645d45;
+    }
+
+    /* Copy-to-clipboard fields */
+    .copyable {
+      cursor: pointer;
+      border-bottom: 1px dashed #0e7490;
+      border-radius: 3px;
+      transition: background-color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .copyable:hover, .copyable:focus {
+      background-color: rgba(14, 116, 144, 0.1);
+      outline: none;
+    }
+    .copyable:active {
+      background-color: rgba(14, 116, 144, 0.2);
+    }
+    .copyable svg {
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+    #copyToast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1f2937;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 10060;
+    }
+    #copyToast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Discourage casual saving/copying of images */
+    img {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      user-drag: none;
+      -webkit-touch-callout: none;
+    }
+  </style>
+  <style id="a11y-styles">
+    #a11y-toggle {
+      position: fixed; bottom: 16px; left: 16px; z-index: 10050;
+      width: 52px; height: 52px; border-radius: 50%;
+      background-color: #756c50; color: #fff; border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      padding: 0;
+    }
+    #a11y-toggle:hover, #a11y-toggle:focus { background-color: #645d45; outline: 3px solid #0e7490; outline-offset: 2px; }
+    #a11y-panel {
+      position: fixed; bottom: 78px; left: 16px; z-index: 10050;
+      width: 280px; max-width: calc(100vw - 32px);
+      background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      padding: 18px 16px 16px; display: none; direction: rtl;
+      font-family: 'Varela Round', sans-serif; color: #1f2937;
+    }
+    #a11y-panel.open { display: block; }
+    #a11y-panel h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #0e7490; }
+    .a11y-btn {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      text-align: right; padding: 10px 12px; margin-bottom: 8px;
+      background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px;
+      cursor: pointer; font-size: 15px; color: #1f2937; font-family: inherit;
+    }
+    .a11y-btn:hover, .a11y-btn:focus { background: #e5e7eb; outline: 2px solid #0e7490; }
+    .a11y-btn[aria-pressed="true"] { background: #5c5540; color: #fff; border-color: #5c5540; }
+    .a11y-btn[aria-pressed="true"]:hover, .a11y-btn[aria-pressed="true"]:focus { background: #46402f; }
+    #a11y-close {
+      position: absolute; top: 10px; left: 10px; background: none; border: none;
+      font-size: 18px; line-height: 1; cursor: pointer; color: #6b7280; padding: 6px;
+    }
+    #a11y-close:hover, #a11y-close:focus { color: #1f2937; outline: 2px solid #0e7490; }
+    .a11y-statement-link { text-align: center; justify-content: center; text-decoration: none !important; }
+
+    html.a11y-fs-2 { font-size: 112.5%; }
+    html.a11y-fs-3 { font-size: 125%; }
+    html.a11y-fs-4 { font-size: 137.5%; }
+
+    html.a11y-contrast body,
+    html.a11y-contrast body :not(#a11y-toggle):not(#a11y-toggle *):not(#a11y-panel):not(#a11y-panel *) {
+      background-color: #000 !important;
+      background-image: none !important;
+      color: #fff !important;
+      border-color: #555 !important;
+    }
+    html.a11y-contrast body a:not(#a11y-panel a) { color: #ffeb3b !important; }
+    html.a11y-contrast body img:not(#a11y-panel img) { filter: grayscale(1) contrast(1.2); }
+
+    html.a11y-links a:not(#a11y-panel a) {
+      text-decoration: underline !important;
+      font-weight: bold !important;
+      background-color: #fff59d !important;
+      color: #000 !important;
+    }
+
+    html.a11y-no-motion *, html.a11y-no-motion *::before, html.a11y-no-motion *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  </style>
+</head>
+<body class="bg-blue-50 text-gray-800 antialiased">
+  <!-- Accessibility Toolbar (IS 5568 / WCAG 2.1 AA) -->
+  <button id="a11y-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="a11y-panel" aria-label="תפריט נגישות" title="תפריט נגישות"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="7.2" r="1.9"/><path d="M12 9.6c-2.7 0-5.9.6-5.9 2.2 0 .6.5 1 1.1 1 1-.1 2.3-.5 3.3-.6l-.6 2.3-3 3.4c-.4.5-.4 1.2.1 1.6.5.4 1.2.4 1.6-.1l2.4-2.8h1.9l2.4 2.8c.4.5 1.1.5 1.6.1.5-.4.5-1.1.1-1.6l-3-3.4-.6-2.3c1 .1 2.3.5 3.3.6.6 0 1.1-.4 1.1-1 0-1.6-3.2-2.2-5.9-2.2z"/></svg></button>
+  <div id="a11y-panel" role="dialog" aria-label="אפשרויות נגישות">
+    <button id="a11y-close" type="button" aria-label="סגירת תפריט נגישות">✕</button>
+    <h2>נגישות</h2>
+    <button class="a11y-btn" id="a11y-inc-font" type="button" aria-pressed="false">א+ הגדלת טקסט</button>
+    <button class="a11y-btn" id="a11y-dec-font" type="button" aria-pressed="false">א- הקטנת טקסט</button>
+    <button class="a11y-btn" id="a11y-contrast" type="button" aria-pressed="false">◐ ניגודיות גבוהה</button>
+    <button class="a11y-btn" id="a11y-links" type="button" aria-pressed="false">🔗 הדגשת קישורים</button>
+    <button class="a11y-btn" id="a11y-motion" type="button" aria-pressed="false">⏸ עצירת אנימציות</button>
+    <button class="a11y-btn" id="a11y-reset" type="button" aria-pressed="false">↺ איפוס הגדרות</button>
+    <a href="accessibility-statement.html" class="a11y-btn a11y-statement-link">📄 הצהרת נגישות</a>
+  </div>
+  <script>
+  (function() {
+    var html = document.documentElement;
+    var fsLevel = 1;
+    var STORAGE_KEY = 'a11yPrefs';
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          fsLevel: fsLevel,
+          contrast: html.classList.contains('a11y-contrast'),
+          links: html.classList.contains('a11y-links'),
+          motion: html.classList.contains('a11y-no-motion')
+        }));
+      } catch (e) {}
+    }
+
+    function applyFontSize() {
+      html.classList.remove('a11y-fs-2', 'a11y-fs-3', 'a11y-fs-4');
+      if (fsLevel > 1) html.classList.add('a11y-fs-' + fsLevel);
+    }
+
+    function updatePressed(id, state) {
+      var btn = document.getElementById(id);
+      if (btn) btn.setAttribute('aria-pressed', state ? 'true' : 'false');
+    }
+
+    function loadState() {
+      try {
+        var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        fsLevel = saved.fsLevel || 1;
+        applyFontSize();
+        if (saved.contrast) { html.classList.add('a11y-contrast'); updatePressed('a11y-contrast', true); }
+        if (saved.links) { html.classList.add('a11y-links'); updatePressed('a11y-links', true); }
+        if (saved.motion) { html.classList.add('a11y-no-motion'); updatePressed('a11y-motion', true); }
+      } catch (e) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var toggleBtn = document.getElementById('a11y-toggle');
+      var panel = document.getElementById('a11y-panel');
+      var closeBtn = document.getElementById('a11y-close');
+
+      loadState();
+
+      function openPanel() {
+        panel.classList.add('open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        closeBtn.focus();
+      }
+      function closePanel() {
+        panel.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.focus();
+      }
+
+      toggleBtn.addEventListener('click', function() {
+        if (panel.classList.contains('open')) closePanel(); else openPanel();
+      });
+      closeBtn.addEventListener('click', closePanel);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+      });
+
+      document.getElementById('a11y-inc-font').addEventListener('click', function() {
+        fsLevel = Math.min(fsLevel + 1, 4);
+        applyFontSize();
+        saveState();
+      });
+      document.getElementById('a11y-dec-font').addEventListener('click', function() {
+        fsLevel = Math.max(fsLevel - 1, 1);
+        applyFontSize();
+        saveState();
+      });
+      document.getElementById('a11y-contrast').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-contrast');
+        updatePressed('a11y-contrast', active);
+        saveState();
+      });
+      document.getElementById('a11y-links').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-links');
+        updatePressed('a11y-links', active);
+        saveState();
+      });
+      document.getElementById('a11y-motion').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-no-motion');
+        updatePressed('a11y-motion', active);
+        saveState();
+      });
+      document.getElementById('a11y-reset').addEventListener('click', function() {
+        fsLevel = 1;
+        applyFontSize();
+        html.classList.remove('a11y-contrast', 'a11y-links', 'a11y-no-motion');
+        updatePressed('a11y-contrast', false);
+        updatePressed('a11y-links', false);
+        updatePressed('a11y-motion', false);
+        saveState();
+      });
+    });
+  })();
+  </script>
+  <!-- End Accessibility Toolbar -->
+
+  <!-- Copy-to-clipboard for addresses / PNR / flight numbers etc. -->
+  <div id="copyToast" role="status" aria-live="polite"></div>
+  <script>
+  (function() {
+    var toast = document.getElementById('copyToast');
+    var toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2000);
+    }
+    function copyValue(el) {
+      var text = el.getAttribute('data-copy') || el.textContent.trim();
+      function done(ok) {
+        showToast(ok ? 'הועתק ללוח: ' + text : 'לא ניתן להעתיק');
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() { done(true); }, function() { done(false); });
+      } else {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          done(true);
+        } catch (e) {
+          done(false);
+        }
+      }
+    }
+    document.addEventListener('click', function(e) {
+      var el = e.target.closest('.copyable');
+      if (el) copyValue(el);
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var el = e.target.closest('.copyable');
+      if (el) { e.preventDefault(); copyValue(el); }
+    });
+
+    // Discourage casual saving/copying of images
+    document.addEventListener('contextmenu', function(e) {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    });
+    document.addEventListener('dragstart', function(e) {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    });
+  })();
+  </script>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <div class="loading-bar-container">
+        <div class="loading-bar" id="loadingBar"></div>
+        <div class="loading-plane" id="loadingPlane">
+          <i class="fas fa-plane"></i>
+        </div>
+      </div>
+      <div class="loading-text">תכינו דרכונים...</div>
+    </div>
+  </div>
+
+  <!-- Loading Logo (separate from loading screen) -->
+  <div class="loading-logo" id="loadingLogo">
+    <img src="logo.jpg" alt="לוגו">
+  </div>
+
+  <!-- AI Disclaimer Modal -->
+  <div class="ai-disclaimer-overlay" id="aiDisclaimerOverlay">
+    <div class="ai-disclaimer-box">
+      <div class="ai-disclaimer-icon">⚠️</div>
+      <div class="ai-disclaimer-text">המידע בדף זה הופק בסיוע בינה מלאכותית ועשוי להכיל אי-דיוקים. יש לוודא מול הקבצים המקוריים שהתקבלו בסגירת הטיול, הספקים או H.O Travel.</div>
+      <button class="ai-disclaimer-button" id="aiDisclaimerConfirm">הבנתי</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <header class="header-bg h-72 flex items-center justify-center text-center text-white shadow-lg rounded-b-xl">
+      <div class="logo-container">
+        <img src="logo.jpg" alt="לוגו">
+      </div>
+      <div class="contact-info">
+        הודיה אוריאן • 054-8792582
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold drop-shadow-lg">חלקידה, יוון 2026 </br>איילה ולורין</h1>
+    </header>
+
+    <main class="p-4 md:p-8 max-w-4xl mx-auto">
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">✈️</span> טיסות בינלאומיות
+      </h2>
+      <div class="mb-4">
+        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md font-semibold mb-3"><strong>דרישה:</strong> יש לוודא כי תוקף הדרכון הינו 6 חודשים לפחות ממועד היציאה מהארץ, וכי הדרכון מכיל לפחות דף ריק אחד.</div>
+        <p class="text-lg">פרטי טיסות בינלאומיות:</p>
+        <div class="overflow-x-auto mt-4">
+          <table class="min-w-full text-right text-sm">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="px-3 py-2">קטע</th>
+                <th class="px-3 py-2">חברת תעופה</th>
+                <th class="px-3 py-2">מס' טיסה</th>
+                <th class="px-3 py-2">תאריך</th>
+                <th class="px-3 py-2">מ־</th>
+                <th class="px-3 py-2">ל־</th>
+                <th class="px-3 py-2">המראה</th>
+                <th class="px-3 py-2">נחיתה</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t">
+                <td class="px-3 py-2">יציאה</td>
+                <td class="px-3 py-2">Arkia (ארקיע)</td>
+                <td class="px-3 py-2"><span class="copyable" role="button" tabindex="0" aria-label="העתק מספר טיסה ללוח">IZ211<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></td>
+                <td class="px-3 py-2">06/09/2026 (יום א')</td>
+                <td class="px-3 py-2">TLV (Ben Gurion)</td>
+                <td class="px-3 py-2">ATH (Eleftherios Venizelos, אתונה)</td>
+                <td class="px-3 py-2">07:20</td>
+                <td class="px-3 py-2">09:30</td>
+              </tr>
+              <tr class="border-t">
+                <td class="px-3 py-2">חזרה</td>
+                <td class="px-3 py-2">Arkia (ארקיע)</td>
+                <td class="px-3 py-2"><span class="copyable" role="button" tabindex="0" aria-label="העתק מספר טיסה ללוח">IZ216<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></td>
+                <td class="px-3 py-2">10/09/2026 (יום ה')</td>
+                <td class="px-3 py-2">ATH (Eleftherios Venizelos)</td>
+                <td class="px-3 py-2">TLV (Ben Gurion)</td>
+                <td class="px-3 py-2">00:30</td>
+                <td class="px-3 py-2">02:20</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-3">שימו לב: טיסת החזרה יוצאת ב-00:30 - כלומר, ממש אחרי חצות של ליל 9-10 בספטמבר. חשוב לתכנן את ההגעה לנמל התעופה בהתאם (כ-3 שעות לפני ההמראה, כלומר עוד באותו ערב)</div>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold">PNR</div>
+            <div class="text-sm text-gray-600"><span class="copyable" role="button" tabindex="0" aria-label="העתק PNR ללוח">13714935<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold">כבודה</div>
+            <div class="text-sm text-gray-600">אין מזוודה בהזמנת הטיסה - רק תיק יד 8 ק"ג לכל נוסעת, לכל כיוון</div>
+          </div>
+        </div>
+        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-3">שימו לב: הטיסה אינה כוללת ארוחה מוגשת</div>
+        <div class="mt-3 flex flex-col gap-1">
+          <a href="files/860431-he.pdf" target="_blank" class="text-blue-700 hover:underline">פתח הזמנת טיסות מלאה (860431-he.pdf)</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h3 class="text-2xl font-semibold mb-3">נוסעים וכבודה</h3>
+      <ul class="list-none p-0 space-y-2 text-lg">
+        <li><strong>נוסעים:</strong> Ayala Pozaylov, Lorin Ezon</li>
+        <li><strong>כבודה:</strong> תיק יד 8 ק"ג לכל נוסעת בלבד</li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🏨</span> מלונות
+      </h2>
+      <ul class="list-none p-0 space-y-3 text-lg">
+        <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+          <img src="files/hotel-brown-beach-chalkida.jpg" alt="Brown Beach Chalkida Resort" class="w-full rounded-md shadow-sm mb-3" />
+          <div class="font-semibold">Brown Beach Chalkida Resort, a member of Brown Hotels</div>
+          <div class="text-sm text-gray-600 mt-1">חדר: Classic Garden View Room</div>
+          <div class="text-sm text-gray-600 mt-1">כניסה: 06/09/2026 | יציאה: 09/09/2026 (3 לילות) | בסיס אירוח: חצי פנסיון (ארוחת בוקר וערב) | 2 מבוגרים</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Elenis Alexandrou 30, חלקידה (Chalkida)<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+30 2221440300<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | <span class="copyable" role="button" tabindex="0" aria-label="העתק אימייל ללוח">ACCOUNTING.GREECE@BROWNHOTELS.COM<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          <div class="text-sm text-gray-600 mt-2">איש קשר בהזמנה: Ayala Pozaylov</div>
+          <div class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-2">שימו לב: הזמנה לא ניתנת לביטול</div>
+          <div class="text-sm text-gray-600 mt-1">צ'ק-אין: משעה 15:00 | צ'ק-אאוט: עד 11:00</div>
+          <div class="text-sm text-gray-600 mt-1">עלות משוערת של מיסים ותשלומים נוספים: 30 יורו, לתשלום במקום בהגעה | חניה: כלולה, ללא עלות נוספת</div>
+          <div class="p-2 bg-green-50 border-l-4 border-green-500 text-green-800 rounded-md text-sm font-semibold mt-2">המלון הוא ריזורט כשר מוסמך (בהשגחת הרב ירון חנוכה) - ארוחות הבוקר והערב במסגרת חצי הפנסיון כשרות</div>
+          <a href="files/862162-he.pdf" target="_blank" class="text-blue-700 hover:underline mt-2 inline-block">פתח קובץ הזמנה</a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🚕</span> תחבורה, מטבע וסים - טיפים מעשיים
+      </h2>
+
+      <div class="mb-5">
+        <h3 class="text-xl font-semibold mb-2">מאתונה לחלקידה וחזרה</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li>המלון נמצא בחלקידה (Chalkida), עיר הבירה של האי אויה (Evia) - כשעה נסיעה (כ-75 ק"מ) מנמל התעופה של אתונה</li>
+          <li><strong>רכבת:</strong> Hellenic Train מפעילה רכבת מתחנת הרכבת המרכזית של אתונה (לריסה) לחלקידה כל כשעתיים, נסיעה של כ-1:22 שעות</li>
+          <li><strong>אוטובוס:</strong> KTEL Evias - מהתחנה המרכזית ברחוב Liosion באתונה, נסיעה של כ-1:30 שעות</li>
+          <li><strong>מונית/רכב שכור:</strong> הדרך הנוחה והמהירה ביותר - כשעה נסיעה ישירה מהנמל התעופה</li>
+          <li class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-base font-semibold">שימו לב: Uber פועל ביוון רק באתונה, בסלוניקי, בקורפו ובסנטוריני - <strong>אין Uber בחלקידה</strong>. בעיר עצמה יש להזמין מונית טלפונית/ברחוב</li>
+        </ul>
+      </div>
+
+      <div class="mb-5">
+        <h3 class="text-xl font-semibold mb-2">מטבע</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>המטבע המקומי הוא <strong>יורו (EUR)</strong></li>
+          <li>רוב בתי העסק, המסעדות והמלונות מקבלים כרטיסי אשראי/דביט ללא בעיה</li>
+          <li>מומלץ מזומן קטן לטיפים ורכישות קטנות בשוליים (למשל בדוכני חוף)</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold mb-2">כרטיס סים</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>בנמל התעופה של אתונה - דוכני חברות תקשורת (Cosmote, Vodafone, Nova) לרכישה מיידית</li>
+          <li>אפשרות נוספת - eSIM שמופעל מראש מהארץ: <a href="https://www.airalo.com/" target="_blank" class="text-blue-700 hover:underline">Airalo</a> או <a href="https://www.mobimatter.com/" target="_blank" class="text-blue-700 hover:underline">Mobimatter</a> - נוח במיוחד לטיול קצר כזה, בלי צורך להחליף סים פיזית</li>
+          <li>נדרש דרכון לרישום סים מקומי (חוק מקומי)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">📆</span> לוח זמנים עיקרי
+      </h2>
+      <div class="prose text-lg">
+        <p>להלן לוח הזמנים המבוסס על ההזמנות שהופקו מתוך הקבצים:</p>
+        <ol class="list-decimal pr-6 space-y-2 mt-4">
+          <li><strong>06/09/2026 (יום א'):</strong> טיסה מת"א (TLV) לאתונה (ATH) — Arkia (IZ211), 07:20-09:30. לאחר הנחיתה - נסיעה לחלקידה (כשעה)</li>
+          <li><strong>06/09/2026 - 09/09/2026:</strong> לינה ב-Brown Beach Chalkida Resort, 3 לילות (חצי פנסיון)</li>
+          <li><strong>09/09/2026 (יום ד'):</strong> צ'ק-אאוט מהמלון עד השעה 11:00, נסיעה חזרה לאתונה</li>
+          <li><strong>09/09/2026 - 10/09/2026 (ליל רביעי-חמישי):</strong> טיסת חזרה מאתונה (ATH) לת"א (TLV) — Arkia (IZ216), המראה 00:30 (מיד אחרי חצות), נחיתה 02:20</li>
+        </ol>
+        <p class="mt-4">בין הצ'ק-אאוט מהמלון (11:00 ביום ד') לטיסת החזרה (00:30 בליל ד'-ה') יש כמעט יום שלם פנוי - מומלץ לנצל אותו לסיור באתונה: עצירה באחת המסעדות הכשרות המפורטות בהמשך (רבות מהן ברחוב Ermou), ואם נשאר זמן - גם שופינג ברחוב הקניות Ermou או באחד הקניונים באתונה. כדאי לתכנן מראש גם איפה להשאיר את הכבודה עד שעת ההמראה. למידע מפורט על זמני המראות ונחיתות עיינו במסמכי ה-PDF המצורפים.</p>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">💡</span> אתרים ואטרקציות מומלצות בחלקידה וסביבתה
+      </h2>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🌊 תופעת הגאות המסתורית של אבריפוס</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li>חלקידה מפורסמת בתופעה טבעית ייחודית: במיצר אבריפוס (Evripos), הצר ביותר בעולם, המים משנים כיוון זרימה מספר פעמים ביממה (בממוצע כל כ-6 שעות, ולעיתים אף עד 14 פעמים ביום), ולרגע עוצרים לחלוטין. התופעה מוכרת עוד מימי אריסטו, שכשל בהסברתה</li>
+          <li>המקום הכי נוח לצפות בתופעה - הגשר הישן (Negroponte / Old Euripus Bridge) במרכז העיר, שם אפשר גם לראות דייגים על המעקות</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🏰 אתרים ואטרקציות</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>מבצר קראבבה (Karababa Fortress)</strong> — מבצר עות'מאני מהמאה ה-17 על גבעה מול הגשר הישן, עם נוף פנורמי לעיר ולמיצר</li>
+          <li><strong>הטיילת וחזית הים</strong> — טיילת נעימה עם מסעדות דגים וטברנות מקומיות (שימו לב: לא כשרות)</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🏝️ חופים מומלצים בסביבה</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>חוף אליקס (Alykes Beach)</strong> — כ-10 דקות נסיעה ממרכז חלקידה, חוף חולי עם מים כחולים צלולים ומספר בָּארי חוף פופולריים (Sabbia, Ippokampos, Bora Bora) עם שיזלונגים, מוזיקה ואוכל</li>
+          <li><strong>חוף אסטריה (Asteria Beach)</strong> — חוף חולי שקט עם עצים גבוהים ומים רגועים, מתאים למשפחות עם ילדים קטנים, ובר-מסעדה פופולרי בסמוך</li>
+          <li><strong>חוף דפני (Dafni Beach)</strong> — כ-30 דקות נסיעה צפונית לחלקידה (ליד פוליטיקה), מוקף מים טורקיז ויער אורנים היורד עד לים - יפהפה אך דורש נסיעה קצת יותר ארוכה</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🛍️ קניות</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>רחוב אבנטון (Avanton)</strong> — הרחוב המסחרי הראשי במרכז חלקידה, עם חנויות (כולל Zara ו-Sephora), בתי קפה ומסעדות</li>
+          <li>לחוויית קניות רחבה יותר - מומלץ לנצל את החניה באתונה בדרך להלוך או לחזור (יש שם קניונים גדולים יותר), מכיוון שבחלקידה עצמה מדובר בעיקר בחנויות קטנות ורחוב קניות אחד מרכזי</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold mb-2">🏖️ במלון עצמו</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li>Brown Beach Chalkida הוא ריזורט בסגנון ציקלדי עם בריכה בנוף לים וחוף פרטי</li>
+          <li>יש גם מתחם ספא (חמאם, סאונה וטיפולים) למי שרוצה זמן פינוק</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🍽️</span> אוכל כשר
+      </h2>
+      <div class="p-3 bg-green-50 border-l-4 border-green-500 text-green-800 rounded-md font-semibold mb-4">Brown Beach Chalkida הינו ריזורט כשר מוסמך (בהשגחת הרב ירון חנוכה) - ארוחות הבוקר והערב הכלולות בחצי הפנסיון כשרות ואין צורך לחפש אוכל כשר נוסף בחלקידה עצמה.</div>
+      <p class="text-lg mb-4">מחוץ למלון (לדוגמה בעצירה באתונה ביום ההגעה או ביום החזרה), אוכל כשר זמין בעיקר באתונה:</p>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🥩 בשרי</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>King David Burger</strong> — מסעדת המבורגר בשרית כשרה (בד"ץ "תפארת ישראל", הרב הראל אשר יזדי) — Ermou 78 &amp; Athinas 2, אתונה</li>
+          <li><strong>גוסטיו (Gostijo)</strong> — מסעדה בשרית כשרה למהדרין בסגנון ספרדי-ים תיכוני, בהנהלת חב"ד אתונה — Esopou 10, אתונה</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">☕ חלבי</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>מסעדת שוק (Shuk)</strong> — מסעדה חלבית (עם אופציות צמחוניות) כשרה - חומוס, פלאפל, שקשוקה וסלטים — Ermou 117, אתונה</li>
+          <li><strong>פרקלו (Parakalo)</strong> — בית קפה-ביסטרו חלבי כשר (מהדרין) הסמוך לבית חב"ד — Aisopou 10, פסירי, אתונה</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold mb-2">🥖 מכולת</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>מכולת כשרה</strong> — בבניין מסעדת גוסטיו (Esopou 10, אתונה), מספקים משלוחים לכל יוון וניתן להזמין גם אונליין - שימושי למי שרוצה להצטייד לפני היציאה לחלקידה</li>
+        </ul>
+      </div>
+    </section>
+
+      <section class="bg-white p-6 md:p-8 mt-6 rounded-xl shadow-lg animate-fadeIn">
+        <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+          <span class="ml-2">📎</span> קבצים מצורפים
+        </h2>
+        <ul class="list-none p-0 space-y-3 text-lg">
+          <li>
+            <a href="files/860431-he.pdf" target="_blank" class="text-blue-700 hover:underline">860431-he.pdf</a>
+            <div class="text-sm text-gray-600">אישורי טיסות (Arkia) — TLV↔ATH, 06/09/2026 ו-10/09/2026. PNR: 13714935.</div>
+          </li>
+          <li>
+            <a href="files/862162-he.pdf" target="_blank" class="text-blue-700 hover:underline">862162-he.pdf</a>
+            <div class="text-sm text-gray-600">הזמנת Brown Beach Chalkida Resort — כניסה: 06/09/2026, יציאה: 09/09/2026. הזמנה לא ניתנת לביטול.</div>
+          </li>
+        </ul>
+      </section>
+  </main>
+  </div>
+  <footer class="text-center text-sm text-gray-600 py-6 px-4">
+    <a href="accessibility-statement.html" class="underline hover:text-cyan-700">הצהרת נגישות</a>
+    <span class="mx-2">•</span>
+    <span>הודיה אוריאן טרוול</span>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const KIT_EXPIRY = new Date('2026-09-12T00:00:00+03:00');
+      const loadingScreen = document.getElementById('loadingScreen');
+      const loadingLogo = document.getElementById('loadingLogo');
+      const loadingPlane = document.getElementById('loadingPlane');
+      const mainContent = document.getElementById('mainContent');
+      const headerLogo = document.querySelector('.logo-container');
+      const aiDisclaimerOverlay = document.getElementById('aiDisclaimerOverlay');
+      const aiDisclaimerConfirm = document.getElementById('aiDisclaimerConfirm');
+
+      aiDisclaimerConfirm.addEventListener('click', () => {
+        aiDisclaimerOverlay.classList.remove('visible');
+      });
+      
+      // Generate random loading duration between 2-7 seconds
+      const loadingDuration = Math.random() * 5000 + 2000; // 2000-7000ms
+      
+      // Set CSS variable for plane animation
+      loadingPlane.style.setProperty('--loading-duration', loadingDuration + 'ms');
+      
+      // Start loading
+      setTimeout(() => {
+        // Start logo animation to header position
+        loadingLogo.classList.add('animating');
+        
+        // Hide loading screen with 0.5s fade during animation
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+        }, 700); // Hide loading screen 0.5s before animation completes
+        
+        // Show main content after animation completes
+        setTimeout(() => {
+          if (new Date() >= KIT_EXPIRY) {
+            window.location.replace('../thank-you.html');
+            return;
+          }
+          mainContent.classList.add('visible');
+          aiDisclaimerOverlay.classList.add('visible');
+          
+          // Show the header logo after the animated logo reaches its position
+          setTimeout(() => {
+            headerLogo.classList.add('visible');
+            // Hide the loading logo with fade effect after header logo appears
+            setTimeout(() => {
+              loadingLogo.classList.add('fade-out');
+            }, 200);
+          }, 300);
+        }, 1200); // Match the logo animation duration
+      }, loadingDuration);
+    });
+  </script>
+</body>
+</html>
