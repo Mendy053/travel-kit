@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>לוח בקרה | H.O Travel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+    body {
+      font-family: 'Varela Round', sans-serif;
+      direction: rtl;
+    }
+
+    /* ---------- Lock screen ---------- */
+    #lockScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 20000;
+      background: radial-gradient(circle at 50% 20%, #2b3346 0%, #12151f 70%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      color: #fff;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+    #lockScreen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .lock-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: contain;
+      background: #fff;
+      padding: 6px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+    .lock-title {
+      font-size: 15px;
+      color: #c7cbd6;
+      letter-spacing: 0.5px;
+    }
+    .lock-dots {
+      display: flex;
+      gap: 18px;
+    }
+    .lock-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid #c7cbd6;
+      background: transparent;
+      transition: background-color 0.15s, transform 0.15s;
+    }
+    .lock-dot.filled {
+      background: #fff;
+      transform: scale(1.1);
+    }
+    .lock-dots.shake {
+      animation: shake 0.4s;
+    }
+    @keyframes shake {
+      10%, 90% { transform: translateX(-2px); }
+      20%, 80% { transform: translateX(4px); }
+      30%, 50%, 70% { transform: translateX(-8px); }
+      40%, 60% { transform: translateX(8px); }
+    }
+    .lock-error {
+      font-size: 13px;
+      color: #ff8a80;
+      height: 16px;
+    }
+    .lock-keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 72px);
+      gap: 18px;
+      direction: ltr;
+    }
+    .lock-key {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 26px;
+      font-family: 'Varela Round', sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+      transition: background-color 0.15s, transform 0.1s;
+    }
+    .lock-key:active {
+      background: rgba(255,255,255,0.25);
+      transform: scale(0.94);
+    }
+    .lock-key.ghost {
+      background: transparent;
+      border: none;
+      cursor: default;
+    }
+    .lock-key.ghost:active {
+      background: transparent;
+      transform: none;
+    }
+
+    /* ---------- Dashboard ---------- */
+    #dashboard.hidden { display: none; }
+    .status-active { color: #16a34a; }
+    .status-expired { color: #9ca3af; }
+    .kit-card {
+      transition: box-shadow 0.15s;
+    }
+    .share-menu {
+      display: none;
+      position: absolute;
+      z-index: 50;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      min-width: 190px;
+      overflow: hidden;
+    }
+    .share-menu.open { display: block; }
+    .share-menu button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      text-align: right;
+      padding: 10px 14px;
+      font-size: 14px;
+      background: #fff;
+      border: none;
+      cursor: pointer;
+      color: #1f2937;
+    }
+    .share-menu button:hover { background: #f3f4f6; }
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1f2937;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 10060;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+  <style id="a11y-styles">
+    #a11y-toggle {
+      position: fixed; bottom: 16px; left: 16px; z-index: 10050;
+      width: 52px; height: 52px; border-radius: 50%;
+      background-color: #756c50; color: #fff; border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      padding: 0;
+    }
+    #a11y-toggle:hover, #a11y-toggle:focus { background-color: #645d45; outline: 3px solid #0e7490; outline-offset: 2px; }
+    #a11y-panel {
+      position: fixed; bottom: 78px; left: 16px; z-index: 10050;
+      width: 280px; max-width: calc(100vw - 32px);
+      background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      padding: 18px 16px 16px; display: none; direction: rtl;
+      font-family: 'Varela Round', sans-serif; color: #1f2937;
+    }
+    #a11y-panel.open { display: block; }
+    #a11y-panel h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #0e7490; }
+    .a11y-btn {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      text-align: right; padding: 10px 12px; margin-bottom: 8px;
+      background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px;
+      cursor: pointer; font-size: 15px; color: #1f2937; font-family: inherit;
+    }
+    .a11y-btn:hover, .a11y-btn:focus { background: #e5e7eb; outline: 2px solid #0e7490; }
+    .a11y-btn[aria-pressed="true"] { background: #5c5540; color: #fff; border-color: #5c5540; }
+    .a11y-btn[aria-pressed="true"]:hover, .a11y-btn[aria-pressed="true"]:focus { background: #46402f; }
+    #a11y-close {
+      position: absolute; top: 10px; left: 10px; background: none; border: none;
+      font-size: 18px; line-height: 1; cursor: pointer; color: #6b7280; padding: 6px;
+    }
+    #a11y-close:hover, #a11y-close:focus { color: #1f2937; outline: 2px solid #0e7490; }
+    .a11y-statement-link { text-align: center; justify-content: center; text-decoration: none !important; }
+
+    html.a11y-fs-2 { font-size: 112.5%; }
+    html.a11y-fs-3 { font-size: 125%; }
+    html.a11y-fs-4 { font-size: 137.5%; }
+
+    html.a11y-contrast body,
+    html.a11y-contrast body :not(#a11y-toggle):not(#a11y-toggle *):not(#a11y-panel):not(#a11y-panel *) {
+      background-color: #000 !important;
+      background-image: none !important;
+      color: #fff !important;
+      border-color: #555 !important;
+    }
+    html.a11y-contrast body a:not(#a11y-panel a) { color: #ffeb3b !important; }
+    html.a11y-contrast body img:not(#a11y-panel img) { filter: grayscale(1) contrast(1.2); }
+
+    html.a11y-links a:not(#a11y-panel a) {
+      text-decoration: underline !important;
+      font-weight: bold !important;
+      background-color: #fff59d !important;
+      color: #000 !important;
+    }
+
+    html.a11y-no-motion *, html.a11y-no-motion *::before, html.a11y-no-motion *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  </style>
+</head>
+<body class="bg-blue-50 text-gray-800 antialiased">
+
+  <!-- Accessibility Toolbar (IS 5568 / WCAG 2.1 AA) -->
+  <button id="a11y-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="a11y-panel" aria-label="תפריט נגישות" title="תפריט נגישות"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="7.2" r="1.9"/><path d="M12 9.6c-2.7 0-5.9.6-5.9 2.2 0 .6.5 1 1.1 1 1-.1 2.3-.5 3.3-.6l-.6 2.3-3 3.4c-.4.5-.4 1.2.1 1.6.5.4 1.2.4 1.6-.1l2.4-2.8h1.9l2.4 2.8c.4.5 1.1.5 1.6.1.5-.4.5-1.1.1-1.6l-3-3.4-.6-2.3c1 .1 2.3.5 3.3.6.6 0 1.1-.4 1.1-1 0-1.6-3.2-2.2-5.9-2.2z"/></svg></button>
+  <div id="a11y-panel" role="dialog" aria-label="אפשרויות נגישות">
+    <button id="a11y-close" type="button" aria-label="סגירת תפריט נגישות">✕</button>
+    <h2>נגישות</h2>
+    <button class="a11y-btn" id="a11y-inc-font" type="button" aria-pressed="false">א+ הגדלת טקסט</button>
+    <button class="a11y-btn" id="a11y-dec-font" type="button" aria-pressed="false">א- הקטנת טקסט</button>
+    <button class="a11y-btn" id="a11y-contrast" type="button" aria-pressed="false">◐ ניגודיות גבוהה</button>
+    <button class="a11y-btn" id="a11y-links" type="button" aria-pressed="false">🔗 הדגשת קישורים</button>
+    <button class="a11y-btn" id="a11y-motion" type="button" aria-pressed="false">⏸ עצירת אנימציות</button>
+    <button class="a11y-btn" id="a11y-reset" type="button" aria-pressed="false">↺ איפוס הגדרות</button>
+  </div>
+  <!-- End Accessibility Toolbar -->
+
+  <!-- Lock screen -->
+  <div id="lockScreen">
+    <img src="logo.jpg" alt="H.O Travel" class="lock-logo">
+    <div class="lock-title">הזן קוד גישה</div>
+    <div class="lock-dots" id="lockDots">
+      <div class="lock-dot"></div>
+      <div class="lock-dot"></div>
+      <div class="lock-dot"></div>
+      <div class="lock-dot"></div>
+    </div>
+    <div class="lock-error" id="lockError"></div>
+    <div class="lock-keypad" id="lockKeypad">
+      <button class="lock-key" type="button" data-key="1">1</button>
+      <button class="lock-key" type="button" data-key="2">2</button>
+      <button class="lock-key" type="button" data-key="3">3</button>
+      <button class="lock-key" type="button" data-key="4">4</button>
+      <button class="lock-key" type="button" data-key="5">5</button>
+      <button class="lock-key" type="button" data-key="6">6</button>
+      <button class="lock-key" type="button" data-key="7">7</button>
+      <button class="lock-key" type="button" data-key="8">8</button>
+      <button class="lock-key" type="button" data-key="9">9</button>
+      <button class="lock-key ghost" type="button" tabindex="-1"></button>
+      <button class="lock-key" type="button" data-key="0">0</button>
+      <button class="lock-key" type="button" id="lockDelete" aria-label="מחיקה">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 6h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-6-6a1.5 1.5 0 0 1 0-2l6-4z"/><path d="M13 10l4 4M17 10l-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="hidden">
+    <header class="bg-white shadow-sm">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex items-center gap-3">
+        <img src="logo.jpg" alt="H.O Travel" class="w-10 h-10 rounded-full object-contain">
+        <div>
+          <h1 class="text-xl font-bold text-cyan-700">לוח קיטי טיול</h1>
+          <div class="text-sm text-gray-500">H.O Travel</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-4 md:p-8">
+      <div class="overflow-x-auto bg-white rounded-xl shadow-lg">
+        <table class="min-w-full text-right text-sm">
+          <thead>
+            <tr class="bg-gray-100 text-gray-700">
+              <th class="px-4 py-3">כותרת</th>
+              <th class="px-4 py-3">מדינה</th>
+              <th class="px-4 py-3">סטטוס</th>
+              <th class="px-4 py-3">שיתוף</th>
+              <th class="px-4 py-3">פתיחה</th>
+            </tr>
+          </thead>
+          <tbody id="kitsTableBody"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // KITS: יש להוסיף שורה חדשה בכל יצירת קיט (ראו PROJECTS.md)
+    const KITS = [
+      { code: 'kit_D422BRQ4djGiofHm7B3UG0ZvP', title: 'שמואל ושרה אדרעי בתאילנד 2025', country: 'תאילנד', expiry: '2025-08-23T00:00:00+03:00' },
+      { code: 'kit_VB55MpT3JwExUNvzk5kXeDX7E', title: 'יותם דוד ויהודה בלס בתאילנד 2026', country: 'תאילנד', expiry: '2026-02-04T00:00:00+02:00' },
+      { code: 'kit_Cud5p9lStXETlMnyiOjCT52CL', title: 'יותם דוד ויהודה בלס בתאילנד 2026 (עותק/תבנית)', country: 'תאילנד', expiry: '2026-02-04T00:00:00+02:00' },
+      { code: 'kit_YSBn978vJhsDAKNqjbx4uPvDs', title: 'שלומי יצחק דוד באוסטריה 2026', country: 'אוסטריה', expiry: '2026-08-09T00:00:00+03:00' },
+      { code: 'kit_TUGPICKWf4ncBLzBIKnfOg4Nf', title: 'אוראן הודיה ויהונתן נחום במונטנגרו 2026', country: 'מונטנגרו', expiry: '2026-08-15T00:00:00+03:00' },
+      { code: 'kit_mBsqjUDsfcsTS3cdJSMyWNaA5', title: 'משפחת גברילוב באתונה 2026', country: 'יוון', expiry: '2026-08-09T00:00:00+03:00' },
+      { code: 'kit_ziXAOt2AEZDk33q4WBcldode1', title: 'יהודית מלכה וינר ומוריה סופיר בבודפשט 2026', country: 'הונגריה', expiry: '2026-08-29T00:00:00+03:00' },
+      { code: 'kit_K6cMERPmKLO01BFilPtgB7TjA', title: 'תמר ושרה לוי לדקני בבודפשט 2026', country: 'הונגריה', expiry: '2026-08-15T00:00:00+03:00' },
+      { code: 'kit_koXSCyp8vuU1HlNpra2bbCys2', title: 'משפחת שלו בחלקידה 2026', country: 'יוון', expiry: '2026-09-11T00:00:00+03:00' },
+    ];
+
+    const SITE_BASE = 'https://ho-travel.netlify.app';
+
+    function kitUrl(code) {
+      return SITE_BASE + '/' + code + '/Index.html';
+    }
+
+    function isActive(kit) {
+      // מחושב בזמן אמת - לא נשמר כמידע שטוח
+      return new Date() < new Date(kit.expiry);
+    }
+
+    function shareText(kit) {
+      const link = kitUrl(kit.code);
+      return 'מוכנים? ✈️\n\n' +
+        'יצרנו במיוחד עבורכם קיט טיול אישי, כדי שכל המידע יהיה לכם נוח וזמין במקום אחד - פרטי טיסה, מלון, אטרקציות, אוכל כשר ועוד.\n\n' +
+        'מוזמנים להיכנס וליהנות:\n' + link + '\n\n' +
+        'ואל תשכחו להכין דרכונים! 🧳\n\n' +
+        'H.O Travel';
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    async function shareOrCopy(text, label) {
+      if (navigator.share) {
+        try {
+          await navigator.share({ text: text });
+          return;
+        } catch (e) {
+          if (e && e.name === 'AbortError') return;
+        }
+      }
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast(label + ' הועתק/ה ללוח');
+      } catch (e) {
+        showToast('לא ניתן להעתיק אוטומטית - יש להעתיק ידנית');
+      }
+    }
+
+    function closeAllShareMenus(except) {
+      document.querySelectorAll('.share-menu.open').forEach(m => {
+        if (m !== except) m.classList.remove('open');
+      });
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('kitsTableBody');
+      tbody.innerHTML = '';
+      KITS.forEach((kit, idx) => {
+        const active = isActive(kit);
+        const link = kitUrl(kit.code);
+        const tr = document.createElement('tr');
+        tr.className = 'border-t kit-card';
+
+        const statusIcon = active
+          ? '<span class="status-active inline-flex items-center gap-1" title="פעיל"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg> פעיל</span>'
+          : '<span class="status-expired inline-flex items-center gap-1" title="פג תוקף"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9 9l6 6M15 9l-6 6"/></svg> פג תוקף</span>';
+
+        tr.innerHTML =
+          '<td class="px-4 py-3 font-semibold">' + kit.title + '</td>' +
+          '<td class="px-4 py-3">' + kit.country + '</td>' +
+          '<td class="px-4 py-3">' + statusIcon + '</td>' +
+          '<td class="px-4 py-3 relative">' +
+            '<button type="button" class="share-btn inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700" data-idx="' + idx + '">' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.5l6.8-3.9M8.6 13.5l6.8 3.9"/></svg>' +
+              'שיתוף' +
+            '</button>' +
+            '<div class="share-menu" data-idx="' + idx + '">' +
+              '<button type="button" class="share-with-text" data-idx="' + idx + '">עם טקסט נלווה</button>' +
+              '<button type="button" class="share-link-only" data-idx="' + idx + '">קישור בלבד</button>' +
+            '</div>' +
+          '</td>' +
+          '<td class="px-4 py-3">' +
+            '<a href="' + link + '" target="_blank" rel="noopener" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-cyan-700 text-white hover:bg-cyan-800">' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"/></svg>' +
+              'פתיחה' +
+            '</a>' +
+          '</td>';
+        tbody.appendChild(tr);
+      });
+
+      // Position + wire share menus
+      document.querySelectorAll('.share-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const idx = this.getAttribute('data-idx');
+          const menu = document.querySelector('.share-menu[data-idx="' + idx + '"]');
+          const isOpen = menu.classList.contains('open');
+          closeAllShareMenus();
+          if (!isOpen) menu.classList.add('open');
+        });
+      });
+      document.querySelectorAll('.share-with-text').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const kit = KITS[this.getAttribute('data-idx')];
+          shareOrCopy(shareText(kit), 'ההודעה');
+          closeAllShareMenus();
+        });
+      });
+      document.querySelectorAll('.share-link-only').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const kit = KITS[this.getAttribute('data-idx')];
+          shareOrCopy(kitUrl(kit.code), 'הקישור');
+          closeAllShareMenus();
+        });
+      });
+    }
+
+    document.addEventListener('click', () => closeAllShareMenus());
+
+    // ---------- Lock screen logic ----------
+    (function() {
+      const PASSCODE = '5555';
+      const SESSION_KEY = 'projectsUnlocked';
+      let entered = '';
+
+      const lockScreen = document.getElementById('lockScreen');
+      const dashboard = document.getElementById('dashboard');
+      const dotsWrap = document.getElementById('lockDots');
+      const errorEl = document.getElementById('lockError');
+      const dots = dotsWrap.querySelectorAll('.lock-dot');
+
+      function renderDots() {
+        dots.forEach((d, i) => d.classList.toggle('filled', i < entered.length));
+      }
+
+      function unlock() {
+        try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (e) {}
+        lockScreen.classList.add('hidden');
+        dashboard.classList.remove('hidden');
+        renderTable();
+      }
+
+      function wrongCode() {
+        errorEl.textContent = 'קוד שגוי, נסו שוב';
+        dotsWrap.classList.add('shake');
+        setTimeout(() => {
+          dotsWrap.classList.remove('shake');
+          entered = '';
+          renderDots();
+        }, 400);
+      }
+
+      function pressKey(k) {
+        if (entered.length >= 4) return;
+        entered += k;
+        renderDots();
+        errorEl.textContent = '';
+        if (entered.length === 4) {
+          setTimeout(() => {
+            if (entered === PASSCODE) unlock();
+            else wrongCode();
+          }, 150);
+        }
+      }
+
+      document.getElementById('lockKeypad').addEventListener('click', function(e) {
+        const key = e.target.closest('[data-key]');
+        if (key) { pressKey(key.getAttribute('data-key')); return; }
+        if (e.target.closest('#lockDelete')) {
+          entered = entered.slice(0, -1);
+          renderDots();
+          errorEl.textContent = '';
+        }
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (lockScreen.classList.contains('hidden')) return;
+        if (e.key >= '0' && e.key <= '9') pressKey(e.key);
+        else if (e.key === 'Backspace') {
+          entered = entered.slice(0, -1);
+          renderDots();
+          errorEl.textContent = '';
+        }
+      });
+
+      try {
+        if (sessionStorage.getItem(SESSION_KEY) === '1') unlock();
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Accessibility Toolbar script -->
+  <script>
+  (function() {
+    var html = document.documentElement;
+    var fsLevel = 1;
+    var STORAGE_KEY = 'a11yPrefs';
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          fsLevel: fsLevel,
+          contrast: html.classList.contains('a11y-contrast'),
+          links: html.classList.contains('a11y-links'),
+          motion: html.classList.contains('a11y-no-motion')
+        }));
+      } catch (e) {}
+    }
+
+    function applyFontSize() {
+      html.classList.remove('a11y-fs-2', 'a11y-fs-3', 'a11y-fs-4');
+      if (fsLevel > 1) html.classList.add('a11y-fs-' + fsLevel);
+    }
+
+    function updatePressed(id, state) {
+      var btn = document.getElementById(id);
+      if (btn) btn.setAttribute('aria-pressed', state ? 'true' : 'false');
+    }
+
+    function loadState() {
+      try {
+        var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        fsLevel = saved.fsLevel || 1;
+        applyFontSize();
+        if (saved.contrast) { html.classList.add('a11y-contrast'); updatePressed('a11y-contrast', true); }
+        if (saved.links) { html.classList.add('a11y-links'); updatePressed('a11y-links', true); }
+        if (saved.motion) { html.classList.add('a11y-no-motion'); updatePressed('a11y-motion', true); }
+      } catch (e) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var toggleBtn = document.getElementById('a11y-toggle');
+      var panel = document.getElementById('a11y-panel');
+      var closeBtn = document.getElementById('a11y-close');
+
+      loadState();
+
+      function openPanel() {
+        panel.classList.add('open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        closeBtn.focus();
+      }
+      function closePanel() {
+        panel.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.focus();
+      }
+
+      toggleBtn.addEventListener('click', function() {
+        if (panel.classList.contains('open')) closePanel(); else openPanel();
+      });
+      closeBtn.addEventListener('click', closePanel);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+      });
+
+      document.getElementById('a11y-inc-font').addEventListener('click', function() {
+        fsLevel = Math.min(fsLevel + 1, 4);
+        applyFontSize();
+        saveState();
+      });
+      document.getElementById('a11y-dec-font').addEventListener('click', function() {
+        fsLevel = Math.max(fsLevel - 1, 1);
+        applyFontSize();
+        saveState();
+      });
+      document.getElementById('a11y-contrast').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-contrast');
+        updatePressed('a11y-contrast', active);
+        saveState();
+      });
+      document.getElementById('a11y-links').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-links');
+        updatePressed('a11y-links', active);
+        saveState();
+      });
+      document.getElementById('a11y-motion').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-no-motion');
+        updatePressed('a11y-motion', active);
+        saveState();
+      });
+      document.getElementById('a11y-reset').addEventListener('click', function() {
+        fsLevel = 1;
+        applyFontSize();
+        html.classList.remove('a11y-contrast', 'a11y-links', 'a11y-no-motion');
+        updatePressed('a11y-contrast', false);
+        updatePressed('a11y-links', false);
+        updatePressed('a11y-motion', false);
+        saveState();
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
