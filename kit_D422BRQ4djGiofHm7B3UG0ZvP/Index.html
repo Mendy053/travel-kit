@@ -16,6 +16,15 @@
       font-family: 'Varela Round', sans-serif;
       /* Default text direction for Hebrew */
       direction: rtl;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+    /* Selection allowed only on titles/names/addresses - not on descriptive body text */
+    h1, h2, h3, h4, .font-bold, .font-semibold, .copyable {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      user-select: text;
     }
     
     /* Loading Screen Styles */
@@ -313,6 +322,47 @@
     .ai-disclaimer-button:hover {
       background-color: #645d45;
     }
+
+    /* Copy-to-clipboard fields */
+    .copyable {
+      cursor: pointer;
+      border-bottom: 1px dashed #0e7490;
+      border-radius: 3px;
+      transition: background-color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .copyable:hover, .copyable:focus {
+      background-color: rgba(14, 116, 144, 0.1);
+      outline: none;
+    }
+    .copyable:active {
+      background-color: rgba(14, 116, 144, 0.2);
+    }
+    .copyable svg {
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+    #copyToast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1f2937;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 10060;
+    }
+    #copyToast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
   </style>
   <style id="a11y-styles">
     #a11y-toggle {
@@ -493,6 +543,52 @@
   </script>
   <!-- End Accessibility Toolbar -->
 
+  <!-- Copy-to-clipboard for addresses / PNR / flight numbers etc. -->
+  <div id="copyToast" role="status" aria-live="polite"></div>
+  <script>
+  (function() {
+    var toast = document.getElementById('copyToast');
+    var toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2000);
+    }
+    function copyValue(el) {
+      var text = el.getAttribute('data-copy') || el.textContent.trim();
+      function done(ok) {
+        showToast(ok ? 'הועתק ללוח: ' + text : 'לא ניתן להעתיק');
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() { done(true); }, function() { done(false); });
+      } else {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          done(true);
+        } catch (e) {
+          done(false);
+        }
+      }
+    }
+    document.addEventListener('click', function(e) {
+      var el = e.target.closest('.copyable');
+      if (el) copyValue(el);
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var el = e.target.closest('.copyable');
+      if (el) { e.preventDefault(); copyValue(el); }
+    });
+  })();
+  </script>
 
   <!-- Loading Screen -->
   <div class="loading-screen" id="loadingScreen">
@@ -540,7 +636,7 @@
         <span class="ml-2">✈️</span> טיסות בינלאומיות
       </h2>
       <div class="mb-4 flex items-center justify-between">
-        <span class="inline-block bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full">PNR: IHJVZY</span>
+        <span class="copyable bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full" role="button" tabindex="0" data-copy="IHJVZY" aria-label="העתק PNR ללוח">PNR: IHJVZY<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span>
         <a href="international.pdf" target="_blank" class="flex items-center bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 shadow-md">
           <span class="ml-2">📄</span>
           <span>הורד מסמך טיסה</span>
@@ -618,7 +714,7 @@
         <span class="ml-2">🛫</span> טיסות פנימיות
       </h2>
       <div class="mb-4 flex items-center justify-between">
-        <span class="inline-block bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full">PNR: 92AXU5</span>
+        <span class="copyable bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full" role="button" tabindex="0" data-copy="92AXU5" aria-label="העתק PNR ללוח">PNR: 92AXU5<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span>
         <a href="inner.pdf" target="_blank" class="flex items-center bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 shadow-md">
           <span class="ml-2">📄</span>
           <span>הורד מסמך טיסה</span>

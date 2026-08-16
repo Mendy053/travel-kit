@@ -16,6 +16,15 @@
       font-family: 'Varela Round', sans-serif;
       /* Default text direction for Hebrew */
       direction: rtl;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+    /* Selection allowed only on titles/names/addresses - not on descriptive body text */
+    h1, h2, h3, h4, .font-bold, .font-semibold, .copyable {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      user-select: text;
     }
     
     /* Loading Screen Styles */
@@ -313,6 +322,47 @@
     .ai-disclaimer-button:hover {
       background-color: #645d45;
     }
+
+    /* Copy-to-clipboard fields */
+    .copyable {
+      cursor: pointer;
+      border-bottom: 1px dashed #0e7490;
+      border-radius: 3px;
+      transition: background-color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .copyable:hover, .copyable:focus {
+      background-color: rgba(14, 116, 144, 0.1);
+      outline: none;
+    }
+    .copyable:active {
+      background-color: rgba(14, 116, 144, 0.2);
+    }
+    .copyable svg {
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+    #copyToast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1f2937;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 10060;
+    }
+    #copyToast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
   </style>
   <style id="a11y-styles">
     #a11y-toggle {
@@ -493,6 +543,52 @@
   </script>
   <!-- End Accessibility Toolbar -->
 
+  <!-- Copy-to-clipboard for addresses / PNR / flight numbers etc. -->
+  <div id="copyToast" role="status" aria-live="polite"></div>
+  <script>
+  (function() {
+    var toast = document.getElementById('copyToast');
+    var toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2000);
+    }
+    function copyValue(el) {
+      var text = el.getAttribute('data-copy') || el.textContent.trim();
+      function done(ok) {
+        showToast(ok ? 'הועתק ללוח: ' + text : 'לא ניתן להעתיק');
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() { done(true); }, function() { done(false); });
+      } else {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          done(true);
+        } catch (e) {
+          done(false);
+        }
+      }
+    }
+    document.addEventListener('click', function(e) {
+      var el = e.target.closest('.copyable');
+      if (el) copyValue(el);
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var el = e.target.closest('.copyable');
+      if (el) { e.preventDefault(); copyValue(el); }
+    });
+  })();
+  </script>
 
   <!-- Loading Screen -->
   <div class="loading-screen" id="loadingScreen">
@@ -560,7 +656,7 @@
               <tr class="border-t">
                 <td class="px-3 py-2">יציאה</td>
                 <td class="px-3 py-2">Arkia (ארקיע)</td>
-                <td class="px-3 py-2">IZ1213</td>
+                <td class="px-3 py-2"><span class="copyable" role="button" tabindex="0" aria-label="העתק מספר טיסה ללוח">IZ1213<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></td>
                 <td class="px-3 py-2">06/09/2026 (יום א')</td>
                 <td class="px-3 py-2">TLV (Ben Gurion)</td>
                 <td class="px-3 py-2">ATH (Eleftherios Venizelos, אתונה)</td>
@@ -570,7 +666,7 @@
               <tr class="border-t">
                 <td class="px-3 py-2">חזרה</td>
                 <td class="px-3 py-2">Arkia (ארקיע)</td>
-                <td class="px-3 py-2">IZ214</td>
+                <td class="px-3 py-2"><span class="copyable" role="button" tabindex="0" aria-label="העתק מספר טיסה ללוח">IZ214<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></td>
                 <td class="px-3 py-2">09/09/2026 (יום ד')</td>
                 <td class="px-3 py-2">ATH (Eleftherios Venizelos)</td>
                 <td class="px-3 py-2">TLV (Ben Gurion)</td>
@@ -584,7 +680,7 @@
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="p-3 bg-gray-50 rounded-lg">
             <div class="font-semibold">PNR</div>
-            <div class="text-sm text-gray-600">13704239</div>
+            <div class="text-sm text-gray-600"><span class="copyable" role="button" tabindex="0" aria-label="העתק PNR ללוח">13704239<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
           </div>
           <div class="p-3 bg-gray-50 rounded-lg">
             <div class="font-semibold">כבודה</div>
@@ -616,7 +712,7 @@
           <div class="font-semibold">Brown Beach Chalkida Resort, a member of Brown Hotels</div>
           <div class="text-sm text-gray-600 mt-1">חדר: Classic Room (Garden View)</div>
           <div class="text-sm text-gray-600 mt-1">כניסה: 06/09/2026 | יציאה: 09/09/2026 (3 לילות) | בסיס אירוח: חצי פנסיון (ארוחת בוקר וערב) | 2 מבוגרים + תינוק</div>
-          <div class="text-sm text-gray-600 mt-1">כתובת: Elenis Alexandrou 30, חלקידה (Chalkida) | טל': <span dir="ltr">+30 2221440300</span> | ACCOUNTING.GREECE@BROWNHOTELS.COM</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Elenis Alexandrou 30, חלקידה (Chalkida)<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+30 2221440300<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | <span class="copyable" role="button" tabindex="0" aria-label="העתק אימייל ללוח">ACCOUNTING.GREECE@BROWNHOTELS.COM<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
           <div class="text-sm text-gray-600 mt-2">איש קשר בהזמנה: Yehudit Shalev</div>
           <div class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-2">שימו לב: הזמנה לא ניתנת לביטול</div>
           <div class="text-sm text-gray-600 mt-1">צ'ק-אין: משעה 15:00 | צ'ק-אאוט: עד 11:00</div>
