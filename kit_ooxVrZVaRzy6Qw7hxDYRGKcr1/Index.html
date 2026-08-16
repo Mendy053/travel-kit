@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="כרתים 2026" />
+  <meta property="og:description" content="כרתים, יוון - נועה ושירל" />
+  <meta property="og:image" content="bkg.jpg" />
+  <title>קיט טיול | כרתים, יוון 2026 - נועה ושירל</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Google Fonts - Varela Round for Hebrew */
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+    body {
+      font-family: 'Varela Round', sans-serif;
+      /* Default text direction for Hebrew */
+      direction: rtl;
+    }
+    
+    /* Loading Screen Styles */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+    
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .loading-logo {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 3px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      z-index: 10000;
+      transition: all 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+    
+    .loading-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    
+    .loading-logo.animating {
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    
+    .loading-logo.fade-out {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+    
+    .loading-bar-container {
+      width: 200px;
+      height: 4px;
+      background-color: #e0e0e0;
+      border-radius: 2px;
+      overflow: visible;
+      margin-bottom: 30px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    
+    .loading-bar {
+      height: 100%;
+      background: transparent;
+      border-radius: 2px;
+      width: 100%;
+    }
+    
+    .loading-plane {
+      position: absolute;
+      top: -8px;
+      right: 200px;
+      color: #A89B73;
+      font-size: 16px;
+      animation: plane-move var(--loading-duration, 3s) linear forwards;
+    }
+    
+    @keyframes plane-move {
+      from {
+        right: 200px;
+      }
+      to {
+        right: -5px;
+      }
+    }
+    
+    .loading-text {
+      color: #666;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    /* Main content - hidden initially */
+    .main-content {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
+    }
+    
+    .main-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Custom styles for the header background image */
+    .header-bg {
+      background-image: url('bkg.jpg');
+      background-position: center center;
+      background-size: cover;
+      position: relative;
+    }
+    .header-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65));
+      border-radius: inherit;
+    }
+    /* Logo styling */
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 200px;
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
+    }
+    
+    .logo-container.visible {
+      opacity: 1;
+    }
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    /* Contact info styling */
+    .contact-info {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(0,0,0,0.45);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    /* Keyframe animation for fade-in effect */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.7s ease-in-out;
+    }
+    /* Custom styles from the user's provided HTML */
+    .tag {
+      display: inline-block;
+      background: #e1f5fe;
+      color: #0277bd;
+      padding: 0.2em 0.6em;
+      border-radius: 6px;
+      font-size: 0.85em;
+      margin-right: 0.5em; /* Adjusted for RTL */
+    }
+    a {
+      color: #007b9e;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h1{
+      color: white;
+  -webkit-text-stroke: 0.5px #A89B73;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8em;
+        color: white;
+  -webkit-text-stroke: 0.5px #A89B73;
+      }
+      main {
+        padding: 1em;
+      }
+      .logo-container {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .contact-info {
+        font-size: 12px;
+        bottom: 15px;
+        right: 15px;
+        padding: 4px 12px;
+      }
+      .loading-logo {
+        width: 120px;
+        height: 120px;
+        top: 35%;
+      }
+      .loading-logo.animating {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .loading-content {
+        top: 50%;
+        gap: 8px;
+      }
+    }
+
+    /* AI Disclaimer Modal */
+    .ai-disclaimer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.55);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+    .ai-disclaimer-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .ai-disclaimer-box {
+      background: white;
+      border-radius: 16px;
+      padding: 28px 24px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .ai-disclaimer-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .ai-disclaimer-text {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .ai-disclaimer-button {
+      background-color: #756c50;
+      color: white;
+      border: none;
+      padding: 10px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: 'Varela Round', sans-serif;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .ai-disclaimer-button:hover {
+      background-color: #645d45;
+    }
+  </style>
+  <style id="a11y-styles">
+    #a11y-toggle {
+      position: fixed; bottom: 16px; left: 16px; z-index: 10050;
+      width: 52px; height: 52px; border-radius: 50%;
+      background-color: #756c50; color: #fff; border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      padding: 0;
+    }
+    #a11y-toggle:hover, #a11y-toggle:focus { background-color: #645d45; outline: 3px solid #0e7490; outline-offset: 2px; }
+    #a11y-panel {
+      position: fixed; bottom: 78px; left: 16px; z-index: 10050;
+      width: 280px; max-width: calc(100vw - 32px);
+      background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      padding: 18px 16px 16px; display: none; direction: rtl;
+      font-family: 'Varela Round', sans-serif; color: #1f2937;
+    }
+    #a11y-panel.open { display: block; }
+    #a11y-panel h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #0e7490; }
+    .a11y-btn {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      text-align: right; padding: 10px 12px; margin-bottom: 8px;
+      background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px;
+      cursor: pointer; font-size: 15px; color: #1f2937; font-family: inherit;
+    }
+    .a11y-btn:hover, .a11y-btn:focus { background: #e5e7eb; outline: 2px solid #0e7490; }
+    .a11y-btn[aria-pressed="true"] { background: #5c5540; color: #fff; border-color: #5c5540; }
+    .a11y-btn[aria-pressed="true"]:hover, .a11y-btn[aria-pressed="true"]:focus { background: #46402f; }
+    #a11y-close {
+      position: absolute; top: 10px; left: 10px; background: none; border: none;
+      font-size: 18px; line-height: 1; cursor: pointer; color: #6b7280; padding: 6px;
+    }
+    #a11y-close:hover, #a11y-close:focus { color: #1f2937; outline: 2px solid #0e7490; }
+    .a11y-statement-link { text-align: center; justify-content: center; text-decoration: none !important; }
+
+    html.a11y-fs-2 { font-size: 112.5%; }
+    html.a11y-fs-3 { font-size: 125%; }
+    html.a11y-fs-4 { font-size: 137.5%; }
+
+    html.a11y-contrast body,
+    html.a11y-contrast body :not(#a11y-toggle):not(#a11y-toggle *):not(#a11y-panel):not(#a11y-panel *) {
+      background-color: #000 !important;
+      background-image: none !important;
+      color: #fff !important;
+      border-color: #555 !important;
+    }
+    html.a11y-contrast body a:not(#a11y-panel a) { color: #ffeb3b !important; }
+    html.a11y-contrast body img:not(#a11y-panel img) { filter: grayscale(1) contrast(1.2); }
+
+    html.a11y-links a:not(#a11y-panel a) {
+      text-decoration: underline !important;
+      font-weight: bold !important;
+      background-color: #fff59d !important;
+      color: #000 !important;
+    }
+
+    html.a11y-no-motion *, html.a11y-no-motion *::before, html.a11y-no-motion *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  </style>
+</head>
+<body class="bg-blue-50 text-gray-800 antialiased">
+  <!-- Accessibility Toolbar (IS 5568 / WCAG 2.1 AA) -->
+  <button id="a11y-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="a11y-panel" aria-label="תפריט נגישות" title="תפריט נגישות"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="7.2" r="1.9"/><path d="M12 9.6c-2.7 0-5.9.6-5.9 2.2 0 .6.5 1 1.1 1 1-.1 2.3-.5 3.3-.6l-.6 2.3-3 3.4c-.4.5-.4 1.2.1 1.6.5.4 1.2.4 1.6-.1l2.4-2.8h1.9l2.4 2.8c.4.5 1.1.5 1.6.1.5-.4.5-1.1.1-1.6l-3-3.4-.6-2.3c1 .1 2.3.5 3.3.6.6 0 1.1-.4 1.1-1 0-1.6-3.2-2.2-5.9-2.2z"/></svg></button>
+  <div id="a11y-panel" role="dialog" aria-label="אפשרויות נגישות">
+    <button id="a11y-close" type="button" aria-label="סגירת תפריט נגישות">✕</button>
+    <h2>נגישות</h2>
+    <button class="a11y-btn" id="a11y-inc-font" type="button" aria-pressed="false">א+ הגדלת טקסט</button>
+    <button class="a11y-btn" id="a11y-dec-font" type="button" aria-pressed="false">א- הקטנת טקסט</button>
+    <button class="a11y-btn" id="a11y-contrast" type="button" aria-pressed="false">◐ ניגודיות גבוהה</button>
+    <button class="a11y-btn" id="a11y-links" type="button" aria-pressed="false">🔗 הדגשת קישורים</button>
+    <button class="a11y-btn" id="a11y-motion" type="button" aria-pressed="false">⏸ עצירת אנימציות</button>
+    <button class="a11y-btn" id="a11y-reset" type="button" aria-pressed="false">↺ איפוס הגדרות</button>
+    <a href="accessibility-statement.html" class="a11y-btn a11y-statement-link">📄 הצהרת נגישות</a>
+  </div>
+  <script>
+  (function() {
+    var html = document.documentElement;
+    var fsLevel = 1;
+    var STORAGE_KEY = 'a11yPrefs';
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          fsLevel: fsLevel,
+          contrast: html.classList.contains('a11y-contrast'),
+          links: html.classList.contains('a11y-links'),
+          motion: html.classList.contains('a11y-no-motion')
+        }));
+      } catch (e) {}
+    }
+
+    function applyFontSize() {
+      html.classList.remove('a11y-fs-2', 'a11y-fs-3', 'a11y-fs-4');
+      if (fsLevel > 1) html.classList.add('a11y-fs-' + fsLevel);
+    }
+
+    function updatePressed(id, state) {
+      var btn = document.getElementById(id);
+      if (btn) btn.setAttribute('aria-pressed', state ? 'true' : 'false');
+    }
+
+    function loadState() {
+      try {
+        var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        fsLevel = saved.fsLevel || 1;
+        applyFontSize();
+        if (saved.contrast) { html.classList.add('a11y-contrast'); updatePressed('a11y-contrast', true); }
+        if (saved.links) { html.classList.add('a11y-links'); updatePressed('a11y-links', true); }
+        if (saved.motion) { html.classList.add('a11y-no-motion'); updatePressed('a11y-motion', true); }
+      } catch (e) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var toggleBtn = document.getElementById('a11y-toggle');
+      var panel = document.getElementById('a11y-panel');
+      var closeBtn = document.getElementById('a11y-close');
+
+      loadState();
+
+      function openPanel() {
+        panel.classList.add('open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        closeBtn.focus();
+      }
+      function closePanel() {
+        panel.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.focus();
+      }
+
+      toggleBtn.addEventListener('click', function() {
+        if (panel.classList.contains('open')) closePanel(); else openPanel();
+      });
+      closeBtn.addEventListener('click', closePanel);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+      });
+
+      document.getElementById('a11y-inc-font').addEventListener('click', function() {
+        fsLevel = Math.min(fsLevel + 1, 4);
+        applyFontSize();
+        saveState();
+      });
+      document.getElementById('a11y-dec-font').addEventListener('click', function() {
+        fsLevel = Math.max(fsLevel - 1, 1);
+        applyFontSize();
+        saveState();
+      });
+      document.getElementById('a11y-contrast').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-contrast');
+        updatePressed('a11y-contrast', active);
+        saveState();
+      });
+      document.getElementById('a11y-links').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-links');
+        updatePressed('a11y-links', active);
+        saveState();
+      });
+      document.getElementById('a11y-motion').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-no-motion');
+        updatePressed('a11y-motion', active);
+        saveState();
+      });
+      document.getElementById('a11y-reset').addEventListener('click', function() {
+        fsLevel = 1;
+        applyFontSize();
+        html.classList.remove('a11y-contrast', 'a11y-links', 'a11y-no-motion');
+        updatePressed('a11y-contrast', false);
+        updatePressed('a11y-links', false);
+        updatePressed('a11y-motion', false);
+        saveState();
+      });
+    });
+  })();
+  </script>
+  <!-- End Accessibility Toolbar -->
+
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <div class="loading-bar-container">
+        <div class="loading-bar" id="loadingBar"></div>
+        <div class="loading-plane" id="loadingPlane">
+          <i class="fas fa-plane"></i>
+        </div>
+      </div>
+      <div class="loading-text">תכינו דרכונים...</div>
+    </div>
+  </div>
+
+  <!-- Loading Logo (separate from loading screen) -->
+  <div class="loading-logo" id="loadingLogo">
+    <img src="logo.jpg" alt="לוגו">
+  </div>
+
+  <!-- AI Disclaimer Modal -->
+  <div class="ai-disclaimer-overlay" id="aiDisclaimerOverlay">
+    <div class="ai-disclaimer-box">
+      <div class="ai-disclaimer-icon">⚠️</div>
+      <div class="ai-disclaimer-text">המידע בדף זה הופק בסיוע בינה מלאכותית ועשוי להכיל אי-דיוקים. יש לוודא מול הקבצים המקוריים שהתקבלו בסגירת הטיול, הספקים או H.O Travel.</div>
+      <button class="ai-disclaimer-button" id="aiDisclaimerConfirm">הבנתי</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <header class="header-bg h-72 flex items-center justify-center text-center text-white shadow-lg rounded-b-xl">
+      <div class="logo-container">
+        <img src="logo.jpg" alt="לוגו">
+      </div>
+      <div class="contact-info">
+        הודיה אוריאן • 054-8792582
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold drop-shadow-lg">כרתים, יוון 2026 </br>נועה ושירל</h1>
+    </header>
+
+    <main class="p-4 md:p-8 max-w-4xl mx-auto">
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">✈️</span> טיסות בינלאומיות
+      </h2>
+      <div class="mb-4">
+        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md font-semibold mb-3"><strong>דרישה:</strong> יש לוודא כי תוקף הדרכון הינו 6 חודשים לפחות ממועד היציאה מהארץ, וכי הדרכון מכיל לפחות דף ריק אחד.</div>
+        <p class="text-lg">פרטי טיסות בינלאומיות:</p>
+        <div class="overflow-x-auto mt-4">
+          <table class="min-w-full text-right text-sm">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="px-3 py-2">קטע</th>
+                <th class="px-3 py-2">חברת תעופה</th>
+                <th class="px-3 py-2">מס' טיסה</th>
+                <th class="px-3 py-2">תאריך</th>
+                <th class="px-3 py-2">מ־</th>
+                <th class="px-3 py-2">ל־</th>
+                <th class="px-3 py-2">המראה</th>
+                <th class="px-3 py-2">נחיתה</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t">
+                <td class="px-3 py-2">יציאה</td>
+                <td class="px-3 py-2">Blue Bird Airways</td>
+                <td class="px-3 py-2">BZ740</td>
+                <td class="px-3 py-2">17/08/2026 (יום ב')</td>
+                <td class="px-3 py-2">TLV (Ben Gurion)</td>
+                <td class="px-3 py-2">HER (North Kazantzakis, כרתים)</td>
+                <td class="px-3 py-2">06:20</td>
+                <td class="px-3 py-2">08:10</td>
+              </tr>
+              <tr class="border-t">
+                <td class="px-3 py-2">חזרה</td>
+                <td class="px-3 py-2">Blue Bird Airways</td>
+                <td class="px-3 py-2">BZ743</td>
+                <td class="px-3 py-2">20/08/2026 (יום ה')</td>
+                <td class="px-3 py-2">HER (North Kazantzakis)</td>
+                <td class="px-3 py-2">TLV (Ben Gurion)</td>
+                <td class="px-3 py-2">15:50</td>
+                <td class="px-3 py-2">17:30</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold">PNR</div>
+            <div class="text-sm text-gray-600">51183035</div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold">כבודה</div>
+            <div class="text-sm text-gray-600">אין מזוודה בהזמנת הטיסה - רק תיק יד 8 ק"ג לכל נוסעת, לכל כיוון</div>
+          </div>
+        </div>
+        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-3">שימו לב: הטיסה אינה כוללת ארוחה מוגשת</div>
+        <div class="mt-3 flex flex-col gap-1">
+          <a href="files/864827he.pdf" target="_blank" class="text-blue-700 hover:underline">פתח הזמנת טיסות מלאה (864827he.pdf)</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h3 class="text-2xl font-semibold mb-3">נוסעות וכבודה</h3>
+      <ul class="list-none p-0 space-y-2 text-lg">
+        <li><strong>נוסעות:</strong> Noa Esther Amouyal (ת. לידה 07/06/2000), Shirel Shoshana Zagdoun (ת. לידה 20/11/2007)</li>
+        <li><strong>כבודה:</strong> תיק יד 8 ק"ג לכל נוסעת בלבד</li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🏨</span> מלונות
+      </h2>
+      <ul class="list-none p-0 space-y-3 text-lg">
+        <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+          <img src="files/hotel-vasia-boulevard.jpg" alt="Vasia Boulevard Adults Only" class="w-full rounded-md shadow-sm mb-3" />
+          <div class="font-semibold">Vasia Boulevard Adults Only</div>
+          <div class="text-sm text-gray-600 mt-1">חדר: Superior Double Pool View</div>
+          <div class="text-sm text-gray-600 mt-1">כניסה: 17/08/2026 | יציאה: 20/08/2026 (3 לילות) | בסיס אירוח: לינה וארוחת בוקר | 2 מבוגרות</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: Machis Kritis, כרתים | טל': <span dir="ltr">+30 28410 71001</span> | info@maragakis.gr</div>
+          <div class="text-sm text-gray-600 mt-2">איש קשר בהזמנה: Noa Esther Amouyal</div>
+          <div class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-2">שימו לב: הזמנה לא ניתנת לביטול. המלון למבוגרים בלבד (Adults Only)</div>
+          <div class="text-sm text-gray-600 mt-1">מס עירוני משוער: 45 יורו, ישולם במלון בעת ההגעה. אין חניה</div>
+          <a href="files/864863he.pdf" target="_blank" class="text-blue-700 hover:underline mt-2 inline-block">פתח קובץ הזמנה</a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🚕</span> תחבורה, מטבע וסים - טיפים מעשיים
+      </h2>
+
+      <div class="mb-5">
+        <h3 class="text-xl font-semibold mb-2">תחבורה באי</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li>המלון נמצא בהרקליון (Heraklion), כ-25 דקות נסיעה מנמל התעופה (HER)</li>
+          <li>חלק ניכר מהאתרים המומלצים (באלוס, חאניה, מפל קורטוליוטיקו) נמצאים במרחק נסיעה של שעה-שעתיים מהרקליון - מומלץ רכב שכור לגמישות מרבית</li>
+          <li>מוניות זמינות בהרקליון ובעיירות המרכזיות, אך לאתרים המרוחקים יותר רכב שכור נוח יותר</li>
+        </ul>
+      </div>
+
+      <div class="mb-5">
+        <h3 class="text-xl font-semibold mb-2">מטבע</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>המטבע המקומי הוא <strong>יורו (EUR)</strong></li>
+          <li>רוב בתי העסק, המסעדות והמלונות מקבלים כרטיסי אשראי/דביט ללא בעיה</li>
+          <li>מומלץ מזומן קטן לרכישות קטנות (חניה, דוכני חוף וכו')</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold mb-2">כרטיס סים</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>בנמל התעופה של הרקליון - דוכני חברות תקשורת (Cosmote, Vodafone, Nova) לרכישה מיידית</li>
+          <li>אפשרות נוספת - eSIM שמופעל מראש מהארץ: <a href="https://www.airalo.com/" target="_blank" class="text-blue-700 hover:underline">Airalo</a> או <a href="https://www.mobimatter.com/" target="_blank" class="text-blue-700 hover:underline">Mobimatter</a></li>
+          <li>נדרש דרכון לרישום סים מקומי (חוק מקומי)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">📆</span> לוח זמנים עיקרי
+      </h2>
+      <div class="prose text-lg">
+        <p>להלן לוח הזמנים המבוסס על ההזמנות שהופקו מתוך הקבצים:</p>
+        <ol class="list-decimal pr-6 space-y-2 mt-4">
+          <li><strong>17/08/2026 (יום ב'):</strong> טיסה מת"א (TLV) לכרתים (HER) — Blue Bird Airways (BZ740), 06:20-08:10</li>
+          <li><strong>17/08/2026 - 20/08/2026:</strong> לינה במלון Vasia Boulevard Adults Only, הרקליון, 3 לילות (לינה וארוחת בוקר)</li>
+          <li><strong>20/08/2026 (יום ה'):</strong> טיסת חזרה מכרתים (HER) לת"א (TLV) — Blue Bird Airways (BZ743), 15:50-17:30</li>
+        </ol>
+        <p class="mt-4">למידע מפורט על זמני המראות ונחיתות עיינו במסמכי ה-PDF המצורפים.</p>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">💡</span> אתרים ואטרקציות מומלצות בכרתים
+      </h2>
+      <p class="text-gray-600 mb-4">ההמלצות הבאות הן המלצות אישיות, לא רשימה של אתרים היסטוריים - לפי חוויה אישית באי.</p>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🏖️ חופים ועיירות חוף</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>אגיוס ניקולאוס (Agios Nikolaos)</strong> — אחת עיירות הנמל היפות בכרתים. חופים עם מים טורקיז, טיילת, מסעדות ובתי קפה מול הים. ניתן לרדת לחוף Kitroplatia (ליד הטיילת והמסעדות) או לחוף Almyros המתאים למשפחות עם כניסה נוחה למים (כ-5 דק' נסיעה)</li>
+          <li><strong>חוף Voulisma</strong> — כחצי שעה נסיעה מאנליפסי (איפה שנמצא האוכל הכשר). חוף עם חול, מים צלולים, נוף מדהים ומיטות שיזוף - אחד החופים השווים באזור</li>
+          <li><strong>לגונת באלוס (Balos)</strong> — אחת היציאות השוות ביותר באי. חול בהיר, מים טורקיז ולגונה רדודה ונעימה - חוויה מדהימה (הליכה רגלית ומדרגות, כ-20 דק')</li>
+        </ul>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+          <img src="files/agios-nikolaos.jpg" alt="אגיוס ניקולאוס" class="w-full rounded-md shadow-sm" />
+          <img src="files/voulisma-beach.jpg" alt="חוף ווליסמני" class="w-full rounded-md shadow-sm" />
+          <img src="files/balos-lagoon.jpg" alt="לגונת באלוס" class="w-full rounded-md shadow-sm" />
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🛍️ שופינג</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>רחוב דאדלוס (Daidalou)</strong> — רחוב הקניות המרכזי, עם מותגים כמו Zara, Pull &amp; Bear, Bershka, Mango, Sephora ועוד - כחצי מחיר מהארץ. שווה לסיים את הסיבוב בשוק המקומי שברחוב ולקנות מזכרות ומתנות</li>
+        </ul>
+        <img src="files/daidalou-street.jpg" alt="רחוב דאדלוס" class="w-full rounded-md shadow-sm mt-3" />
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🥾 טבע ומסלולי הליכה</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>מסלול מפל קורטוליוטיקו (Kourtaliotiko)</strong> — באזור רתימנו, בדרך לחאניה (כ-1:40 שעות נסיעה מהרקליון). מסלול הליכה של כחצי שעה לכל היותר לכל כיוון, עד לנחל מטורף ומדהים ביופיו, עם אפשרות כניסה למים (קרים!) ושחייה עד המפל - חוויה מומלצת ביותר</li>
+          <li><strong>אגם קורנס (Kournas)</strong> — אגם מדהים לשחייה עם מים מתוקים, ניתן לשכור קיאקים, וביום טוב אפשר אפילו לראות צבי ים</li>
+        </ul>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+          <img src="files/kourtaliotiko-gorge.jpg" alt="ערוץ קורטוליוטיקו" class="w-full rounded-md shadow-sm" />
+          <img src="files/gorge-2.jpg" alt="ערוץ קורטוליוטיקו - תמונה נוספת" class="w-full rounded-md shadow-sm" />
+        </div>
+        <img src="files/kournas-lake.jpg" alt="אגם קורנס" class="w-full rounded-md shadow-sm mt-3" />
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🏛️ חאניה וחיי לילה</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>העיר העתיקה של חאניה (Chania)</strong> — המקום היפה ביותר בכרתים לדעת רבים. כיף להסתובב ולהיאבד בסמטאות הצרות, בין חנויות בוטיק ודוכנים מקומיים. השקיעה שם אחת היפות באי - שווה להישאר עד אחריה, גם אם הנסיעה חזרה להרקליון ארוכה</li>
+          <li><strong>חיי לילה במאליה (Malia)</strong> — למי שמחפש מסיבות: מאליה ידועה כמקום עם מסיבות בכל הסגנונות (טכנו, שנות ה-90, פופ ועוד)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🍽️</span> אוכל כשר בכרתים
+      </h2>
+      <p class="text-lg mb-4">נכון לאוגוסט 2026 יש באי 4 מסעדות כשרות (עד לפני כחודש הייתה רק אחת) - שתיים מהן מפורטות כאן. שתי המסעדות עמוסות בשיא הקיץ אבל השולחנות מתפנים מהר.</p>
+
+      <div class="mb-4">
+        <div class="p-4 bg-gray-50 rounded-lg shadow-sm border-t-4 border-cyan-600">
+          <div class="font-bold text-xl text-cyan-800">לחיים (Lechaim) - The Pearl of Crete</div>
+          <div class="text-sm text-gray-600 mt-1">מסעדה כשרה חדשה יחסית באנליפסי, הרקליון. אוכל נחמד ומחירים לא יקרים יחסית. בהשגחת השליח חב"ד המקומי</div>
+          <img src="files/lechaim-menu.jpg" alt="תפריט מסעדת לחיים" class="w-full rounded-md shadow-sm mt-3" />
+        </div>
+      </div>
+
+      <div>
+        <div class="p-4 bg-gray-50 rounded-lg shadow-sm border-t-4 border-cyan-600">
+          <div class="font-bold text-xl text-cyan-800">ימאניס (Yamanis)</div>
+          <div class="text-sm text-gray-600 mt-1">מסעדה כשרה - אוכל ישראלי בנגיעה יוונית</div>
+          <div class="text-sm text-gray-700 mt-3 space-y-1.5">
+            <div>📍 71 El. Venizelou, Limenas Chersonisou, כרתים 700 14</div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+            <img src="files/yamanis-restaurant.jpg" alt="מסעדת ימאניס" class="w-full rounded-md shadow-sm" />
+            <img src="files/yamanis-food-1.jpg" alt="ימאניס - מנה" class="w-full rounded-md shadow-sm" />
+            <img src="files/yamanis-food-2.jpg" alt="ימאניס - מנה" class="w-full rounded-md shadow-sm" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+      <section class="bg-white p-6 md:p-8 mt-6 rounded-xl shadow-lg animate-fadeIn">
+        <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+          <span class="ml-2">📎</span> קבצים מצורפים
+        </h2>
+        <ul class="list-none p-0 space-y-3 text-lg">
+          <li>
+            <a href="files/864827he.pdf" target="_blank" class="text-blue-700 hover:underline">864827he.pdf</a>
+            <div class="text-sm text-gray-600">אישורי טיסות (Blue Bird Airways) — TLV↔HER, 17/08/2026 ו-20/08/2026. PNR: 51183035.</div>
+          </li>
+          <li>
+            <a href="files/864863he.pdf" target="_blank" class="text-blue-700 hover:underline">864863he.pdf</a>
+            <div class="text-sm text-gray-600">הזמנת מלון Vasia Boulevard Adults Only — כניסה: 17/08/2026, יציאה: 20/08/2026. הזמנה לא ניתנת לביטול.</div>
+          </li>
+        </ul>
+      </section>
+  </main>
+  </div>
+  <footer class="text-center text-sm text-gray-600 py-6 px-4">
+    <a href="accessibility-statement.html" class="underline hover:text-cyan-700">הצהרת נגישות</a>
+    <span class="mx-2">•</span>
+    <span>הודיה אוריאן טרוול</span>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const KIT_EXPIRY = new Date('2026-08-22T00:00:00+03:00');
+      const loadingScreen = document.getElementById('loadingScreen');
+      const loadingLogo = document.getElementById('loadingLogo');
+      const loadingPlane = document.getElementById('loadingPlane');
+      const mainContent = document.getElementById('mainContent');
+      const headerLogo = document.querySelector('.logo-container');
+      const aiDisclaimerOverlay = document.getElementById('aiDisclaimerOverlay');
+      const aiDisclaimerConfirm = document.getElementById('aiDisclaimerConfirm');
+
+      aiDisclaimerConfirm.addEventListener('click', () => {
+        aiDisclaimerOverlay.classList.remove('visible');
+      });
+      
+      // Generate random loading duration between 2-7 seconds
+      const loadingDuration = Math.random() * 5000 + 2000; // 2000-7000ms
+      
+      // Set CSS variable for plane animation
+      loadingPlane.style.setProperty('--loading-duration', loadingDuration + 'ms');
+      
+      // Start loading
+      setTimeout(() => {
+        // Start logo animation to header position
+        loadingLogo.classList.add('animating');
+        
+        // Hide loading screen with 0.5s fade during animation
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+        }, 700); // Hide loading screen 0.5s before animation completes
+        
+        // Show main content after animation completes
+        setTimeout(() => {
+          if (new Date() >= KIT_EXPIRY) {
+            window.location.replace('../thank-you.html');
+            return;
+          }
+          mainContent.classList.add('visible');
+          aiDisclaimerOverlay.classList.add('visible');
+          
+          // Show the header logo after the animated logo reaches its position
+          setTimeout(() => {
+            headerLogo.classList.add('visible');
+            // Hide the loading logo with fade effect after header logo appears
+            setTimeout(() => {
+              loadingLogo.classList.add('fade-out');
+            }, 200);
+          }, 300);
+        }, 1200); // Match the logo animation duration
+      }, loadingDuration);
+    });
+  </script>
+</body>
+</html>
