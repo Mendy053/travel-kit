@@ -3,7 +3,7 @@
 
 # Allow-list: only kit_* folders and the shared utility/admin pages are
 # publicly reachable. Everything else (including real files like
-# PROJECTS.md, netlify.toml, app/*) force-redirects to 404.html.
+# CLAUDE.md, netlify.toml, app/*) force-redirects to 404.html.
 # Note: /projects.html has its own passcode gate (client-side, not a
 # real access control) - it is not linked from anywhere public.
 
