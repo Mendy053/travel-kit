@@ -1,9 +1,11 @@
 [build]
   publish = "."
 
-# Allow-list: only kit_* folders and the two shared utility pages are
+# Allow-list: only kit_* folders and the shared utility/admin pages are
 # publicly reachable. Everything else (including real files like
 # PROJECTS.md, netlify.toml, app/*) force-redirects to 404.html.
+# Note: /projects.html has its own passcode gate (client-side, not a
+# real access control) - it is not linked from anywhere public.
 
 [[redirects]]
   from = "/kit_*"
@@ -23,6 +25,11 @@
 [[redirects]]
   from = "/logo.jpg"
   to = "/logo.jpg"
+  status = 200
+
+[[redirects]]
+  from = "/projects.html"
+  to = "/projects.html"
   status = 200
 
 [[redirects]]
