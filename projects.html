@@ -26,6 +26,7 @@
       gap: 28px;
       color: #fff;
       transition: opacity 0.4s ease, visibility 0.4s ease;
+      touch-action: manipulation;
     }
     #lockScreen.hidden {
       opacity: 0;
@@ -81,6 +82,7 @@
       grid-template-columns: repeat(3, 72px);
       gap: 18px;
       direction: ltr;
+      touch-action: manipulation;
     }
     .lock-key {
       width: 72px;
@@ -96,6 +98,7 @@
       align-items: center;
       justify-content: center;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
       transition: background-color 0.15s, transform 0.1s;
     }
     .lock-key:active {
