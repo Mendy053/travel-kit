@@ -373,6 +373,24 @@
       user-drag: none;
       -webkit-touch-callout: none;
     }
+
+    /* Hints that a wide table can be scrolled sideways on narrow screens */
+    @keyframes tableScrollHint {
+      0%, 100% { transform: translateX(0); opacity: 0.5; }
+      50% { transform: translateX(-8px); opacity: 1; }
+    }
+    .table-scroll-hint {
+      display: none;
+      text-align: center;
+      color: #0e7490;
+      font-size: 20px;
+      min-height: 20px;
+      margin-top: 2px;
+      animation: tableScrollHint 1.3s ease-in-out infinite;
+    }
+    @media (max-width: 640px) {
+      .table-scroll-hint { display: block; }
+    }
   </style>
   <style id="a11y-styles">
     #a11y-toggle {
@@ -694,6 +712,7 @@
             </tbody>
           </table>
         </div>
+        <div class="table-scroll-hint" aria-hidden="true"><i class="fas fa-arrows-left-right"></i></div>
         <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-3">שימו לב: טיסת החזרה יוצאת ב-00:30 - כלומר, ממש אחרי חצות של ליל 9-10 בספטמבר. חשוב לתכנן את ההגעה לנמל התעופה בהתאם (כ-3 שעות לפני ההמראה, כלומר עוד באותו ערב)</div>
 
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -703,7 +722,7 @@
           </div>
           <div class="p-3 bg-gray-50 rounded-lg">
             <div class="font-semibold">כבודה</div>
-            <div class="text-sm text-gray-600">אין מזוודה בהזמנת הטיסה - רק תיק יד 8 ק"ג לכל נוסעת, לכל כיוון</div>
+            <div class="text-sm text-gray-600">תיק יד 8 ק"ג לכל נוסעת, לכל כיוון</div>
           </div>
         </div>
         <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-3">שימו לב: הטיסה אינה כוללת ארוחה מוגשת</div>
@@ -789,7 +808,8 @@
           <li><strong>09/09/2026 (יום ד'):</strong> צ'ק-אאוט מהמלון עד השעה 11:00, נסיעה חזרה לאתונה</li>
           <li><strong>09/09/2026 - 10/09/2026 (ליל רביעי-חמישי):</strong> טיסת חזרה מאתונה (ATH) לת"א (TLV) — Arkia (IZ216), המראה 00:30 (מיד אחרי חצות), נחיתה 02:20</li>
         </ol>
-        <p class="mt-4">בין הצ'ק-אאוט מהמלון (11:00 ביום ד') לטיסת החזרה (00:30 בליל ד'-ה') יש כמעט יום שלם פנוי - מומלץ לנצל אותו לסיור באתונה: עצירה באחת המסעדות הכשרות המפורטות בהמשך (רבות מהן ברחוב Ermou), ואם נשאר זמן - גם שופינג ברחוב הקניות Ermou או באחד הקניונים באתונה. כדאי לתכנן מראש גם איפה להשאיר את הכבודה עד שעת ההמראה. למידע מפורט על זמני המראות ונחיתות עיינו במסמכי ה-PDF המצורפים.</p>
+        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md font-semibold mt-4"><strong>לתשומת לבכם:</strong> בין הצ'ק-אאוט מהמלון (11:00 ביום ד') לטיסת החזרה (00:30 בליל ד'-ה') יש כמעט יום שלם פנוי - מומלץ לנצל אותו לסיור באתונה: עצירה באחת המסעדות הכשרות המפורטות בהמשך (רבות מהן ברחוב Ermou), ואם נשאר זמן - גם שופינג ברחוב הקניות Ermou או באחד הקניונים באתונה. כדאי לתכנן מראש גם איפה להשאיר את הכבודה עד שעת ההמראה.</div>
+        <p class="mt-4">למידע מפורט על זמני המראות ונחיתות עיינו במסמכי ה-PDF המצורפים.</p>
       </div>
     </section>
 
