@@ -373,6 +373,24 @@
       user-drag: none;
       -webkit-touch-callout: none;
     }
+
+    /* Hints that a wide table can be scrolled sideways on narrow screens */
+    @keyframes tableScrollHint {
+      0%, 100% { transform: translateX(0); opacity: 0.5; }
+      50% { transform: translateX(-8px); opacity: 1; }
+    }
+    .table-scroll-hint {
+      display: none;
+      text-align: center;
+      color: #0e7490;
+      font-size: 20px;
+      min-height: 20px;
+      margin-top: 2px;
+      animation: tableScrollHint 1.3s ease-in-out infinite;
+    }
+    @media (max-width: 640px) {
+      .table-scroll-hint { display: block; }
+    }
   </style>
   <style id="a11y-styles">
     #a11y-toggle {
@@ -714,6 +732,7 @@
             </tbody>
           </table>
         </div>
+        <div class="table-scroll-hint" aria-hidden="true"><i class="fas fa-arrows-left-right"></i></div>
 
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="p-3 bg-gray-50 rounded-lg">
@@ -769,6 +788,7 @@
             </tbody>
           </table>
         </div>
+        <div class="table-scroll-hint" aria-hidden="true"><i class="fas fa-arrows-left-right"></i></div>
 
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="p-3 bg-gray-50 rounded-lg">
