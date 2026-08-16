@@ -39,6 +39,20 @@
 - **סימון טקסט (selection)**: `body` מוגדר עם `user-select: none` כברירת מחדל - טקסט תיאורי (המלצות, תוכן כללי) אינו ניתן לסימון/העתקה ידנית. חריגים שכן ניתנים לסימון: כותרות (`h1`-`h4`), שמות אתרים/מקומות המודגשים בתוך משפט תיאורי (`<strong>`, למשל "לגונת באלוס (Balos)"), שמות/תוויות מודגשים אחרים (`.font-bold`, `.font-semibold` - שמות מלונות/מסעדות, כותרות סעיפים), ושדות `.copyable`. **חובה בכל קיט חדש**: להעתיק את כללי ה-CSS האלה (מיד בתוך `body {}` ואחריו, בתחילת בלוק ה-`<style>` הראשי).
 - **הגנה על תמונות**: לכל `<img>` יש `user-drag: none` ו-`-webkit-touch-callout: none` (מונע גרירה/תפריט מגע ארוך ב-iOS), וסקריפט חוסם `contextmenu`/`dragstart` על תמונות (מונע "שמור תמונה בשם" בעכבר ימני). זו הגנה מפני שמירה מקרית בלבד - לא DRM אמיתי (התמונה עדיין נגישה דרך כלי פיתוח או בקשת רשת ישירה). **חובה בכל קיט חדש**: להעתיק את כללי ה-CSS וה-JS האלה (נמצאים ליד בלוקי ה-copyable).
 
+## הטמעת קישורי אינסטגרם
+
+- **קישור לפוסט/רילס אינסטגרם שמצורף למידע של קיט (למשל תיעוד של מסעדה/אתר) יש להטמיע (embed) ולא רק לקשר אליו** - כדי שהתוכן יוצג ישירות בעמוד.
+- פורמט ה-embed הרשמי של אינסטגרם:
+  ```html
+  <blockquote class="instagram-media" data-instgrm-permalink="<הקישור>" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px auto; max-width:400px; min-width:280px; padding:0; width:100%;">
+    <div style="padding:16px;">
+      <a href="<הקישור>" target="_blank" style="text-decoration:none;">צפייה בסרטון/תמונה ב-Instagram</a>
+    </div>
+  </blockquote>
+  <script async src="//www.instagram.com/embed.js"></script>
+  ```
+- ניתן למקם כמה `blockquote` תחת אותו `<script>` אחד (ראו דוגמה בקיט #6, `kit_mBsqjUDsfcsTS3cdJSMyWNaA5`).
+
 ## לוח בקרה (`projects.html`)
 
 - דף יחיד בשורש הריפו, מוגן במסך כניסה בסגנון iOS (קוד בן 4 ספרות, `5555`). הגנה צד-לקוח בלבד (הקוד גלוי בקוד המקור) - לא אמצעי אבטחה אמיתי, ולכן הדף לא מקושר משום מקום ציבורי.
