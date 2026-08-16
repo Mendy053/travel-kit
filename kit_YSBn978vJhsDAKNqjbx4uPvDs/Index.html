@@ -363,6 +363,16 @@
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
+
+    /* Discourage casual saving/copying of images */
+    img {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      user-drag: none;
+      -webkit-touch-callout: none;
+    }
   </style>
   <style id="a11y-styles">
     #a11y-toggle {
@@ -586,6 +596,14 @@
       if (e.key !== 'Enter' && e.key !== ' ') return;
       var el = e.target.closest('.copyable');
       if (el) { e.preventDefault(); copyValue(el); }
+    });
+
+    // Discourage casual saving/copying of images
+    document.addEventListener('contextmenu', function(e) {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    });
+    document.addEventListener('dragstart', function(e) {
+      if (e.target.tagName === 'IMG') e.preventDefault();
     });
   })();
   </script>
