@@ -373,6 +373,38 @@
       user-drag: none;
       -webkit-touch-callout: none;
     }
+    /* Floating quick-navigation menu (shown once the header image scrolls out of view) */
+    #sectionNavToggle {
+      position: fixed; top: 16px; left: 16px; z-index: 10050;
+      width: 52px; height: 52px; border-radius: 50%;
+      background-color: #0e7490; color: #fff; border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      padding: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+    #sectionNavToggle[hidden] { display: none; }
+    #sectionNavToggle:hover, #sectionNavToggle:focus { background-color: #0b5c72; outline: 3px solid #756c50; outline-offset: 2px; }
+    #sectionNavPanel {
+      position: fixed; top: 78px; left: 16px; z-index: 10050;
+      width: 280px; max-width: calc(100vw - 32px); max-height: calc(100vh - 100px); overflow-y: auto;
+      background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      padding: 18px 16px 16px; display: none; direction: rtl;
+      font-family: 'Varela Round', sans-serif; color: #1f2937;
+    }
+    #sectionNavPanel.open { display: block; }
+    #sectionNavPanel h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #0e7490; }
+    .section-nav-link {
+      display: block; width: 100%; text-align: right; padding: 10px 12px; margin-bottom: 8px;
+      background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px;
+      cursor: pointer; font-size: 15px; color: #1f2937; font-family: inherit;
+    }
+    .section-nav-link:hover, .section-nav-link:focus { background: #e5e7eb; outline: 2px solid #0e7490; }
+    #sectionNavClose {
+      position: absolute; top: 10px; left: 10px; background: none; border: none;
+      font-size: 18px; line-height: 1; cursor: pointer; color: #6b7280; padding: 6px;
+    }
+    #sectionNavClose:hover, #sectionNavClose:focus { color: #1f2937; outline: 2px solid #0e7490; }
   </style>
   <style id="a11y-styles">
     #a11y-toggle {
@@ -552,6 +584,75 @@
   })();
   </script>
   <!-- End Accessibility Toolbar -->
+
+  <!-- Floating quick-navigation menu -->
+  <button id="sectionNavToggle" type="button" hidden aria-haspopup="true" aria-expanded="false" aria-controls="sectionNavPanel" aria-label="ניווט מהיר בין הסעיפים" title="ניווט מהיר"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></button>
+  <div id="sectionNavPanel" role="dialog" aria-label="ניווט מהיר בין הסעיפים">
+    <button id="sectionNavClose" type="button" aria-label="סגירת תפריט הניווט">✕</button>
+    <h2>ניווט מהיר</h2>
+    <nav id="sectionNavList"></nav>
+  </div>
+  <script>
+  (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      var toggleBtn = document.getElementById('sectionNavToggle');
+      var panel = document.getElementById('sectionNavPanel');
+      var closeBtn = document.getElementById('sectionNavClose');
+      var listEl = document.getElementById('sectionNavList');
+      var header = document.querySelector('.header-bg');
+      if (!toggleBtn || !panel || !closeBtn || !listEl) return;
+
+      var sections = document.querySelectorAll('main > section');
+      sections.forEach(function(sec, idx) {
+        var heading = sec.querySelector('h2, h3');
+        if (!heading) return;
+        if (!sec.id) sec.id = 'section-nav-' + idx;
+        var link = document.createElement('button');
+        link.type = 'button';
+        link.className = 'section-nav-link';
+        link.textContent = heading.textContent.trim();
+        link.addEventListener('click', function() {
+          var noMotion = document.documentElement.classList.contains('a11y-no-motion');
+          sec.scrollIntoView({ behavior: noMotion ? 'auto' : 'smooth', block: 'start' });
+          closePanel();
+        });
+        listEl.appendChild(link);
+      });
+
+      function openPanel() {
+        panel.classList.add('open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        closeBtn.focus();
+      }
+      function closePanel() {
+        panel.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      toggleBtn.addEventListener('click', function() {
+        if (panel.classList.contains('open')) closePanel(); else openPanel();
+      });
+      closeBtn.addEventListener('click', closePanel);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && panel.classList.contains('open')) { closePanel(); toggleBtn.focus(); }
+      });
+
+      if (header && 'IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              toggleBtn.setAttribute('hidden', '');
+              closePanel();
+            } else {
+              toggleBtn.removeAttribute('hidden');
+            }
+          });
+        }, { threshold: 0 });
+        observer.observe(header);
+      }
+    });
+  })();
+  </script>
 
   <!-- Copy-to-clipboard for addresses / PNR / flight numbers etc. -->
   <div id="copyToast" role="status" aria-live="polite"></div>
