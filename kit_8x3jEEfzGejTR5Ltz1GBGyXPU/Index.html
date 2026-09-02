@@ -396,14 +396,14 @@
     #sectionNavToggle {
       position: fixed; top: 16px; left: 16px; z-index: 10050;
       width: 52px; height: 52px; border-radius: 50%;
-      background-color: #0e7490; color: #fff; border: none;
+      background-color: #1b3a3a; color: #d9be93; border: 2px solid #a08050;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;
       padding: 0;
-      transition: opacity 0.2s ease-in-out;
+      transition: opacity 0.2s ease-in-out, background-color 0.2s;
     }
     #sectionNavToggle[hidden] { display: none; }
-    #sectionNavToggle:hover, #sectionNavToggle:focus { background-color: #0b5c72; outline: 3px solid #756c50; outline-offset: 2px; }
+    #sectionNavToggle:hover, #sectionNavToggle:focus { background-color: #142d2d; outline: 3px solid #a08050; outline-offset: 2px; }
     #sectionNavPanel {
       position: fixed; top: 78px; left: 16px; z-index: 10050;
       width: 280px; max-width: calc(100vw - 32px); max-height: calc(100vh - 100px); overflow-y: auto;
