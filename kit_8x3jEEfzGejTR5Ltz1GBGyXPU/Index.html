@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:title" content="טביליסי 2026" />
   <meta property="og:description" content="טביליסי, גאורגיה - אודיה ודניאל" />
-  <meta property="og:image" content="https://commons.wikimedia.org/wiki/Special:FilePath/Tbilisi%20Peace%20Bridge%20and%20Kura%20River%20by%20Falco.jpg?width=1200" />
+  <meta property="og:image" content="https://commons.wikimedia.org/wiki/Special:FilePath/Russia-%20Georgia%20Friendship%20Monument%20(31002685640).jpg?width=1200" />
   <title>קיט טיול | טביליסי, גאורגיה 2026 - אודיה ודניאל</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -152,7 +152,7 @@
     
     /* Custom styles for the header background image */
     .header-bg {
-      background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Tbilisi%20Peace%20Bridge%20and%20Kura%20River%20by%20Falco.jpg?width=1600');
+      background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Russia-%20Georgia%20Friendship%20Monument%20(31002685640).jpg?width=1600');
       background-position: center center;
       background-size: cover;
       position: relative;
@@ -391,6 +391,39 @@
     @media (max-width: 640px) {
       .table-scroll-hint { display: block; }
     }
+
+    /* Floating quick-navigation menu (shown once the header image scrolls out of view) */
+    #sectionNavToggle {
+      position: fixed; top: 16px; left: 16px; z-index: 10050;
+      width: 52px; height: 52px; border-radius: 50%;
+      background-color: #0e7490; color: #fff; border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      padding: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+    #sectionNavToggle[hidden] { display: none; }
+    #sectionNavToggle:hover, #sectionNavToggle:focus { background-color: #0b5c72; outline: 3px solid #756c50; outline-offset: 2px; }
+    #sectionNavPanel {
+      position: fixed; top: 78px; left: 16px; z-index: 10050;
+      width: 280px; max-width: calc(100vw - 32px); max-height: calc(100vh - 100px); overflow-y: auto;
+      background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      padding: 18px 16px 16px; display: none; direction: rtl;
+      font-family: 'Varela Round', sans-serif; color: #1f2937;
+    }
+    #sectionNavPanel.open { display: block; }
+    #sectionNavPanel h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #0e7490; }
+    .section-nav-link {
+      display: block; width: 100%; text-align: right; padding: 10px 12px; margin-bottom: 8px;
+      background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px;
+      cursor: pointer; font-size: 15px; color: #1f2937; font-family: inherit;
+    }
+    .section-nav-link:hover, .section-nav-link:focus { background: #e5e7eb; outline: 2px solid #0e7490; }
+    #sectionNavClose {
+      position: absolute; top: 10px; left: 10px; background: none; border: none;
+      font-size: 18px; line-height: 1; cursor: pointer; color: #6b7280; padding: 6px;
+    }
+    #sectionNavClose:hover, #sectionNavClose:focus { color: #1f2937; outline: 2px solid #0e7490; }
   </style>
   <style id="a11y-styles">
     #a11y-toggle {
@@ -571,6 +604,75 @@
   </script>
   <!-- End Accessibility Toolbar -->
 
+  <!-- Floating quick-navigation menu -->
+  <button id="sectionNavToggle" type="button" hidden aria-haspopup="true" aria-expanded="false" aria-controls="sectionNavPanel" aria-label="ניווט מהיר בין הסעיפים" title="ניווט מהיר"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></button>
+  <div id="sectionNavPanel" role="dialog" aria-label="ניווט מהיר בין הסעיפים">
+    <button id="sectionNavClose" type="button" aria-label="סגירת תפריט הניווט">✕</button>
+    <h2>ניווט מהיר</h2>
+    <nav id="sectionNavList"></nav>
+  </div>
+  <script>
+  (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      var toggleBtn = document.getElementById('sectionNavToggle');
+      var panel = document.getElementById('sectionNavPanel');
+      var closeBtn = document.getElementById('sectionNavClose');
+      var listEl = document.getElementById('sectionNavList');
+      var header = document.querySelector('.header-bg');
+      if (!toggleBtn || !panel || !closeBtn || !listEl) return;
+
+      var sections = document.querySelectorAll('main > section');
+      sections.forEach(function(sec, idx) {
+        var heading = sec.querySelector('h2, h3');
+        if (!heading) return;
+        if (!sec.id) sec.id = 'section-nav-' + idx;
+        var link = document.createElement('button');
+        link.type = 'button';
+        link.className = 'section-nav-link';
+        link.textContent = heading.textContent.trim();
+        link.addEventListener('click', function() {
+          var noMotion = document.documentElement.classList.contains('a11y-no-motion');
+          sec.scrollIntoView({ behavior: noMotion ? 'auto' : 'smooth', block: 'start' });
+          closePanel();
+        });
+        listEl.appendChild(link);
+      });
+
+      function openPanel() {
+        panel.classList.add('open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        closeBtn.focus();
+      }
+      function closePanel() {
+        panel.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      toggleBtn.addEventListener('click', function() {
+        if (panel.classList.contains('open')) closePanel(); else openPanel();
+      });
+      closeBtn.addEventListener('click', closePanel);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && panel.classList.contains('open')) { closePanel(); toggleBtn.focus(); }
+      });
+
+      if (header && 'IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              toggleBtn.setAttribute('hidden', '');
+              closePanel();
+            } else {
+              toggleBtn.removeAttribute('hidden');
+            }
+          });
+        }, { threshold: 0 });
+        observer.observe(header);
+      }
+    });
+  })();
+  </script>
+
   <!-- Copy-to-clipboard for addresses / PNR / flight numbers etc. -->
   <div id="copyToast" role="status" aria-live="polite"></div>
   <script>
@@ -664,7 +766,7 @@
       </div>
       <h1 class="text-4xl md:text-5xl font-bold drop-shadow-lg">טביליסי, גאורגיה 2026 </br>אודיה ודניאל</h1>
     </header>
-    <p class="text-xs text-gray-400 text-center mt-1">תמונת רקע: <a href="https://commons.wikimedia.org/wiki/File:Tbilisi_Peace_Bridge_and_Kura_River_by_Falco.jpg" target="_blank" class="hover:underline">Wikimedia Commons</a></p>
+    <p class="text-xs text-gray-400 text-center mt-1">תמונת רקע: אנדרטת הידידות רוסיה-גאורגיה, גודאורי - <a href="https://commons.wikimedia.org/wiki/File:Russia-_Georgia_Friendship_Monument_(31002685640).jpg" target="_blank" class="hover:underline">Wikimedia Commons</a></p>
 
     <main class="p-4 md:p-8 max-w-4xl mx-auto">
 
@@ -849,7 +951,7 @@
         <h3 class="text-xl font-semibold mb-2">מנמל התעופה למלון וחזרה</h3>
         <ul class="list-disc pr-6 space-y-2 text-lg">
           <li>נמל התעופה הבינלאומי של טביליסי (TBS) נמצא כ-17 ק"מ מהעיר העתיקה - נסיעה במונית/Bolt של כ-20-30 דקות (עד כ-50 דקות בשעות עומס)</li>
-          <li>עלות מונית מהשדה: כ-40-60 לארי (GEL) לפי המונה. אין רכבת/מטרו ישירים לשדה התעופה</li>
+          <li>עלות מונית מהשדה: כ-40-60 לארי (GEL) לפי המונה - <strong>לעיתים יש ניסיון לגבות מחיר מופרז מתיירים</strong>, לכן מומלץ לוודא מחיר/מונה מראש או להזמין דרך Bolt. אין רכבת/מטרו ישירים לשדה התעופה</li>
         </ul>
       </div>
 
@@ -893,7 +995,7 @@
         <p>להלן הצעת לוח זמנים ליומיים וחצי בטביליסי, המבוסס על ההזמנות שהופקו מתוך הקבצים והתכנון שנשלח:</p>
         <ol class="list-decimal pr-6 space-y-2 mt-4">
           <li><strong>20/10/2026 (יום ג', הגעה):</strong> טיסה מת"א (TLV) לטביליסי (TBS) — El Al (LY5107), 05:30-09:05. לאחר הנחיתה - נסיעה למלון Iota (כ-20-30 דקות). המשך היום פנוי: העיר העתיקה, שוק הגשר היבש, רכבל לגבעת נריקלה והגן הבוטני. ארוחת ערב כשרה בעיר</li>
-          <li><strong>21/10/2026 (יום ד'):</strong> טיול יום מומלץ לגודאורי (Gudauri) - כשעתיים נסיעה בכביש הצבאי הגאורגי, עם עצירה במצודת אננורי בדרך (כשעה נסיעה). מומלץ נהג פרטי ליום שלם</li>
+          <li><strong>21/10/2026 (יום ד'):</strong> טיול יום מומלץ לגודאורי (Gudauri) - כשעתיים נסיעה במסלול "הדרך הצבאית", עם עצירה במצודת אננורי בדרך (כשעה נסיעה). מומלץ נהג פרטי ליום שלם</li>
           <li><strong>22/10/2026 (יום ה'):</strong> יום פנוי בטביליסי - מרחצאות גופרית, ספא, פארק מתאצמינדה או קניות, לפי העניין (חלופה: טיול יום נוסף לגשר היהלום בקניון דשבאשי, כשעתיים נסיעה)</li>
           <li><strong>23/10/2026 (יום ו'):</strong> צ'ק-אאוט מהמלון, טיסת חזרה מטביליסי (TBS) לת"א (TLV) — El Al (LY5108), 10:10-11:50</li>
         </ol>
@@ -919,7 +1021,7 @@
       </div>
 
       <div class="mb-4">
-        <h3 class="text-xl font-semibold mb-2">🎡 פארק מתאצמינדה</h3>
+        <h3 class="text-xl font-semibold mb-2">🎡 פארק מתאצמינדה (Mtatsminda Park)</h3>
         <ul class="list-disc pr-6 space-y-2 text-lg">
           <li>פארק שעשועים על ההר המשקיף על העיר, כולל גלגל ענק, רכבת הרים ועוד. הכניסה לפארק חופשית, האטרקציות בתשלום נפרד (כ-3-10 לארי לכל אחת)</li>
           <li>ההגעה לפארק דרך הרכבל/פוניקולר מרחוב רוסתוולי (Rustaveli Ave 52) - פוניקולר 10 לארי לכיוון, רכבל 12 לארי לכיוון</li>
@@ -929,7 +1031,7 @@
       <div class="mb-4">
         <h3 class="text-xl font-semibold mb-2">🚙 טיול יום לגודאורי (Gudauri)</h3>
         <ul class="list-disc pr-6 space-y-2 text-lg">
-          <li>עיירת סקי בהרי הקווקז, כשעתיים נסיעה מטביליסי בכביש הצבאי הגאורגי. אפשרויות: טרקטורונים/רייזרים, רכיבה על סוסים, ובעונת שלג - גם טרקטורוני שלג</li>
+          <li>עיירת סקי בהרי הקווקז, כשעתיים נסיעה מטביליסי במסלול "הדרך הצבאית". אפשרויות: טרקטורונים/רייזרים, רכיבה על סוסים, ובעונת שלג - גם טרקטורוני שלג</li>
           <li>בדרך (כשעה נסיעה מטביליסי) - עצירה מומלצת ב<strong>מצודת אננורי</strong>, מבצר מהמאות ה-16-17 על גדות נהר אראגווי</li>
           <li>לטיול הזה מומלץ לשכור נהג פרטי ליום שלם (ראו פרטי קשר בסעיף התחבורה)</li>
         </ul>
@@ -945,7 +1047,7 @@
       <div>
         <h3 class="text-xl font-semibold mb-2">🛍️ קניות ומתנות</h3>
         <ul class="list-disc pr-6 space-y-2 text-lg">
-          <li><strong>סופרמרקט Goodwill</strong> בקניון Galleria Tbilisi (כיכר החירות) — טוב במיוחד למתנות ומוצרים מקומיים (יין, שוקולד, צ'ורצ'חלה)</li>
+          <li><strong>סופרמרקט Goodwill</strong> בקניון Galleria Tbilisi (כיכר החירות) — טוב במיוחד למתנות ומוצרים מקומיים (יין, שוקולד, צ'ורצ'חלה). לא ידוע על כשרות במקום</li>
           <li><strong>שוק לילו (Lilo Mall)</strong> — שוק סיטונאי ענק בקצה העיר, בדרך לשדה התעופה. מחירים זולים משמעותית, אך פחות נוח/ציורי לתייר מאשר שוק הגשר היבש</li>
         </ul>
       </div>
@@ -959,33 +1061,81 @@
 
       <div class="mb-4">
         <h3 class="text-xl font-semibold mb-2">🥩 בשרי</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li><strong>מנדי'ס (Mendi's)</strong> — מסעדת בשרים כשרה מהדרין (בהשגחת הרב מאיר קוזלובסקי, בית חב"ד טביליסי) — Bambis Rigi 7, טביליסי</li>
-          <li><strong>מסעדת דוד / קינג דוד</strong> — המסעדה הכשרה הוותיקה בעיר, בחצר בית הכנסת הגדול — Kote Abkhazi 49, טביליסי</li>
-          <li><strong>לחיים (L'Chaim)</strong> — מסעדה כשרה מהדרין (בהשגחת חב"ד), במרחק הליכה קצרה ממרחצאות הגופרית — Vakhtang Gorgasali 25, טביליסי</li>
-          <li><strong>La Casa</strong> — מסעדה כשרה, מומלצת במיוחד ("לא לוותר") — Ivane Machabeli 12, טביליסי</li>
-        </ul>
+        <div class="space-y-3">
+          <div class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="font-semibold">La Casa</div>
+            <div class="text-sm text-gray-600 mt-1">מסעדה בשרית כשרה למהדרין (בהשגחת הרב אבימלך רוזנבלט והרב חיים אטיאס), בעיר העתיקה. מומלצת במיוחד ("לא לוותר")</div>
+            <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Ivane Machabeli 12, טביליסי<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="font-semibold">מסעדת דוד / קינג דוד (David / King David)</div>
+            <div class="text-sm text-gray-600 mt-1">המסעדה הכשרה הוותיקה בעיר, בחצר בית הכנסת הגדול - כוללת שתי מטבחונים נפרדים (בשרי וחלבי) עם שתי תעודות כשרות</div>
+            <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Kote Abkhazi 49, טביליסי<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+995 32 272 93 91<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="font-semibold">מנדי'ס (Mendi's)</div>
+            <div class="text-sm text-gray-600 mt-1">מסעדת בשרים כשרה מהדרין של בית חב"ד טביליסי (בהשגחת הרב מאיר קוזלובסקי), אוכל גאורגי מסורתי לצד מטבחים נוספים. פתוחה מדי יום 12:00-24:00</div>
+            <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Bambis Rigi 7, טביליסי<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+995 550 00 18 36<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="font-semibold">לחיים (L'Chaim)</div>
+            <div class="text-sm text-gray-600 mt-1">מסעדה כשרה מהדרין (בהשגחת חב"ד), במרחק הליכה קצרה ממרחצאות הגופרית. שעות: א'-ה' 11:00-22:00, ו' 11:00-15:00 (סגורה בשבת)</div>
+            <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Vakhtang Gorgasali 25, טביליסי<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="font-semibold">Elchikos</div>
+            <div class="text-sm text-gray-600 mt-1">קונספט כשר מודרני בסגנון פסט-פוד (בהשגחת הרב אבימלך רוזנבלט), פתוחה עד השעה 02:00 בלילה</div>
+            <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Baku St 20b, טביליסי<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+995 596 11 61 49<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="font-semibold">Anise</div>
+            <div class="text-sm text-gray-600 mt-1">מסעדת מלון Gallery Palace Kosher Hotel, מטבח גאורגי משולב ישראלי. בשכונת סולולאקי, כ-2 דקות הליכה מכיכר החירות - קרוב מאוד למלון שלכם</div>
+            <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Pavle Ingorokva 5, טביליסי<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          </div>
+        </div>
       </div>
 
       <div class="mb-4">
         <h3 class="text-xl font-semibold mb-2">☕ חלבי / פרווה</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li><strong>Hummus Jerusalem Kosher</strong> — חומוס, פלאפל וסביח כשר — רחוב ירושלים (Ierusalimi) 2/5, טביליסי</li>
-        </ul>
+        <div class="p-3 bg-gray-50 rounded-lg shadow-sm">
+          <div class="font-semibold">Hummus Jerusalem Kosher (Halavi-Hummus)</div>
+          <div class="text-sm text-gray-600 mt-1">מסעדה חלבית בסגנון פסט-פוד - חומוס, פלאפל וסביח. יש גם ארוחות בוקר (מ-11:00). שעות: מדי יום 11:00-23:00</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Ierusalimi St 2/5, טביליסי<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+995 555 55 77 25<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🛒 משלוחים ומכולת כשרה</h3>
+        <div class="space-y-3">
+          <div class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="font-semibold">KFS - Kosher Food Service</div>
+            <div class="text-sm text-gray-600 mt-1">מטבח משלוחים כשר, הזמנה גם דרך אפליקציית Wolt. שעות: מדי יום 11:00-20:00</div>
+            <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">4 Bneli Dead End, טביליסי<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+995 599 66 18 18<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg shadow-sm">
+            <div class="font-semibold">Kosher Market</div>
+            <div class="text-sm text-gray-600 mt-1">מכולת מוצרים כשרים, ממש ליד מסעדת דוד/קינג דוד</div>
+            <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Kote Abkhazi 45, טביליסי<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          </div>
+        </div>
       </div>
 
       <div class="mb-4">
         <h3 class="text-xl font-semibold mb-2">🕍 בית חב"ד טביליסי</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li>ניתן להזמין ארוחות כשרות לשבת מראש — רחוב קוטה אפחזי (Kote Apkhazi), טביליסי. טלפון: <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+995 32 242 97 70<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | וואטסאפ: <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק וואטסאפ ללוח">+995 55 100 96 55<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></li>
-        </ul>
+        <div class="p-3 bg-gray-50 rounded-lg shadow-sm">
+          <div class="text-sm text-gray-600">ניתן להזמין ארוחות כשרות לשבת מראש</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Kote Apkhazi, טביליסי<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+995 32 242 97 70<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | וואטסאפ: <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק וואטסאפ ללוח">+995 55 100 96 55<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+        </div>
       </div>
 
       <div>
         <h3 class="text-xl font-semibold mb-2">🏔️ בגודאורי (ליום הטיול)</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li><strong>מסעדת בראשית (Bereshit)</strong> — מסעדה חלבית כשרה במלון Gudauri Inn, פתוחה מדי יום 17:00-23:00 (ארוחות ערב וסעודות שבת בהזמנה מראש). <strong>שימו לב:</strong> ארוחות הבוקר במסעדה מיועדות לאורחי המחלקה הכשרה של קשת טורס בלבד ואינן פתוחות לקהל הרחב - מתאימה לכם לארוחת ערב בדרך חזרה מהטיול. פרטים נוספים: <a href="https://lacasa.kosher-hotel.co.il/" target="_blank" class="text-blue-700 hover:underline">lacasa.kosher-hotel.co.il</a></li>
-        </ul>
+        <div class="p-3 bg-gray-50 rounded-lg shadow-sm">
+          <div class="font-semibold">מסעדת בראשית (Bereshit)</div>
+          <div class="text-sm text-gray-600 mt-1">מסעדה חלבית כשרה במלון Gudauri Inn, פתוחה מדי יום 17:00-23:00 (ארוחות ערב וסעודות שבת בהזמנה מראש)</div>
+          <div class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-2">שימו לב: ארוחות הבוקר במסעדה מיועדות לאורחי המחלקה הכשרה של קשת טורס בלבד ואינן פתוחות לקהל הרחב - מתאימה לכם לארוחת ערב בדרך חזרה מהטיול</div>
+          <div class="text-sm text-gray-600 mt-2">פרטים נוספים: <a href="https://lacasa.kosher-hotel.co.il/" target="_blank" class="text-blue-700 hover:underline">lacasa.kosher-hotel.co.il</a></div>
+        </div>
       </div>
     </section>
 
