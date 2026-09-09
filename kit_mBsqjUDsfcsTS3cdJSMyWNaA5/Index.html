@@ -1064,8 +1064,12 @@
         // Show main content after animation completes
         setTimeout(() => {
           if (new Date() >= KIT_EXPIRY) {
-            window.location.replace('../thank-you.html');
-            return;
+            let agentAccess = false;
+            try { agentAccess = localStorage.getItem('hoTravelAgent') === '1'; } catch (e) {}
+            if (!agentAccess) {
+              window.location.replace('../thank-you.html');
+              return;
+            }
           }
           mainContent.classList.add('visible');
           aiDisclaimerOverlay.classList.add('visible');

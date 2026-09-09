@@ -458,6 +458,7 @@
 
       function unlock() {
         try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (e) {}
+        try { localStorage.setItem('hoTravelAgent', '1'); } catch (e) {}
         lockScreen.classList.add('hidden');
         dashboard.classList.remove('hidden');
         renderTable();
