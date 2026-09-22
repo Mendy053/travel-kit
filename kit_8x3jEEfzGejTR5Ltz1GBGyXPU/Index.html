@@ -407,23 +407,25 @@
     #sectionNavPanel {
       position: fixed; top: 78px; left: 16px; z-index: 10050;
       width: 280px; max-width: calc(100vw - 32px); max-height: calc(100vh - 100px); overflow-y: auto;
-      background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.35);
-      padding: 18px 16px 16px; display: none; direction: rtl;
+      background: #fff; border-radius: 14px; box-shadow: 0 10px 34px rgba(0,0,0,0.35);
+      border-top: 4px solid #a08050;
+      padding: 20px 16px 16px; display: none; direction: rtl;
       font-family: 'Varela Round', sans-serif; color: #1f2937;
     }
     #sectionNavPanel.open { display: block; }
-    #sectionNavPanel h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #0e7490; }
+    #sectionNavPanel h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #e5e7eb; color: #1b3a3a; }
     .section-nav-link {
-      display: block; width: 100%; text-align: right; padding: 10px 12px; margin-bottom: 8px;
-      background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px;
+      display: block; width: 100%; text-align: right; padding: 11px 14px; margin-bottom: 8px;
+      background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px;
       cursor: pointer; font-size: 15px; color: #1f2937; font-family: inherit;
+      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
     }
-    .section-nav-link:hover, .section-nav-link:focus { background: #e5e7eb; outline: 2px solid #0e7490; }
+    .section-nav-link:hover, .section-nav-link:focus { background: #1b3a3a; color: #d9be93; border-color: #1b3a3a; outline: 2px solid #a08050; outline-offset: 1px; }
     #sectionNavClose {
       position: absolute; top: 10px; left: 10px; background: none; border: none;
-      font-size: 18px; line-height: 1; cursor: pointer; color: #6b7280; padding: 6px;
+      font-size: 18px; line-height: 1; cursor: pointer; color: #6b7280; padding: 6px; border-radius: 6px;
     }
-    #sectionNavClose:hover, #sectionNavClose:focus { color: #1f2937; outline: 2px solid #0e7490; }
+    #sectionNavClose:hover, #sectionNavClose:focus { color: #1f2937; background: #f3f4f6; outline: 2px solid #0e7490; }
   </style>
   <style id="a11y-styles">
     #a11y-toggle {
@@ -654,6 +656,11 @@
       closeBtn.addEventListener('click', closePanel);
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && panel.classList.contains('open')) { closePanel(); toggleBtn.focus(); }
+      });
+      document.addEventListener('click', function(e) {
+        if (!panel.classList.contains('open')) return;
+        if (panel.contains(e.target) || toggleBtn.contains(e.target)) return;
+        closePanel();
       });
 
       if (header && 'IntersectionObserver' in window) {

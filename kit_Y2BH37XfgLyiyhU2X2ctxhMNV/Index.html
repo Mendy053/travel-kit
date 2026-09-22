@@ -406,23 +406,25 @@
     #sectionNavPanel {
       position: fixed; top: 78px; left: 16px; z-index: 10050;
       width: 280px; max-width: calc(100vw - 32px); max-height: calc(100vh - 100px); overflow-y: auto;
-      background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.35);
-      padding: 18px 16px 16px; display: none; direction: rtl;
+      background: #fff; border-radius: 14px; box-shadow: 0 10px 34px rgba(0,0,0,0.35);
+      border-top: 4px solid #a08050;
+      padding: 20px 16px 16px; display: none; direction: rtl;
       font-family: 'Varela Round', sans-serif; color: #1f2937;
     }
     #sectionNavPanel.open { display: block; }
-    #sectionNavPanel h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #0e7490; }
+    #sectionNavPanel h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #e5e7eb; color: #1b3a3a; }
     .section-nav-link {
-      display: block; width: 100%; text-align: right; padding: 10px 12px; margin-bottom: 8px;
-      background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px;
+      display: block; width: 100%; text-align: right; padding: 11px 14px; margin-bottom: 8px;
+      background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px;
       cursor: pointer; font-size: 15px; color: #1f2937; font-family: inherit;
+      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
     }
-    .section-nav-link:hover, .section-nav-link:focus { background: #e5e7eb; outline: 2px solid #0e7490; }
+    .section-nav-link:hover, .section-nav-link:focus { background: #1b3a3a; color: #d9be93; border-color: #1b3a3a; outline: 2px solid #a08050; outline-offset: 1px; }
     #sectionNavClose {
       position: absolute; top: 10px; left: 10px; background: none; border: none;
-      font-size: 18px; line-height: 1; cursor: pointer; color: #6b7280; padding: 6px;
+      font-size: 18px; line-height: 1; cursor: pointer; color: #6b7280; padding: 6px; border-radius: 6px;
     }
-    #sectionNavClose:hover, #sectionNavClose:focus { color: #1f2937; outline: 2px solid #0e7490; }
+    #sectionNavClose:hover, #sectionNavClose:focus { color: #1f2937; background: #f3f4f6; outline: 2px solid #0e7490; }
   </style>
   <style id="a11y-styles">
     #a11y-toggle {
@@ -654,6 +656,11 @@
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && panel.classList.contains('open')) { closePanel(); toggleBtn.focus(); }
       });
+      document.addEventListener('click', function(e) {
+        if (!panel.classList.contains('open')) return;
+        if (panel.contains(e.target) || toggleBtn.contains(e.target)) return;
+        closePanel();
+      });
 
       if (header && 'IntersectionObserver' in window) {
         var observer = new IntersectionObserver(function(entries) {
@@ -825,9 +832,6 @@
             <div class="text-sm text-gray-600">תיק יד 1x8kg + מזוודה 1x23kg לנוסעת, לכל כיוון</div>
           </div>
         </div>
-        <div class="p-3 bg-gray-50 border-l-4 border-gray-300 rounded-md text-sm text-gray-700 mt-3">
-          <strong>תנאי כרטיס:</strong> שינוי תאריך: 120$ לנוסע, עד 3 ימי עסקים לפני היציאה, פעם אחת בלבד + הפרשי מחיר ומיסים. ביטול כרטיס: 210$ לנוסע, עד 3 ימי עסקים לפני היציאה.
-        </div>
         <div class="mt-3 flex flex-col gap-1">
           <a href="files/887413-he.pdf" target="_blank" class="text-blue-700 hover:underline">פתח הזמנת טיסות מלאה (887413-he.pdf)</a>
         </div>
@@ -852,11 +856,8 @@
           <div class="font-semibold">7seasons Apartments Budapest</div>
           <div class="text-sm text-gray-600 mt-1">חדר: Deluxe One-Bedroom</div>
           <div class="text-sm text-gray-600 mt-1">כניסה: 05/10/2026 | יציאה: 09/10/2026 (4 לילות) | בסיס אירוח: לינה בלבד | 3 מבוגרות</div>
-          <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Király Utca 8, בודפשט<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+36 20 274 7777<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | <span class="copyable" role="button" tabindex="0" aria-label="העתק אימייל ללוח">info@7seasonsapartments.com<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Király Utca 8, בודפשט<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+36 20 274 7777<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
           <div class="text-sm text-gray-600 mt-2">איש קשר בהזמנה: Roni Pinyan</div>
-          <div class="p-2 bg-green-50 border-l-4 border-green-400 text-green-800 rounded-md text-sm font-semibold mt-2">ניתן לבטל את ההזמנה ללא עלות עד 24/09/2026</div>
-          <div class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-2">לצורך תהליך הצ'ק-אין, יש לשלוח את כתובות האימייל של הנוסעות למלון לכתובת <span class="copyable" role="button" tabindex="0" aria-label="העתק אימייל ללוח">info@7seasonsapartments.com<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> - חשוב לא לשכוח לציין את מספר אישור ההזמנה (מתחיל ב-"206-")</div>
-          <div class="text-sm text-gray-600 mt-2">הדירות ממוזגות (משך פעילות המיזוג נקבע ע"י ועד הבית בהתאם לטמפרטורה)</div>
           <div class="text-sm text-gray-600 mt-2">מס עירוני משוער: 4% מעלות ההזמנה, ישולם במלון בעת ההגעה</div>
           <div class="text-sm text-gray-600 mt-1">צ'ק-אין: משעה 15:00 | צ'ק-אאוט: עד 11:00 | נדרשת תעודה מזהה בהגעה | גיל מינימלי לצ'ק-אין: 18 | זמין צ'ק-אין מקוון</div>
           <div class="text-sm text-gray-600 mt-1">יש חניה בתשלום נוסף: 32 יורו ליחידה ללילה</div>
@@ -907,18 +908,7 @@
           <li>מחירים: סים מקומי עם 5-10 ג'יגה כ-5-10 אירו; סים עם שיחות ואינטרנט ללא הגבלה כ-15-20 אירו</li>
           <li>נדרש דרכון לרישום הסים (חוק מקומי)</li>
           <li>אפשרות נוספת - eSIM שמופעל מראש מהארץ: <a href="https://www.airalo.com/" target="_blank" class="text-blue-700 hover:underline">Airalo</a> או <a href="https://www.mobimatter.com/" target="_blank" class="text-blue-700 hover:underline">Mobimatter</a></li>
-        </ul>
-      </div>
-
-      <div class="mt-5">
-        <h3 class="text-xl font-semibold mb-2">🛍️ שופינג וטיפ נוסף</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li>קניון <strong>Arena Mall (Aréna Pláza)</strong> - הכי מומלץ, קרוב לרובע היהודי, יש בו כמעט הכל</li>
-          <li>רחוב <strong>ואצי (Váci utca)</strong> - רחוב קניות מרכזי (חנויות כמו Zara), אך די מת בערב</li>
-          <li>שדרת <strong>אנדרשי (Andrássy Avenue)</strong> - שדרה ארוכה עד כיכר הגיבורים, בעיקר מותגי יוקרה</li>
-          <li>קניון <strong>Outlet</strong> - מומלץ במיוחד</li>
-          <li>החזר מע"מ (Tax Refund) ניתן רק על רכישות מעל 700 ש"ח; בקנייה נוספת באותו סניף חנות ניתן לבקש אישור/קבלה שיכלול את הסכום המצטבר</li>
-          <li>מומלץ להתלבש בשכבות - בקניונים ובמקומות סגורים חם מאוד</li>
+          <li>טיפ: מומלץ להתלבש בשכבות - בקניונים ובמקומות סגורים חם מאוד</li>
         </ul>
       </div>
     </section>
@@ -931,7 +921,7 @@
         <p>להלן לוח הזמנים המבוסס על ההזמנות שהופקו מתוך הקבצים:</p>
         <ol class="list-decimal pr-6 space-y-2 mt-4">
           <li><strong>05/10/2026 (יום ב'):</strong> טיסה מת"א (TLV) לבודפשט (BUD) — El Al (LY2367), 19:40-22:05</li>
-          <li><strong>05/10/2026 - 09/10/2026:</strong> לינה בדירת 7seasons Apartments Budapest (חדר Deluxe One-Bedroom), 4 לילות (לינה בלבד)</li>
+          <li><strong>05/10/2026 - 09/10/2026:</strong> לינה בסוויטת 7seasons Apartments Budapest (חדר Deluxe One-Bedroom), 4 לילות (לינה בלבד)</li>
           <li><strong>09/10/2026 (יום ו'):</strong> טיסת חזרה מבודפשט (BUD) לת"א (TLV) — El Al (LY2366), 08:40-12:45</li>
         </ol>
         <p class="mt-4">למידע מפורט על זמני המראות ונחיתות עיינו במסמכי ה-PDF המצורפים.</p>
@@ -965,7 +955,7 @@
         <h3 class="text-xl font-semibold mb-2">🛁 מרחצאות ומנוחה</h3>
         <ul class="list-disc pr-6 space-y-2 text-lg">
           <li><strong>מרחצאות סצ'ני (Széchenyi Baths)</strong> — מרחצאות תרמיים מפורסמים באוויר הפתוח, כיף במיוחד בחורף כשיש אדים מהמים; בחלק מהערבים (בעיקר בסופ"ש) מתקיימות שם מסיבות מים - כדאי לבדוק באתר המרחצאות מראש</li>
-          <li>ממש מאחורי כיכר הגיבורים (Hősök tere) - <strong>חלקת קרח</strong> ציבורית וקרקס, כיף לילדים ולמשפחה</li>
+          <li>ממש מאחורי כיכר הגיבורים (Hősök tere) - <strong>חלקת קרח</strong> ציבורית (בחורף בלבד) וקרקס, כיף לילדים ולמשפחה</li>
           <li><strong>מרחצאות גלרט (Gellért Baths)</strong> — חוויה יותר אותנטית ואדריכלות מהממת, בצד בודה, היסטוריים ומרשימים</li>
           <li><strong>מרחצאות רודאש (Rudas Baths)</strong> — גם בצד בודה, היסטוריים ויפים; שימו לב - בחלק מהשעות ישנה הפרדה בין המינים (לא מטעמי צניעות דתית, אלא כי בהונגריה נהוג להתרחץ שם עירום) - אזור הקבלה תמיד מעורב, הצד הימני נפרד. מי שמחפש הפרדה הלכתית אמיתית - זה לא המקום המתאים</li>
         </ul>
@@ -981,6 +971,7 @@
 
       <div class="mb-4">
         <h3 class="text-xl font-semibold mb-2">☕ קפה ניו יורק (Café New York)</h3>
+        <div class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-base font-semibold mb-2">שימו לב: המקום אינו כשר</div>
         <ul class="list-disc pr-6 space-y-2 text-lg">
           <li>נמצא בקצה הרחוק של הרובע היהודי; יש בדרך כלל תור ארוך אבל שווה את זה</li>
           <li>נמצא צמוד למלון Anantara New York - הכניסה דרך הלובי של המלון ופנייה שמאלה מובילה ישירות לבית הקפה</li>
@@ -1009,7 +1000,11 @@
         <h3 class="text-xl font-semibold mb-2">🛍️ שווקים וקניות</h3>
         <ul class="list-disc pr-6 space-y-2 text-lg">
           <li><strong>השוק המרכזי (Central Market Hall)</strong> — מקום מצוין לטעום אוכל מקומי ולקנות מזכרות; שימו לב - התבלינים הנמכרים שם <strong>אינם כשרים</strong></li>
-          <li><strong>רחוב ואצי (Váci utca)</strong> — רחוב קניות תיירותי עם מסעדות, חנויות ובתי קפה</li>
+          <li><strong>רחוב ואצי (Váci utca)</strong> — רחוב קניות תיירותי עם מסעדות, חנויות ובתי קפה, אך די מת בערב</li>
+          <li>קניון <strong>Arena Mall (Aréna Pláza)</strong> — הכי מומלץ, קרוב לרובע היהודי, יש בו כמעט הכל</li>
+          <li>שדרת <strong>אנדרשי (Andrássy Avenue)</strong> — שדרה ארוכה עד כיכר הגיבורים, בעיקר מותגי יוקרה</li>
+          <li><strong>Premier Outlet Budapest</strong> — מומלץ במיוחד; מעל 150 חנויות אופנה בהנחות של עד 70%. כתובת: Budaörsi út 4, 2051 Biatorbágy | שעות פתיחה: 10:00-20:00 (כל השבוע) | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+36 23 449 700<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></li>
+          <li>החזר מע"מ (Tax Refund) ניתן רק על רכישות מעל 700 ש"ח; בקנייה נוספת באותו סניף חנות ניתן לבקש אישור/קבלה שיכלול את הסכום המצטבר</li>
         </ul>
       </div>
     </section>
@@ -1082,16 +1077,6 @@
           <li><strong>קורטוש (עוגת ארובה)</strong> — Nagy Diófa u. 21, בלב הרובע היהודי</li>
         </ul>
       </div>
-
-      <div>
-        <h3 class="text-xl font-semibold mb-2">✡️ מניינים (שחרית, מנחה, ערבית) ומקווה</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li><strong>בית חב"ד המרכזי קרן אור</strong> — (הרב רסקין) — <a href="https://maps.app.goo.gl/Wdo3Kcf5tTh2C7zs6" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>עדת יראים</strong>, קזינצי — <a href="https://maps.app.goo.gl/2heaxdh6f41JVAje7" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>חברה ש"ס</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/KuU4gxdRDFKdJeW96" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>מקווה</strong> — Kazinczy u. 16</li>
-        </ul>
-      </div>
     </section>
 
       <section class="bg-white p-6 md:p-8 mt-6 rounded-xl shadow-lg animate-fadeIn">
@@ -1105,7 +1090,7 @@
           </li>
           <li>
             <a href="files/887379-he.pdf" target="_blank" class="text-blue-700 hover:underline">887379-he.pdf</a>
-            <div class="text-sm text-gray-600">הזמנת דירת 7seasons Apartments Budapest (Deluxe One-Bedroom) — כניסה: 05/10/2026, יציאה: 09/10/2026. ניתן לבטל עד 24/09/2026.</div>
+            <div class="text-sm text-gray-600">הזמנת סוויטת 7seasons Apartments Budapest (Deluxe One-Bedroom) — כניסה: 05/10/2026, יציאה: 09/10/2026.</div>
           </li>
         </ul>
       </section>
