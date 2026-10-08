@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:title" content="בודפשט 2026" />
-  <meta property="og:description" content="בודפשט 2026 - יהודית מלכה וינר ומוריה סופיר" />
-  <meta property="og:image" content="bkg.jpg" />
-  <title>קיט טיול | בודפשט 2026 - יהודית מלכה וינר ומוריה סופיר</title>
+  <meta property="og:title" content="ניו יורק וקנדה 2026" />
+  <meta property="og:description" content="ניו יורק וקנדה 2026 - שימון בן חמו" />
+  <meta property="og:image" content="https://images.pexels.com/photos/12843898/pexels-photo-12843898.jpeg" />
+  <title>קיט טיול | ניו יורק וקנדה 2026 - שימון בן חמו</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -26,7 +26,7 @@
       -moz-user-select: text;
       user-select: text;
     }
-    
+
     /* Loading Screen Styles */
     .loading-screen {
       position: fixed;
@@ -42,7 +42,7 @@
       z-index: 9999;
       transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
     }
-    
+
     .loading-content {
       display: flex;
       flex-direction: column;
@@ -53,12 +53,12 @@
       left: 50%;
       transform: translateX(-50%);
     }
-    
+
     .loading-screen.hidden {
       opacity: 0;
       visibility: hidden;
     }
-    
+
     .loading-logo {
       position: fixed;
       top: 40%;
@@ -73,14 +73,14 @@
       z-index: 10000;
       transition: all 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
     }
-    
+
     .loading-logo img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       border-radius: 50%;
     }
-    
+
     .loading-logo.animating {
       top: 20px;
       left: 5%;
@@ -90,12 +90,12 @@
       padding: 1.5px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
-    
+
     .loading-logo.fade-out {
       opacity: 0;
       transition: opacity 0.3s ease-out;
     }
-    
+
     .loading-bar-container {
       width: 200px;
       height: 4px;
@@ -106,14 +106,14 @@
       box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
       position: relative;
     }
-    
+
     .loading-bar {
       height: 100%;
       background: transparent;
       border-radius: 2px;
       width: 100%;
     }
-    
+
     .loading-plane {
       position: absolute;
       top: -8px;
@@ -122,7 +122,7 @@
       font-size: 16px;
       animation: plane-move var(--loading-duration, 3s) linear forwards;
     }
-    
+
     @keyframes plane-move {
       from {
         right: 200px;
@@ -131,28 +131,28 @@
         right: -5px;
       }
     }
-    
+
     .loading-text {
       color: #666;
       font-size: 16px;
       font-weight: 500;
     }
-    
+
     /* Main content - hidden initially */
     .main-content {
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.8s ease-out;
     }
-    
+
     .main-content.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    
+
     /* Custom styles for the header background image */
     .header-bg {
-      background-image: url('bkg.jpg');
+      background-image: url('https://images.pexels.com/photos/12843898/pexels-photo-12843898.jpeg');
       background-position: center center;
       background-size: cover;
       position: relative;
@@ -180,7 +180,7 @@
       opacity: 0;
       transition: opacity 0.3s ease-in;
     }
-    
+
     .logo-container.visible {
       opacity: 1;
     }
@@ -770,7 +770,7 @@
       <div class="contact-info">
         הודיה אוריאן • 054-8792582
       </div>
-      <h1 class="text-4xl md:text-5xl font-bold drop-shadow-lg">בודפשט 2026 </br>יהודית ומוריה</h1>
+      <h1 class="text-4xl md:text-5xl font-bold drop-shadow-lg">ניו יורק וקנדה 2026 </br>שימון בן חמו</h1>
     </header>
 
     <main class="p-4 md:p-8 max-w-4xl mx-auto">
@@ -779,70 +779,13 @@
       <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
         <span class="ml-2">✈️</span> טיסות בינלאומיות
       </h2>
-      <div class="mb-4">
-        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md font-semibold mb-3"><strong>דרישה:</strong> יש לוודא כי תוקף הדרכון הינו 6 חודשים לפחות ממועד היציאה מהארץ, וכי הדרכון מכיל לפחות דף ריק אחד.</div>
-        <p class="text-lg">פרטי טיסות בינלאומיות:</p>
-        <div class="overflow-x-auto mt-4">
-          <table class="min-w-full text-right text-sm">
-            <thead>
-              <tr class="bg-gray-100">
-                <th class="px-3 py-2">קטע</th>
-                <th class="px-3 py-2">חברת תעופה</th>
-                <th class="px-3 py-2">מס' טיסה</th>
-                <th class="px-3 py-2">תאריך</th>
-                <th class="px-3 py-2">מ־</th>
-                <th class="px-3 py-2">ל־</th>
-                <th class="px-3 py-2">המראה</th>
-                <th class="px-3 py-2">נחיתה</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-t">
-                <td class="px-3 py-2">יציאה</td>
-                <td class="px-3 py-2">Arkia</td>
-                <td class="px-3 py-2"><span class="copyable" role="button" tabindex="0" aria-label="העתק מספר טיסה ללוח">IZ291<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></td>
-                <td class="px-3 py-2">23/08/2026</td>
-                <td class="px-3 py-2">TLV (Ben Gurion)</td>
-                <td class="px-3 py-2">BUD (Ferihegy, בודפשט)</td>
-                <td class="px-3 py-2">16:35</td>
-                <td class="px-3 py-2">19:10</td>
-              </tr>
-              <tr class="border-t">
-                <td class="px-3 py-2">חזרה</td>
-                <td class="px-3 py-2">Israir</td>
-                <td class="px-3 py-2"><span class="copyable" role="button" tabindex="0" aria-label="העתק מספר טיסה ללוח">6H726<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></td>
-                <td class="px-3 py-2">27/08/2026</td>
-                <td class="px-3 py-2">BUD (Ferihegy)</td>
-                <td class="px-3 py-2">TLV (Ben Gurion)</td>
-                <td class="px-3 py-2">19:30</td>
-                <td class="px-3 py-2">23:40</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="table-scroll-hint" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
-
-        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="p-3 bg-gray-50 rounded-lg">
-            <div class="font-semibold">PNR</div>
-            <div class="text-sm text-gray-600"><span class="copyable" role="button" tabindex="0" aria-label="העתק PNR ללוח">13711867<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> (יציאה), <span class="copyable" role="button" tabindex="0" aria-label="העתק PNR ללוח">4736732<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> (חזרה)</div>
-          </div>
-          <div class="p-3 bg-gray-50 rounded-lg">
-            <div class="font-semibold">כבודה</div>
-            <div class="text-sm text-gray-600">יציאה (Arkia): כבודת יד 1x8kg לנוסע. חזרה (Israir): חבילה אחת עד 10 ק"ג לנוסע</div>
-          </div>
-        </div>
-        <div class="mt-3 flex flex-col gap-1">
-          <a href="files/859966-he.pdf" target="_blank" class="text-blue-700 hover:underline">פתח הזמנת טיסות מלאה (859966-he.pdf)</a>
-        </div>
-      </div>
+      <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md font-semibold">פרטי הטיסות טרם נקבעו - יתעדכנו כאן ברגע שיתקבלו.</div>
     </section>
 
     <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
-      <h3 class="text-2xl font-semibold mb-3">נוסעים וכבודה</h3>
+      <h3 class="text-2xl font-semibold mb-3">נוסעים</h3>
       <ul class="list-none p-0 space-y-2 text-lg">
-        <li><strong>נוסעות:</strong> Yehudit Malka Wiener (ת. לידה 14/10/2005), Moria Soufir (ת. לידה 30/03/2005)</li>
-        <li><strong>כבודה:</strong> יציאה (Arkia) - כבודת יד 1x8kg לנוסעת; חזרה (Israir) - חבילה אחת עד 10 ק"ג לנוסעת</li>
+        <li><strong>נוסע:</strong> שימון בן חמו</li>
       </ul>
     </section>
 
@@ -850,50 +793,72 @@
       <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
         <span class="ml-2">🏨</span> מלונות
       </h2>
+      <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md font-semibold mb-4">תאריכי הכניסה/יציאה המדויקים טרם נקבעו - המלונות המתוכננים מפורטים למטה לפי מקומם במסלול.</div>
       <ul class="list-none p-0 space-y-3 text-lg">
         <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
-          <img src="files/hotel-leonardo-budapest.jpg" alt="Leonardo Boutique Hotel Budapest M Square" class="w-full rounded-md shadow-sm mb-3" />
-          <div class="font-semibold">Leonardo Boutique Hotel Budapest M Square</div>
-          <div class="text-sm text-gray-600 mt-1">חדר: Superior Room</div>
-          <div class="text-sm text-gray-600 mt-1">כניסה: 23/08/2026 | יציאה: 27/08/2026 (4 לילות) | בסיס אירוח: לינה בלבד | 2 מבוגרות</div>
-          <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Madách Tér 2, בודפשט<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">36-1-8016300<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | <span class="copyable" role="button" tabindex="0" aria-label="העתק אימייל ללוח">info.boutiquebudapest@leonardo-hotels.com<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
-          <div class="text-sm text-gray-600 mt-2">איש קשר בהזמנה: Yehudit Malka Wiener</div>
-          <div class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-2">שימו לב: הזמנה לא ניתנת לביטול</div>
-          <div class="text-sm text-gray-600 mt-2">מס עירוני משוער: 4% מעלות ההזמנה, ישולם במלון בעת ההגעה</div>
-          <div class="text-sm text-gray-600 mt-1">קבלת מפתחות/צ'ק-אין: משעה 14:00 | צ'ק-אאוט: עד 11:00 | נדרשת תעודה מזהה בהגעה</div>
-          <div class="text-sm text-gray-600 mt-1">אין חניה במלון</div>
-          <a href="files/859976-he.pdf" target="_blank" class="text-blue-700 hover:underline mt-2 inline-block">פתח קובץ הזמנה</a>
+          <div class="font-semibold">Holiday Inn Express &amp; Suites Watertown-Thousand Islands</div>
+          <div class="text-sm text-gray-600 mt-1">לינה בסוף יום 1 במסלול (אזור ווטרטאון, לא אלכסנדריה ביי עצמה)</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">1290 Arsenal Street, Watertown, NY 13601<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+1 315-779-1234<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+        </li>
+        <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+          <div class="font-semibold">Days Inn &amp; Suites by the Falls</div>
+          <div class="text-sm text-gray-600 mt-1">לינה בסוף יום 2 במסלול, באזור קליפטון הילס - נגיש ברגל לתצפית על המפלים המוארים בערב</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">5068 Centre Street, Niagara Falls, ON L2G 3N9<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+1 905-357-2550<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
         </li>
       </ul>
     </section>
 
     <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
       <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
-        <span class="ml-2">🚕</span> תחבורה ומטבע - טיפים מעשיים
+        <span class="ml-2">🍁</span> שתי נקודות לסגור לפני הנסיעה
       </h2>
+      <ul class="list-disc pr-6 space-y-2 text-lg">
+        <li>השייט באלף האיים, Maid of the Mist ומסעדת Niagara Kosher בקנדה כולם תלויים בעונה. עונת 2026 של Maid of the Mist פעילה 24/04-08/11; מסעדת Niagara Kosher סיימה את עונת 2026 ב-09/09. יש לאמת זמינות מחדש מול התאריך הסופי של הנסיעה</li>
+        <li>לעצירת הקניות ביום 3 נבחר Waterloo (Finger Lakes) Premium Outlets, הקרוב והטבעי יותר למסלול המקורי - חלופה אפשרית היא Woodbury Common Premium Outlets הגדול יותר ליד ניו יורק, אך זה משנה את סדר היום</li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">📆</span> מסלול הכביש - 3 ימים
+      </h2>
+      <p class="text-lg mb-4">ניו יורק → הרי הפוקונוס → אלף האיים → מפלי הניאגרה (צד אמריקאי וקנדי) → אגמי האצבעות → ניו יורק. להלן נקודות הניווט המדויקות לכל עצירה - חניונים וכניסות בפועל, לא רק מרכז האטרקציה.</p>
 
       <div class="mb-5">
-        <h3 class="text-xl font-semibold mb-2">מוניות</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li>מומלץ להשתמש רק במוניות חוקיות - מונית צהובה, עם שלט TAXI על הגג, מונה פעיל ולוחית רישוי צהובה</li>
-          <li>לא מומלץ לעלות על מונית ברחוב אקראי - מומלץ להזמין דרך אפליקציה או טלפון</li>
-          <li>אפליקציות מומלצות: <strong>Bolt</strong> (הכי נוחה, אמינה וזולה), <strong>Főtaxi</strong> (טובה גם בשדה התעופה), City Taxi / 6x6 Taxi</li>
-          <li class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-base font-semibold">אין Uber בבודפשט! מי שמציע "Uber" או נסיעה פרטית ברחוב - כנראה נוכל</li>
-          <li>בשדה התעופה: מומלץ לגשת לעמדת Főtaxi ביציאה, אין צורך לחפש נהג באופן עצמאי</li>
-        </ul>
+        <h3 class="text-xl font-semibold mb-2">יום 1 - ניו יורק, הרי הפוקונוס ואלף האיים</h3>
+        <p class="text-base text-gray-600 mb-2">יום נסיעה ארוך. מומלץ לצאת מוקדם ולהזמין את השייט מראש.</p>
+        <ol class="list-decimal pr-6 space-y-2 text-lg">
+          <li>יציאה מניו יורק לכיוון הרי הפוקונוס בפנסילבניה - אפשר לעצור לקפה וארוחת בוקר קלה בדרך</li>
+          <li>המשך נסיעה צפונה-מערבה דרך אזור בינגהמטון וסירקיוז לכיוון אלף האיים - עדיף להשאיר את רוב העצירות ליעד המרכזי של היום</li>
+          <li>שייט באלף האיים - <strong>Uncle Sam Boat Tours</strong>, מזח וחניון בכתובת <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">45 James Street, Alexandria Bay, NY 13607<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span>. מומלץ השייט התיירותי של כשעה שעובר בין האיים ו-Millionaires' Row; מי שרוצה לרדת ולבקר בטירת בולט (Boldt Castle) צריך לבחור שייט שמאפשר זאת ולהוסיף זמן. אתר ולוחות זמנים: <a href="https://www.usboattours.com/" target="_blank" class="text-blue-700 hover:underline">usboattours.com</a></li>
+          <li>לינה - <strong>Holiday Inn Express &amp; Suites Watertown-Thousand Islands</strong>, <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">1290 Arsenal Street, Watertown, NY 13601<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></li>
+        </ol>
       </div>
 
       <div class="mb-5">
-        <h3 class="text-xl font-semibold mb-2">המרת מטבע</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li>המטבע המקומי הוא פורינט הונגרי (HUF) - לא משתמשים ביורו, למעט מקומות תיירותיים מאוד (ואז בשער גבוה)</li>
-          <li>לא כדאי להמיר בשדה התעופה או בעמדות תיירותיות מרכזיות (כמו רחוב ואצי) - השער גבוה</li>
-          <li>כדאי לחפש בתי חלפנות עם שלט "No Commission", ולוודא שהפער בין שער קנייה למכירה נמוך</li>
-          <li>מומלץ להוציא מעט מזומן ולהשתמש בעיקר באשראי; כ-20,000-30,000 פורינט לאדם מספיקים לנסיעות, טיפים ודברים קטנים</li>
-          <li>רוב המסעדות, החנויות והמוזיאונים מכבדים כרטיסי אשראי/דביט</li>
-        </ul>
+        <h3 class="text-xl font-semibold mb-2">יום 2 - מפלי הניאגרה, מעבר לקנדה וקליפטון הילס</h3>
+        <p class="text-base text-gray-600 mb-2">היום העמוס ביותר מבחינת אטרקציות. כדאי להתחיל מוקדם.</p>
+        <ol class="list-decimal pr-6 space-y-2 text-lg">
+          <li>נסיעה מווטרטאון לצד האמריקאי של המפלים - <strong>Niagara Falls State Park</strong>, חניון Prospect Point (קרוב למרכז המבקרים ולמתחם הכרטיסים של Maid of the Mist): <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">333 Prospect Street, Niagara Falls, NY 14303<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></li>
+          <li>שייט <strong>Maid of the Mist</strong> - כרטיסים ישירות במתחם Prospect Point; השייט מקרב למפלים האמריקאיים ולמפל הפרסה הקנדי, כולל רסס. <span class="font-semibold">עונתי - עונת 2026: 24/04-08/11.</span> אתר רשמי, שעות וכרטיסים: <a href="https://www.maidofthemist.com/" target="_blank" class="text-blue-700 hover:underline">maidofthemist.com</a></li>
+          <li><strong>Goat Island</strong>, נקודת Terrapin Point ואי Luna Island - חניון שונה מהחניון של Prospect Point: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">15 Goat Island Loop Road, Niagara Falls, NY 14303<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span>. משם המשך הליכה בין נקודות התצפית</li>
+          <li>מעבר הגבול לקנדה דרך <strong>Rainbow Bridge</strong> (לא דרך גשר אלף האיים) - יש לוודא מראש שכל הנוסעים מחזיקים במסמכי הכניסה המתאימים לקנדה ולחזרה לארה"ב</li>
+          <li>ארוחה כשרה בקנדה - <strong>Niagara Kosher</strong>, במתחם Jewish Welcome Centre: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">6417 Main Street, Niagara Falls, ON L2G 5Y3<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span>. פועלות שם מסעדה חלבית ומסעדת בשרים בהשגחת COR, בהתאם לעונה ולשעות הפתיחה. <span class="font-semibold">שימו לב: עונת 2026 הסתיימה ב-09/09 - אם הנסיעה בפועל מתוכננת אחרי תאריך זה, יש לאמת זמינות מחדש ולא להסתמך על כך שהמסעדה פתוחה.</span> אתר רשמי: <a href="https://www.niagarakosher.com/" target="_blank" class="text-blue-700 hover:underline">niagarakosher.com</a></li>
+          <li>שעון הפרחים (Floral Clock) בדרך לאורך ה-Niagara Parkway: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">14004 Niagara Parkway, Queenston, ON L0S 1L0<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> - עצירת צילום קצרה, אתר עונתי עם חניה חינם</li>
+          <li><strong>ניאגרה-און-דה-לייק (Niagara-on-the-Lake)</strong> - טיול ברחוב Queen Street בין המבנים ההיסטוריים, החנויות והגלריות; מומלץ כ-45-60 דקות</li>
+          <li>לינה - <strong>Days Inn &amp; Suites by the Falls</strong>, <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">5068 Centre Street, Niagara Falls, ON L2G 3N9<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> - קרוב לקליפטון הילס ולתצפית על המפלים המוארים בערב</li>
+        </ol>
       </div>
 
+      <div>
+        <h3 class="text-xl font-semibold mb-2">יום 3 - חזרה לארה"ב, אגמי האצבעות וניו יורק</h3>
+        <ol class="list-decimal pr-6 space-y-2 text-lg">
+          <li>חזרה לארה"ב דרך Rainbow Bridge - כדאי לצאת מוקדם כדי להשאיר זמן לאגם ולאאוטלט</li>
+          <li><strong>סקנאטלס (Skaneateles)</strong> - טיילת שפת האגם סביב רחוב East Genesee Street, בין חנויות ובתי קפה; כ-45-60 דקות מספיקות לעצירה נעימה</li>
+          <li>עצירת קניות - <strong>Waterloo (Finger Lakes) Premium Outlets</strong>: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">655 NY-318, Waterloo, NY 13165<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> - כשעה עד שעתיים, בהתאם לרצון לקניות ולשעת החזרה</li>
+          <li>חזרה לניו יורק - כדאי להשאיר מרווח לנסיעה ארוכה ולעומסי תנועה בכניסה לעיר</li>
+        </ol>
+      </div>
     </section>
 
     <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
@@ -905,157 +870,6 @@
         <li class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-base font-semibold">ללקוחות H.O Travel יש הנחה של 10% בהזמנה הראשונה</li>
       </ul>
     </section>
-
-    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
-      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
-        <span class="ml-2">📆</span> לוח זמנים עיקרי
-      </h2>
-      <div class="prose text-lg">
-        <p>להלן לוח הזמנים המבוסס על ההזמנות שהופקו מתוך הקבצים:</p>
-        <ol class="list-decimal pr-6 space-y-2 mt-4">
-          <li><strong>23/08/2026:</strong> טיסה מת"א (TLV) לבודפשט (BUD) — Arkia (IZ291), 16:35-19:10</li>
-          <li><strong>23/08/2026 - 27/08/2026:</strong> לינה במלון Leonardo Boutique Hotel Budapest M Square, 4 לילות (לינה בלבד)</li>
-          <li><strong>27/08/2026:</strong> טיסת חזרה מבודפשט (BUD) לת"א (TLV) — Israir (6H726), 19:30-23:40</li>
-        </ol>
-        <p class="mt-4">למידע מפורט על זמני המראות ונחיתות עיינו במסמכי ה-PDF המצורפים.</p>
-      </div>
-    </section>
-
-    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
-      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
-        <span class="ml-2">💡</span> אתרים ואטרקציות מומלצות
-      </h2>
-
-      <div class="mb-4">
-        <h3 class="text-xl font-semibold mb-2">🏰 אתרים ואטרקציות מרכזיות</h3>
-        <ul class="list-disc pr-6 space-y-2 text-lg">
-          <li><strong>גבעת המצודה (Castle Hill)</strong> — כולל את טירת בודה (Buda Castle), גלריית האמנות הלאומית והמוזיאון ההיסטורי. נוף מרהיב לעיר ולנהר הדנובה</li>
-          <li><strong>מצודת הדייגים (Fisherman's Bastion)</strong> — מבנה לבן ומעוטר עם נופים פנורמיים לגשר השלשלאות ולבניין הפרלמנט</li>
-          <li><strong>בניין הפרלמנט ההונגרי</strong> — אחד המבנים המרשימים באירופה. ניתן לסייר בפנים - מומלץ להזמין כרטיסים מראש</li>
-          <li><strong>בית הכנסת הגדול ברחוב דוהאני</strong> — בית הכנסת הגדול ביותר באירופה, כולל מוזיאון יהדות ואנדרטה לזכר השואה</li>
-        </ul>
-      </div>
-
-      <div class="mb-4">
-        <h3 class="text-xl font-semibold mb-2">🌉 גשרים ונופים</h3>
-        <ul class="list-disc pr-6 space-y-2 text-lg">
-          <li><strong>גשר השלשלאות (Chain Bridge)</strong> — מחבר בין בודה לפשט, מואר בלילה, חוויה רומנטית</li>
-          <li><strong>טיילת הדנובה (Danube Promenade)</strong> — הליכה לאורך הנהר עם נוף מדהים, במיוחד בשקיעה</li>
-        </ul>
-      </div>
-
-      <div class="mb-4">
-        <h3 class="text-xl font-semibold mb-2">🛁 מרחצאות ומנוחה</h3>
-        <ul class="list-disc pr-6 space-y-2 text-lg">
-          <li><strong>מרחצאות סצ'ני (Széchenyi Baths)</strong> — מרחצאות תרמיים מפורסמים באוויר הפתוח, כיף במיוחד בחורף כשיש אדים מהמים</li>
-          <li><strong>מרחצאות גלרט (Gellért Baths)</strong> — חוויה יותר אותנטית ואדריכלות מהממת</li>
-        </ul>
-      </div>
-
-      <div class="mb-4">
-        <h3 class="text-xl font-semibold mb-2">🌳 טבע ונוף</h3>
-        <ul class="list-disc pr-6 space-y-2 text-lg">
-          <li><strong>גבעת גלרט (Gellért Hill) והאנדרטה לחירות</strong> — תצפית מדהימה על כל העיר</li>
-          <li><strong>אי מרגיט (Margaret Island)</strong> — פארק ירוק בלב הדנובה, אידיאלי לפיקניק, אופניים והליכה</li>
-        </ul>
-      </div>
-
-      <div>
-        <h3 class="text-xl font-semibold mb-2">🛍️ שווקים וקניות</h3>
-        <ul class="list-disc pr-6 space-y-2 text-lg">
-          <li><strong>השוק המרכזי (Central Market Hall)</strong> — מקום מצוין לטעום אוכל מקומי ולקנות מזכרות</li>
-          <li><strong>רחוב ואצי (Váci utca)</strong> — רחוב קניות תיירותי עם מסעדות, חנויות ובתי קפה</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
-      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
-        <span class="ml-2">🧭</span> הדרכה מקומית - משפחת בנאי
-      </h2>
-      <div class="p-4 bg-gray-50 rounded-lg shadow-sm">
-        <p class="text-lg">משפחת בנאי הינה משפחה ישראלית עם שורשים הונגרים, החיה כ-23 שנה בהונגריה עם ותק של 10 שנים בהדרכת קבוצות ישראלים בבודפשט ובהונגריה. הם ישמחו להדריך אתכם ולשתף אתכם בידע הרב שיש להם, ומעבר לכך לתת זווית ייחודית ממבט ראייה ישראלית-הונגרית על הונגריה - האנשים, התרבות, ההיסטוריה, הכלכלה והחברה המקומית - הכל באווירה חמה, קלילה, כיפית ונעימה.</p>
-        <p class="text-lg mt-3 font-semibold">2 מומלצים:</p>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li>שיט על נהר הדנובה (בשקיעה)</li>
-          <li>טיול ברך הדנובה בהדרכת משפחת בנאי</li>
-        </ul>
-        <div class="mt-3">
-          <a href="https://wa.me/36703603559" target="_blank" class="text-blue-700 hover:underline" dir="ltr">+36 70 360 3559</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
-      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
-        <span class="ml-2">🍽️</span> כל מה שכשר ומהודר בבודפשט
-      </h2>
-
-      <div class="mb-4">
-        <h3 class="text-xl font-semibold mb-2">🥩 בשרי</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li><strong>חנה</strong> — (התאחדות הרבנים) — <a href="https://maps.app.goo.gl/w4sKB3h5RsgDnK7y8" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>כרמל</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/DMnSTQbCgasRRzpT8" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>מרקש</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/UrQ5efa39egjXLv1A" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-        </ul>
-      </div>
-
-      <div class="mb-4">
-        <h3 class="text-xl font-semibold mb-2">🌭 סטריט פוד בשרי</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li><strong>נתאווהלו</strong> — (הרב יזדי) — <a href="https://maps.app.goo.gl/knx9ULZ33641AjGF6" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>אש'יז</strong> — (הרב רוטנברג) — <a href="https://maps.app.goo.gl/wwhQg1KpgDn7UyRk9" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>חומוס בר</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/s7zf4GLHCJoUUEkG7" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>פלאפל בר</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/VeSmGG2FsJMAMTaWA" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>שוק הכרמל</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/p9khi21bco4UxZFj9" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-        </ul>
-      </div>
-
-      <div class="mb-4">
-        <h3 class="text-xl font-semibold mb-2">☕ חלבי</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li><strong>קפה תמר</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/ouNxRe8PVvBYLWxJ8" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>ברוקלין בייגל</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/Zhka4PtAdwbCcArB7" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>קפה תל אביב</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/XDbzWvi9yprRh2Ar7" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-        </ul>
-      </div>
-
-      <div class="mb-4">
-        <h3 class="text-xl font-semibold mb-2">🥖 מכולות ומאפיות</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li><strong>כשר מרקט</strong> — (כשרויות שונות) — <a href="https://maps.app.goo.gl/ZDU5wA5tBVUXz2dA7" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>מאפייה אפטאון</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/G69KrredkWKuUwRv9" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>עגלת מאפים</strong> — (הרב אוברלנדר, ארוז בלבד) — <a href="https://maps.app.goo.gl/WF7HJtXa1RPsU4Qc8" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li>אוטומט סנדוויצ'ים כשר בקניון ארנה (Arena Mall)</li>
-        </ul>
-      </div>
-
-      <div>
-        <h3 class="text-xl font-semibold mb-2">✡️ מניינים (שחרית, מנחה, ערבית) ומקווה</h3>
-        <ul class="list-disc pr-6 space-y-1 text-lg">
-          <li><strong>בית חב"ד המרכזי קרן אור</strong> — (הרב רסקין) — <a href="https://maps.app.goo.gl/Wdo3Kcf5tTh2C7zs6" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>עדת יראים</strong>, קזינצי — <a href="https://maps.app.goo.gl/2heaxdh6f41JVAje7" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>חברה ש"ס</strong> — (הרב אוברלנדר) — <a href="https://maps.app.goo.gl/KuU4gxdRDFKdJeW96" target="_blank" class="text-blue-700 hover:underline">מפה</a></li>
-          <li><strong>מקווה</strong> — Kazinczy u. 16</li>
-        </ul>
-      </div>
-    </section>
-
-      <section class="bg-white p-6 md:p-8 mt-6 rounded-xl shadow-lg animate-fadeIn">
-        <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
-          <span class="ml-2">📎</span> קבצים מצורפים
-        </h2>
-        <ul class="list-none p-0 space-y-3 text-lg">
-          <li>
-            <a href="files/859966-he.pdf" target="_blank" class="text-blue-700 hover:underline">859966-he.pdf</a>
-            <div class="text-sm text-gray-600">אישורי טיסות (Arkia / Israir) — TLV↔BUD, 23/08/2026 ו-27/08/2026. PNR: 13711867 / 4736732.</div>
-          </li>
-          <li>
-            <a href="files/859976-he.pdf" target="_blank" class="text-blue-700 hover:underline">859976-he.pdf</a>
-            <div class="text-sm text-gray-600">הזמנת מלון Leonardo Boutique Hotel Budapest M Square — כניסה: 23/08/2026, יציאה: 27/08/2026. הזמנה לא ניתנת לביטול.</div>
-          </li>
-        </ul>
-      </section>
   </main>
   </div>
   <footer class="text-center text-sm text-gray-600 py-6 px-4">
@@ -1066,7 +880,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const KIT_EXPIRY = new Date('2026-08-29T00:00:00+03:00');
+      const KIT_EXPIRY = new Date('2027-10-08T00:00:00+03:00');
       const loadingScreen = document.getElementById('loadingScreen');
       const loadingLogo = document.getElementById('loadingLogo');
       const loadingPlane = document.getElementById('loadingPlane');
@@ -1078,23 +892,23 @@
       aiDisclaimerConfirm.addEventListener('click', () => {
         aiDisclaimerOverlay.classList.remove('visible');
       });
-      
+
       // Generate random loading duration between 2-7 seconds
       const loadingDuration = Math.random() * 5000 + 2000; // 2000-7000ms
-      
+
       // Set CSS variable for plane animation
       loadingPlane.style.setProperty('--loading-duration', loadingDuration + 'ms');
-      
+
       // Start loading
       setTimeout(() => {
         // Start logo animation to header position
         loadingLogo.classList.add('animating');
-        
+
         // Hide loading screen with 0.5s fade during animation
         setTimeout(() => {
           loadingScreen.classList.add('hidden');
         }, 700); // Hide loading screen 0.5s before animation completes
-        
+
         // Show main content after animation completes
         setTimeout(() => {
           if (new Date() >= KIT_EXPIRY) {
@@ -1107,7 +921,7 @@
           }
           mainContent.classList.add('visible');
           aiDisclaimerOverlay.classList.add('visible');
-          
+
           // Show the header logo after the animated logo reaches its position
           setTimeout(() => {
             headerLogo.classList.add('visible');
