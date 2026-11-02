@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="רומא 2026" />
+  <meta property="og:description" content="רומא 2026 - משפחת אוריאן" />
+  <meta property="og:image" content="https://images.pexels.com/photos/356966/pexels-photo-356966.jpeg" />
+  <title>קיט טיול | רומא 2026 - משפחת אוריאן</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Google Fonts - Varela Round for Hebrew */
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+    body {
+      font-family: 'Varela Round', sans-serif;
+      /* Default text direction for Hebrew */
+      direction: rtl;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+    /* Selection allowed only on titles/names/addresses - not on descriptive body text */
+    h1, h2, h3, h4, strong, .font-bold, .font-semibold, .copyable {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      user-select: text;
+    }
+
+    /* Loading Screen Styles */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loading-logo {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 3px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      z-index: 10000;
+      transition: all 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+
+    .loading-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .loading-logo.animating {
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .loading-logo.fade-out {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+
+    .loading-bar-container {
+      width: 200px;
+      height: 4px;
+      background-color: #e0e0e0;
+      border-radius: 2px;
+      overflow: visible;
+      margin-bottom: 30px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .loading-bar {
+      height: 100%;
+      background: transparent;
+      border-radius: 2px;
+      width: 100%;
+    }
+
+    .loading-plane {
+      position: absolute;
+      top: -8px;
+      right: 200px;
+      color: #A89B73;
+      font-size: 16px;
+      animation: plane-move var(--loading-duration, 3s) linear forwards;
+    }
+
+    @keyframes plane-move {
+      from {
+        right: 200px;
+      }
+      to {
+        right: -5px;
+      }
+    }
+
+    .loading-text {
+      color: #666;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    /* Main content - hidden initially */
+    .main-content {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
+    }
+
+    .main-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Custom styles for the header background image */
+    .header-bg {
+      background-image: url('https://images.pexels.com/photos/356966/pexels-photo-356966.jpeg');
+      background-position: center center;
+      background-size: cover;
+      position: relative;
+    }
+    .header-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65));
+      border-radius: inherit;
+    }
+    /* Logo styling */
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      left: 5%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 1.5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 200px;
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
+    }
+
+    .logo-container.visible {
+      opacity: 1;
+    }
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    /* Contact info styling */
+    .contact-info {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(0,0,0,0.45);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    /* Keyframe animation for fade-in effect */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.7s ease-in-out;
+    }
+    /* Custom styles from the user's provided HTML */
+    .tag {
+      display: inline-block;
+      background: #e1f5fe;
+      color: #0277bd;
+      padding: 0.2em 0.6em;
+      border-radius: 6px;
+      font-size: 0.85em;
+      margin-right: 0.5em; /* Adjusted for RTL */
+    }
+    a {
+      color: #007b9e;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h1{
+      color: white;
+  -webkit-text-stroke: 0.5px #A89B73;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8em;
+        color: white;
+  -webkit-text-stroke: 0.5px #A89B73;
+      }
+      main {
+        padding: 1em;
+      }
+      .logo-container {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .contact-info {
+        font-size: 12px;
+        bottom: 15px;
+        right: 15px;
+        padding: 4px 12px;
+      }
+      .loading-logo {
+        width: 120px;
+        height: 120px;
+        top: 35%;
+      }
+      .loading-logo.animating {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 50%;
+      }
+      .loading-content {
+        top: 50%;
+        gap: 8px;
+      }
+    }
+
+    /* AI Disclaimer Modal */
+    .ai-disclaimer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.55);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+    .ai-disclaimer-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .ai-disclaimer-box {
+      background: white;
+      border-radius: 16px;
+      padding: 28px 24px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .ai-disclaimer-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .ai-disclaimer-text {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .ai-disclaimer-button {
+      background-color: #756c50;
+      color: white;
+      border: none;
+      padding: 10px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: 'Varela Round', sans-serif;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .ai-disclaimer-button:hover {
+      background-color: #645d45;
+    }
+
+    /* Copy-to-clipboard fields */
+    .copyable {
+      cursor: pointer;
+      border-bottom: 1px dashed #0e7490;
+      border-radius: 3px;
+      transition: background-color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .copyable:hover, .copyable:focus {
+      background-color: rgba(14, 116, 144, 0.1);
+      outline: none;
+    }
+    .copyable:active {
+      background-color: rgba(14, 116, 144, 0.2);
+    }
+    .copyable svg {
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+    #copyToast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1f2937;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 10060;
+    }
+    #copyToast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Discourage casual saving/copying of images */
+    img {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      user-drag: none;
+      -webkit-touch-callout: none;
+    }
+
+    /* Hints that a wide table can be scrolled sideways on narrow screens */
+    @keyframes tableScrollHint {
+      0%, 100% { transform: translateX(0); opacity: 0.5; }
+      50% { transform: translateX(8px); opacity: 1; }
+    }
+    .table-scroll-hint {
+      display: none;
+      text-align: center;
+      color: #0e7490;
+      font-size: 20px;
+      min-height: 20px;
+      margin-top: 2px;
+      animation: tableScrollHint 1.3s ease-in-out infinite;
+    }
+    @media (max-width: 640px) {
+      .table-scroll-hint { display: block; }
+    }
+    /* Floating quick-navigation menu (shown once the header image scrolls out of view) */
+    #sectionNavToggle {
+      position: fixed; top: 16px; left: 16px; z-index: 10050;
+      width: 52px; height: 52px; border-radius: 50%;
+      background-color: #1b3a3a; color: #d9be93; border: 2px solid #a08050;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      padding: 0;
+      transition: opacity 0.2s ease-in-out, background-color 0.2s;
+    }
+    #sectionNavToggle[hidden] { display: none; }
+    #sectionNavToggle:hover, #sectionNavToggle:focus { background-color: #142d2d; outline: 3px solid #a08050; outline-offset: 2px; }
+    #sectionNavPanel {
+      position: fixed; top: 78px; left: 16px; z-index: 10050;
+      width: 280px; max-width: calc(100vw - 32px); max-height: calc(100vh - 100px); overflow-y: auto;
+      background: #fff; border-radius: 14px; box-shadow: 0 10px 34px rgba(0,0,0,0.35);
+      border-top: 4px solid #a08050;
+      padding: 20px 16px 16px; display: none; direction: rtl;
+      font-family: 'Varela Round', sans-serif; color: #1f2937;
+    }
+    #sectionNavPanel.open { display: block; }
+    #sectionNavPanel h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #e5e7eb; color: #1b3a3a; }
+    .section-nav-link {
+      display: block; width: 100%; text-align: right; padding: 11px 14px; margin-bottom: 8px;
+      background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px;
+      cursor: pointer; font-size: 15px; color: #1f2937; font-family: inherit;
+      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .section-nav-link:hover, .section-nav-link:focus { background: #1b3a3a; color: #d9be93; border-color: #1b3a3a; outline: 2px solid #a08050; outline-offset: 1px; }
+    #sectionNavClose {
+      position: absolute; top: 10px; left: 10px; background: none; border: none;
+      font-size: 18px; line-height: 1; cursor: pointer; color: #6b7280; padding: 6px; border-radius: 6px;
+    }
+    #sectionNavClose:hover, #sectionNavClose:focus { color: #1f2937; background: #f3f4f6; outline: 2px solid #0e7490; }
+  </style>
+  <style id="a11y-styles">
+    #a11y-toggle {
+      position: fixed; bottom: 16px; left: 16px; z-index: 10050;
+      width: 52px; height: 52px; border-radius: 50%;
+      background-color: #756c50; color: #fff; border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      padding: 0;
+    }
+    #a11y-toggle:hover, #a11y-toggle:focus { background-color: #645d45; outline: 3px solid #0e7490; outline-offset: 2px; }
+    #a11y-panel {
+      position: fixed; bottom: 78px; left: 16px; z-index: 10050;
+      width: 280px; max-width: calc(100vw - 32px);
+      background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      padding: 18px 16px 16px; display: none; direction: rtl;
+      font-family: 'Varela Round', sans-serif; color: #1f2937;
+    }
+    #a11y-panel.open { display: block; }
+    #a11y-panel h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #0e7490; }
+    .a11y-btn {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      text-align: right; padding: 10px 12px; margin-bottom: 8px;
+      background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px;
+      cursor: pointer; font-size: 15px; color: #1f2937; font-family: inherit;
+    }
+    .a11y-btn:hover, .a11y-btn:focus { background: #e5e7eb; outline: 2px solid #0e7490; }
+    .a11y-btn[aria-pressed="true"] { background: #5c5540; color: #fff; border-color: #5c5540; }
+    .a11y-btn[aria-pressed="true"]:hover, .a11y-btn[aria-pressed="true"]:focus { background: #46402f; }
+    #a11y-close {
+      position: absolute; top: 10px; left: 10px; background: none; border: none;
+      font-size: 18px; line-height: 1; cursor: pointer; color: #6b7280; padding: 6px;
+    }
+    #a11y-close:hover, #a11y-close:focus { color: #1f2937; outline: 2px solid #0e7490; }
+    .a11y-statement-link { text-align: center; justify-content: center; text-decoration: none !important; }
+
+    html.a11y-fs-2 { font-size: 112.5%; }
+    html.a11y-fs-3 { font-size: 125%; }
+    html.a11y-fs-4 { font-size: 137.5%; }
+
+    html.a11y-contrast body,
+    html.a11y-contrast body :not(#a11y-toggle):not(#a11y-toggle *):not(#a11y-panel):not(#a11y-panel *) {
+      background-color: #000 !important;
+      background-image: none !important;
+      color: #fff !important;
+      border-color: #555 !important;
+    }
+    html.a11y-contrast body a:not(#a11y-panel a) { color: #ffeb3b !important; }
+    html.a11y-contrast body img:not(#a11y-panel img) { filter: grayscale(1) contrast(1.2); }
+
+    html.a11y-links a:not(#a11y-panel a) {
+      text-decoration: underline !important;
+      font-weight: bold !important;
+      background-color: #fff59d !important;
+      color: #000 !important;
+    }
+
+    html.a11y-no-motion *, html.a11y-no-motion *::before, html.a11y-no-motion *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  </style>
+</head>
+<body class="bg-blue-50 text-gray-800 antialiased">
+  <!-- Accessibility Toolbar (IS 5568 / WCAG 2.1 AA) -->
+  <button id="a11y-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="a11y-panel" aria-label="תפריט נגישות" title="תפריט נגישות"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="7.2" r="1.9"/><path d="M12 9.6c-2.7 0-5.9.6-5.9 2.2 0 .6.5 1 1.1 1 1-.1 2.3-.5 3.3-.6l-.6 2.3-3 3.4c-.4.5-.4 1.2.1 1.6.5.4 1.2.4 1.6-.1l2.4-2.8h1.9l2.4 2.8c.4.5 1.1.5 1.6.1.5-.4.5-1.1.1-1.6l-3-3.4-.6-2.3c1 .1 2.3.5 3.3.6.6 0 1.1-.4 1.1-1 0-1.6-3.2-2.2-5.9-2.2z"/></svg></button>
+  <div id="a11y-panel" role="dialog" aria-label="אפשרויות נגישות">
+    <button id="a11y-close" type="button" aria-label="סגירת תפריט נגישות">✕</button>
+    <h2>נגישות</h2>
+    <button class="a11y-btn" id="a11y-inc-font" type="button" aria-pressed="false">א+ הגדלת טקסט</button>
+    <button class="a11y-btn" id="a11y-dec-font" type="button" aria-pressed="false">א- הקטנת טקסט</button>
+    <button class="a11y-btn" id="a11y-contrast" type="button" aria-pressed="false">◐ ניגודיות גבוהה</button>
+    <button class="a11y-btn" id="a11y-links" type="button" aria-pressed="false">🔗 הדגשת קישורים</button>
+    <button class="a11y-btn" id="a11y-motion" type="button" aria-pressed="false">⏸ עצירת אנימציות</button>
+    <button class="a11y-btn" id="a11y-reset" type="button" aria-pressed="false">↺ איפוס הגדרות</button>
+    <a href="accessibility-statement.html" class="a11y-btn a11y-statement-link">📄 הצהרת נגישות</a>
+  </div>
+  <script>
+  (function() {
+    var html = document.documentElement;
+    var fsLevel = 1;
+    var STORAGE_KEY = 'a11yPrefs';
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          fsLevel: fsLevel,
+          contrast: html.classList.contains('a11y-contrast'),
+          links: html.classList.contains('a11y-links'),
+          motion: html.classList.contains('a11y-no-motion')
+        }));
+      } catch (e) {}
+    }
+
+    function applyFontSize() {
+      html.classList.remove('a11y-fs-2', 'a11y-fs-3', 'a11y-fs-4');
+      if (fsLevel > 1) html.classList.add('a11y-fs-' + fsLevel);
+    }
+
+    function updatePressed(id, state) {
+      var btn = document.getElementById(id);
+      if (btn) btn.setAttribute('aria-pressed', state ? 'true' : 'false');
+    }
+
+    function loadState() {
+      try {
+        var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        fsLevel = saved.fsLevel || 1;
+        applyFontSize();
+        if (saved.contrast) { html.classList.add('a11y-contrast'); updatePressed('a11y-contrast', true); }
+        if (saved.links) { html.classList.add('a11y-links'); updatePressed('a11y-links', true); }
+        if (saved.motion) { html.classList.add('a11y-no-motion'); updatePressed('a11y-motion', true); }
+      } catch (e) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var toggleBtn = document.getElementById('a11y-toggle');
+      var panel = document.getElementById('a11y-panel');
+      var closeBtn = document.getElementById('a11y-close');
+
+      loadState();
+
+      function openPanel() {
+        panel.classList.add('open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        closeBtn.focus();
+      }
+      function closePanel() {
+        panel.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.focus();
+      }
+
+      toggleBtn.addEventListener('click', function() {
+        if (panel.classList.contains('open')) closePanel(); else openPanel();
+      });
+      closeBtn.addEventListener('click', closePanel);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+      });
+
+      document.getElementById('a11y-inc-font').addEventListener('click', function() {
+        fsLevel = Math.min(fsLevel + 1, 4);
+        applyFontSize();
+        saveState();
+      });
+      document.getElementById('a11y-dec-font').addEventListener('click', function() {
+        fsLevel = Math.max(fsLevel - 1, 1);
+        applyFontSize();
+        saveState();
+      });
+      document.getElementById('a11y-contrast').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-contrast');
+        updatePressed('a11y-contrast', active);
+        saveState();
+      });
+      document.getElementById('a11y-links').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-links');
+        updatePressed('a11y-links', active);
+        saveState();
+      });
+      document.getElementById('a11y-motion').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-no-motion');
+        updatePressed('a11y-motion', active);
+        saveState();
+      });
+      document.getElementById('a11y-reset').addEventListener('click', function() {
+        fsLevel = 1;
+        applyFontSize();
+        html.classList.remove('a11y-contrast', 'a11y-links', 'a11y-no-motion');
+        updatePressed('a11y-contrast', false);
+        updatePressed('a11y-links', false);
+        updatePressed('a11y-motion', false);
+        saveState();
+      });
+    });
+  })();
+  </script>
+  <!-- End Accessibility Toolbar -->
+
+  <!-- Floating quick-navigation menu -->
+  <button id="sectionNavToggle" type="button" hidden aria-haspopup="true" aria-expanded="false" aria-controls="sectionNavPanel" aria-label="ניווט מהיר בין הסעיפים" title="ניווט מהיר"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></button>
+  <div id="sectionNavPanel" role="dialog" aria-label="ניווט מהיר בין הסעיפים">
+    <button id="sectionNavClose" type="button" aria-label="סגירת תפריט הניווט">✕</button>
+    <h2>ניווט מהיר</h2>
+    <nav id="sectionNavList"></nav>
+  </div>
+  <script>
+  (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      var toggleBtn = document.getElementById('sectionNavToggle');
+      var panel = document.getElementById('sectionNavPanel');
+      var closeBtn = document.getElementById('sectionNavClose');
+      var listEl = document.getElementById('sectionNavList');
+      var header = document.querySelector('.header-bg');
+      if (!toggleBtn || !panel || !closeBtn || !listEl) return;
+
+      var sections = document.querySelectorAll('main > section');
+      sections.forEach(function(sec, idx) {
+        var heading = sec.querySelector('h2, h3');
+        if (!heading) return;
+        if (!sec.id) sec.id = 'section-nav-' + idx;
+        var link = document.createElement('button');
+        link.type = 'button';
+        link.className = 'section-nav-link';
+        link.textContent = heading.textContent.trim();
+        link.addEventListener('click', function() {
+          var noMotion = document.documentElement.classList.contains('a11y-no-motion');
+          sec.scrollIntoView({ behavior: noMotion ? 'auto' : 'smooth', block: 'start' });
+          closePanel();
+        });
+        listEl.appendChild(link);
+      });
+
+      function openPanel() {
+        panel.classList.add('open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        closeBtn.focus();
+      }
+      function closePanel() {
+        panel.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      toggleBtn.addEventListener('click', function() {
+        if (panel.classList.contains('open')) closePanel(); else openPanel();
+      });
+      closeBtn.addEventListener('click', closePanel);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && panel.classList.contains('open')) { closePanel(); toggleBtn.focus(); }
+      });
+      document.addEventListener('click', function(e) {
+        if (!panel.classList.contains('open')) return;
+        if (panel.contains(e.target) || toggleBtn.contains(e.target)) return;
+        closePanel();
+      });
+
+      if (header && 'IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              toggleBtn.setAttribute('hidden', '');
+              closePanel();
+            } else {
+              toggleBtn.removeAttribute('hidden');
+            }
+          });
+        }, { threshold: 0 });
+        observer.observe(header);
+      }
+    });
+  })();
+  </script>
+
+  <!-- Copy-to-clipboard for addresses / PNR / flight numbers etc. -->
+  <div id="copyToast" role="status" aria-live="polite"></div>
+  <script>
+  (function() {
+    var toast = document.getElementById('copyToast');
+    var toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2000);
+    }
+    function copyValue(el) {
+      var text = el.getAttribute('data-copy') || el.textContent.trim();
+      function done(ok) {
+        showToast(ok ? 'הועתק ללוח: ' + text : 'לא ניתן להעתיק');
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() { done(true); }, function() { done(false); });
+      } else {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          done(true);
+        } catch (e) {
+          done(false);
+        }
+      }
+    }
+    document.addEventListener('click', function(e) {
+      var el = e.target.closest('.copyable');
+      if (el) copyValue(el);
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var el = e.target.closest('.copyable');
+      if (el) { e.preventDefault(); copyValue(el); }
+    });
+
+    // Discourage casual saving/copying of images
+    document.addEventListener('contextmenu', function(e) {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    });
+    document.addEventListener('dragstart', function(e) {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    });
+  })();
+  </script>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <div class="loading-bar-container">
+        <div class="loading-bar" id="loadingBar"></div>
+        <div class="loading-plane" id="loadingPlane">
+          <i class="fas fa-plane"></i>
+        </div>
+      </div>
+      <div class="loading-text">תכינו דרכונים...</div>
+    </div>
+  </div>
+
+  <!-- Loading Logo (separate from loading screen) -->
+  <div class="loading-logo" id="loadingLogo">
+    <img src="logo.jpg" alt="לוגו">
+  </div>
+
+  <!-- AI Disclaimer Modal -->
+  <div class="ai-disclaimer-overlay" id="aiDisclaimerOverlay">
+    <div class="ai-disclaimer-box">
+      <div class="ai-disclaimer-icon">⚠️</div>
+      <div class="ai-disclaimer-text">המידע בדף זה הופק בסיוע בינה מלאכותית ועשוי להכיל אי-דיוקים. יש לוודא מול הקבצים המקוריים שהתקבלו בסגירת הטיול, הספקים או H.O Travel.</div>
+      <button class="ai-disclaimer-button" id="aiDisclaimerConfirm">הבנתי</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <header class="header-bg h-72 flex items-center justify-center text-center text-white shadow-lg rounded-b-xl">
+      <div class="logo-container">
+        <img src="logo.jpg" alt="לוגו">
+      </div>
+      <div class="contact-info">
+        הודיה אוריאן • 054-8792582
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold drop-shadow-lg">רומא 2026 </br>משפחת אוריאן</h1>
+    </header>
+
+    <main class="p-4 md:p-8 max-w-4xl mx-auto">
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">✈️</span> טיסות בינלאומיות
+      </h2>
+      <div class="mb-4">
+        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md font-semibold mb-3"><strong>דרישה:</strong> יש לוודא כי תוקף הדרכון הינו 6 חודשים לפחות ממועד היציאה מהארץ (כולל הדרכון של התינוק/ת), וכי הדרכון מכיל לפחות דף ריק אחד.</div>
+        <p class="text-lg">פרטי טיסות בינלאומיות (אל על):</p>
+        <div class="overflow-x-auto mt-4">
+          <table class="min-w-full text-right text-sm">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="px-3 py-2">קטע</th>
+                <th class="px-3 py-2">חברת תעופה</th>
+                <th class="px-3 py-2">מס' טיסה</th>
+                <th class="px-3 py-2">תאריך</th>
+                <th class="px-3 py-2">מ־</th>
+                <th class="px-3 py-2">ל־</th>
+                <th class="px-3 py-2">המראה</th>
+                <th class="px-3 py-2">נחיתה</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t">
+                <td class="px-3 py-2">יציאה</td>
+                <td class="px-3 py-2">El Al</td>
+                <td class="px-3 py-2"><span class="copyable" role="button" tabindex="0" aria-label="העתק מספר טיסה ללוח">LY383<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></td>
+                <td class="px-3 py-2">08/11/2026 (יום א')</td>
+                <td class="px-3 py-2">TLV (טרמינל 3)</td>
+                <td class="px-3 py-2">FCO (טרמינל 3)</td>
+                <td class="px-3 py-2">18:15</td>
+                <td class="px-3 py-2">21:00</td>
+              </tr>
+              <tr class="border-t">
+                <td class="px-3 py-2">חזרה</td>
+                <td class="px-3 py-2">El Al</td>
+                <td class="px-3 py-2"><span class="copyable" role="button" tabindex="0" aria-label="העתק מספר טיסה ללוח">LY386<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></td>
+                <td class="px-3 py-2">11/11/2026 (יום ד')</td>
+                <td class="px-3 py-2">FCO (טרמינל 3)</td>
+                <td class="px-3 py-2">TLV (טרמינל 3)</td>
+                <td class="px-3 py-2">10:05</td>
+                <td class="px-3 py-2">14:25</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-scroll-hint" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold">PNR (אל על)</div>
+            <div class="text-sm text-gray-600"><span class="copyable" role="button" tabindex="0" aria-label="העתק PNR ללוח">9XQR9P<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold">קוד הזמנה (Travelport)</div>
+            <div class="text-sm text-gray-600"><span class="copyable" role="button" tabindex="0" aria-label="העתק קוד הזמנה ללוח">GW7MTQ<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          </div>
+        </div>
+        <div class="mt-4 bg-gray-50 rounded-lg p-3">
+          <div class="font-semibold mb-2">כבודה (לכל כיוון)</div>
+          <ul class="list-disc pr-6 space-y-1 text-base">
+            <li>מנחם מענדל והודיה - תיק יד 1x8kg לכל אחד, <span class="font-semibold">ללא מזוודה מוטסת כלולה</span> (ניתן לרכוש: 85$ למזוודה של 23 ק"ג בהלוך, 73 אירו בחזור)</li>
+            <li>יהלום (אינפנט) - מזוודה מוטסת 1x23kg כלולה</li>
+          </ul>
+        </div>
+        <div class="text-base text-gray-600 mt-3">מטוס Boeing 737-900, מחלקת תיירים, מוגש חטיף בטיסה.</div>
+        <div class="mt-3 flex flex-col gap-1">
+          <a href="files/ORIAN-flights.pdf" target="_blank" class="text-blue-700 hover:underline">פתח הזמנת טיסות מלאה (ORIAN-flights.pdf)</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h3 class="text-2xl font-semibold mb-3">נוסעים</h3>
+      <ul class="list-none p-0 space-y-2 text-lg">
+        <li><strong>Menahem Mendel Orian</strong> - כרטיס: <span class="copyable" role="button" tabindex="0" aria-label="העתק מספר כרטיס ללוח">1144810732348<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></li>
+        <li><strong>Hodaya Cohen Zemach</strong> - כרטיס: <span class="copyable" role="button" tabindex="0" aria-label="העתק מספר כרטיס ללוח">1144810732349<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></li>
+        <li><strong>Yahalom Orian</strong> - אינפנט (ת. לידה 20/05/2026) - כרטיס: <span class="copyable" role="button" tabindex="0" aria-label="העתק מספר כרטיס ללוח">1143946006002<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🏨</span> מלונות
+      </h2>
+      <ul class="list-none p-0 space-y-3 text-lg">
+        <li class="p-3 bg-gray-50 rounded-lg shadow-sm">
+          <div class="font-semibold">Almaìt ★★★★</div>
+          <div class="text-sm text-gray-600 mt-1">חדר: Deluxe Triple Room</div>
+          <div class="text-sm text-gray-600 mt-1">כניסה: 08/11/2026 | יציאה: 11/11/2026 (3 לילות)</div>
+          <div class="text-sm text-gray-600 mt-1">כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Via del Portico d'Ottavia 7A, 00186 Roma<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span> | טל': <span class="copyable" dir="ltr" role="button" tabindex="0" aria-label="העתק טלפון ללוח">+39 06 4547 5470<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span></div>
+          <div class="text-sm text-gray-600 mt-1">המלון נמצא בלב הגטו היהודי - בית הכנסת הגדול ורוב המסעדות הכשרות במרחק דקות הליכה</div>
+          <div class="text-sm text-gray-600 mt-2">איש קשר בהזמנה: Hodaya (Cohen Zemach) Orian</div>
+          <div class="text-sm text-gray-600 mt-1">צ'ק-אין: 15:00-21:30 | צ'ק-אאוט: עד 11:00 | ההזמנה אינה ניתנת לביטול או לשינוי</div>
+          <div class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-sm font-semibold mt-2">חשוב: הנחיתה ב-21:00 והנסיעה מהשדה למלון אורכת כ-45-60 דקות, כך שתגיעו אחרי סיום שעות הצ'ק-אין (21:30). יש לעדכן מראש את המלון על שעת הגעה משוערת (באפליקציית Booking - "Add arrival time" או בהודעה למלון) ולוודא איך מקבלים את המפתח בהגעה מאוחרת.</div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">📆</span> לוח זמנים עיקרי
+      </h2>
+      <div class="prose text-lg">
+        <ol class="list-decimal pr-6 space-y-2">
+          <li><strong>08/11/2026 (יום א'):</strong> טיסה מת"א לרומא — אל על (LY383), 18:15-21:00. מונית מהשדה למלון Almaìt בגטו היהודי</li>
+          <li><strong>09/11/2026 (יום ב'):</strong> יום מלא ברומא - הצעה: בוקר בגטו היהודי ובבית הכנסת הגדול (ממש ליד המלון), צהריים בקולוסיאום, בפורום הרומי ובשער טיטוס, ערב בטרסטוורה</li>
+          <li><strong>10/11/2026 (יום ג'):</strong> יום מלא ברומא - הצעה: מזרקת טרווי, המדרגות הספרדיות וקניות בויה קונדוטי ובויה דל קורסו, אחה"צ בפארק וילה בורגזה ותצפית הפינצ'ו. לחלופין - יום קניות באאוטלט קסטל רומנו</li>
+          <li><strong>11/11/2026 (יום ד'):</strong> טיסת חזרה — אל על (LY386), 10:05-14:25. מומלץ לצאת מהמלון בסביבות 06:30-07:00</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🚕</span> תחבורה ומטבע - טיפים מעשיים
+      </h2>
+      <div class="mb-5">
+        <h3 class="text-xl font-semibold mb-2">מהשדה למלון ובחזרה</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>מונית רשמית (לבנה, עם שלט TAXI) מתחנת המוניות ביציאה מהטרמינל - <strong>תעריף קבוע של כ-55 אירו לרכב</strong> מפיומיצ'ינו לכל כתובת בתוך חומות העיר העתיקה (כולל הגטו), כולל מזוודות. התעריף הקבוע חל גם בכיוון ההפוך</li>
+          <li>יש לעלות רק במונית מהתחנה הרשמית - לא להיענות לנהגים שפונים אליכם בטרמינל</li>
+          <li>מוניות ברומא בדרך כלל אינן מספקות כיסא תינוק - מומלץ להביא סלקל/כיסא בטיחות משלכם</li>
+          <li>חלופה: רכבת Leonardo Express לתחנת Termini (כ-30 דקות) ומשם מונית - פחות נוח בשעת לילה עם תינוק ומזוודות</li>
+        </ul>
+      </div>
+      <div class="mb-5">
+        <h3 class="text-xl font-semibold mb-2">בתוך העיר</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>מרכז רומא נוח מאוד להליכה - רוב האתרים במרחק 10-25 דקות הליכה מהמלון</li>
+          <li>להזמנת מונית באפליקציה: <strong>FREE NOW</strong> או <strong>itTaxi</strong></li>
+          <li>המדרכות ברובע ההיסטורי מרוצפות באבנים (סמפייטריני) - עגלה עם גלגלים גדולים ובולמי זעזועים או מנשא תינוק יהיו נוחים הרבה יותר</li>
+          <li>אין מטרו בגטו עצמו; בהרבה תחנות מטרו אין מעלית - עם עגלה עדיף ללכת ברגל או לנסוע במונית/אוטובוס</li>
+        </ul>
+      </div>
+      <div class="mb-5">
+        <h3 class="text-xl font-semibold mb-2">מטבע</h3>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>המטבע הוא אירו; כרטיסי אשראי מתקבלים כמעט בכל מקום</li>
+          <li>כדאי להחזיק מעט מזומן לקיוסקים ולטיפים קטנים</li>
+          <li>ייתכן שהמלון יגבה בהגעה מס עירוני (Tassa di soggiorno) לפי מספר הלילות</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">📱</span> כרטיס סים / eSIM
+      </h2>
+      <ul class="list-disc pr-6 space-y-2 text-lg">
+        <li>eSIM מומלץ: <a href="https://wing.travel/a/WING-HO" target="_blank" class="text-blue-700 hover:underline">Wing.Travel</a> - מופעל מראש מהארץ, בלי צורך להחליף כרטיס פיזי</li>
+        <li class="p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md text-base font-semibold">ללקוחות H.O Travel יש הנחה קבועה של 10% בכל הזמנה</li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">💡</span> אתרים ואטרקציות מומלצות
+      </h2>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">✡️ רומא היהודית (ליד המלון)</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>בית הכנסת הגדול והמוזיאון היהודי של רומא</strong> — כתובת: <span class="copyable" role="button" tabindex="0" aria-label="העתק כתובת ללוח">Via Catalana, Lungotevere de' Cenci, Roma<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span>. הכרטיס כולל סיור מודרך בבית הכנסת הגדול ובבית הכנסת הספרדי. שעות בתקופת הנסיעה: א'-ה' 10:00-16:30 (כניסה אחרונה 15:45), סגור בשבת ובחגים</li>
+          <li><strong>סיור ברחובות הגטו</strong> — רחוב Via del Portico d'Ottavia (הרחוב של המלון), שרידי <strong>פורטיקו ד'אוטביה</strong> העתיק, כיכר <strong>Largo 16 Ottobre 1943</strong> לזכר גירוש יהודי רומא, ו"אבני נגף" - לוחיות נחושת במדרכה עם שמות מגורשים</li>
+          <li><strong>תיאטרון מרצלוס (Teatro di Marcello)</strong> — תיאטרון רומי עתיק ממש בקצה הגטו, יפה במיוחד בערב</li>
+          <li><strong>שער טיטוס (Arch of Titus)</strong> — בתוך הפורום הרומי; על השער מתואר תבליט של בזיזת כלי המקדש ונשיאת המנורה לרומא. לפי מסורת יהודית לא עוברים מתחת לשער</li>
+          <li><strong>אי טיבר (Isola Tiberina)</strong> — אי קטן בנהר, מול הגטו; חוצים אליו בגשר פבריציו, הגשר העתיק ביותר ברומא שעדיין בשימוש</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🏛️ רומא העתיקה</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>הקולוסיאום</strong> — כ-15 דקות הליכה מהמלון. יש להזמין כרטיסים מראש באתר הרשמי (הכרטיסים שמיים). יש מעליות ורמפות, כך שעגלה אפשרית, אבל עוברים בידוק ביטחוני ואין שמירת עגלות</li>
+          <li><strong>הפורום הרומי והפלטינוס</strong> — בדרך כלל באותו כרטיס עם הקולוסיאום. השטח לא אחיד ומאובק - עדיף מנשא על פני עגלה</li>
+          <li><strong>קירקוס מקסימוס</strong> — שטח פתוח של זירת מרוצי המרכבות העתיקה, עם נוף לגבעת הפלטינוס</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">⛲ כיכרות ומזרקות</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>מזרקת טרווי</strong> — מאז פברואר 2026 הגישה לאזור הקרוב למים עולה 2 אירו לאדם (תשלום באשראי בלבד, באתר או באינטרנט); הכיכר עצמה חופשית. מומלץ להגיע מוקדם בבוקר לפני ההמונים</li>
+          <li><strong>המדרגות הספרדיות</strong> — עם עגלה עדיף להגיע מלמעלה, דרך גני הפינצ'ו</li>
+          <li><strong>פיאצה נבונה</strong> — כיכר מרשימה עם מזרקות, אמני רחוב ובתי קפה</li>
+          <li><strong>קמפו דה פיורי</strong> — שוק בוקר צבעוני (ב'-ש'), כ-7 דקות הליכה מהמלון</li>
+          <li><strong>פיאצה דל פופולו</strong> — כיכר רחבה בקצה ויה דל קורסו, מתחת לתצפית הפינצ'ו</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">🌳 פארקים ונופים</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>וילה בורגזה ותצפית הפינצ'ו</strong> — הפארק המרכזי של רומא, שבילים רחבים ונוחים לעגלה, אגם קטן עם סירות משוטים, ותצפית יפה מעל פיאצה דל פופולו (בלי להיכנס לגלריה)</li>
+          <li><strong>גבעת הג'אניקולו (Gianicolo)</strong> — אחת התצפיות הפנורמיות הטובות על העיר; עם עגלה עדיף לעלות באוטובוס 115 מטרסטוורה ולרדת ברגל</li>
+          <li><strong>גן התפוזים (Giardino degli Aranci)</strong> — גן קטן על גבעת האוונטינו עם תצפית לנהר ולעיר, יפה בשקיעה</li>
+          <li><strong>טרסטוורה</strong> — השכונה הציורית מעבר לנהר, סמטאות מרוצפות ואווירה ערבית תוססת; כ-10 דקות הליכה מהמלון דרך אי טיבר</li>
+          <li><strong>טיילת הטיבר</strong> — הליכה לאורך הנהר בין הגשרים, נעים במיוחד בשעות אחר הצהריים</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold mb-2">🛍️ קניות</h3>
+        <ul class="list-disc pr-6 space-y-2 text-lg">
+          <li><strong>ויה דל קורסו</strong> — רחוב הקניות הראשי, רשתות אופנה מוכרות; באמצעו מרכז הקניות <strong>Galleria Alberto Sordi</strong></li>
+          <li><strong>ויה קונדוטי</strong> — רחוב מותגי היוקרה, היוצא מהמדרגות הספרדיות</li>
+          <li><strong>Castel Romano Designer Outlet</strong> — האאוטלט הגדול ליד רומא. יש שאטל מתחנת Termini (Via Giolitti 48), ילדים עד גיל 10 נוסעים חינם; לוח זמנים ומחיר עדכניים כדאי לבדוק באתר הרשמי של McArthurGlen לפני הנסיעה</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 md:p-8 mb-6 rounded-xl shadow-lg animate-fadeIn">
+      <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+        <span class="ml-2">🍽️</span> אוכל כשר ברומא לפי אזורים
+      </h2>
+      <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-md font-semibold mb-4">יש לוודא תעודת כשרות בתוקף ושעות פתיחה ישירות מול כל מקום לפני ההגעה.</div>
+
+      <div class="mb-5">
+        <h3 class="text-xl font-semibold mb-2">✡️ הגטו היהודי (ליד המלון)</h3>
+        <div class="font-semibold mt-2">🥩 בשריות</div>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>בא'גטו (Ba'Ghetto)</strong></li>
+          <li><strong>בלה קרנה (Bellacarne)</strong></li>
+          <li><strong>רנטו אל גאטו (Renato al Ghetto)</strong></li>
+          <li><strong>רנטו - אוכל רחוב</strong></li>
+          <li><strong>המבורגר פונזי</strong></li>
+          <li><strong>אוריינטל פונזי</strong></li>
+          <li><strong>סו'גאטו (Su'Ghetto)</strong></li>
+          <li><strong>בלה קרנה - אוכל רחוב בשרי</strong></li>
+        </ul>
+        <div class="font-semibold mt-3">☕ חלביות</div>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>בונה פיצה (Buona Pizza)</strong></li>
+          <li><strong>גלידריה רומנה קרמריה</strong></li>
+          <li><strong>באגטו מילקי (Ba'Ghetto Milky)</strong></li>
+          <li><strong>קאסלינו</strong></li>
+          <li><strong>יטבתה</strong> - מהדרין</li>
+          <li><strong>באגטו - ביסטרו</strong></li>
+        </ul>
+        <div class="font-semibold mt-3">🛒 שונות</div>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>מכולת <strong>Kosher Delight</strong></li>
+          <li>מאפיות וקונדיטוריה</li>
+        </ul>
+      </div>
+
+      <div class="mb-5">
+        <h3 class="text-xl font-semibold mb-2">📍 פיאצה בולוניה</h3>
+        <div class="font-semibold mt-2">🥩 בשריות</div>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>ליטל טריפולי</strong> - גלאט</li>
+          <li><strong>המבורגר פונזי</strong></li>
+        </ul>
+        <div class="font-semibold mt-3">☕ חלביות</div>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>קפה פלור</strong></li>
+        </ul>
+        <div class="font-semibold mt-3">🛒 שונות</div>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>מכולת <strong>Da Zakino</strong></li>
+          <li>מכולת <strong>Kosher Delight</strong></li>
+          <li>מאפיית עוגיות</li>
+        </ul>
+      </div>
+
+      <div class="mb-5">
+        <h3 class="text-xl font-semibold mb-2">📍 מונטוורדה ומרקוני</h3>
+        <div class="font-semibold mt-2">☕ חלביות</div>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>Ce Pasta E Pizza</strong></li>
+          <li><strong>Ce Pasta E Pasta</strong> (מעדניה)</li>
+        </ul>
+        <div class="font-semibold mt-3">🛒 שונות</div>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li>מאפיית <strong>Dolce Kosher</strong></li>
+          <li>מאפיית <strong>Kasher Roma 5778</strong></li>
+          <li>קצביה <strong>Pascarella</strong></li>
+          <li>מכולת</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">📍 המדרגות הספרדיות</h3>
+        <div class="font-semibold mt-2">🥩 בשריות</div>
+        <ul class="list-disc pr-6 space-y-1 text-lg">
+          <li><strong>המבורגר פונזי</strong></li>
+        </ul>
+      </div>
+      <a href="files/rome-kosher-by-area.png" target="_blank" class="text-blue-700 hover:underline">פתח את מפת האוכל הכשר המקורית</a>
+    </section>
+
+      <section class="bg-white p-6 md:p-8 mt-6 rounded-xl shadow-lg animate-fadeIn">
+        <h2 class="text-3xl font-bold text-cyan-700 mb-6 flex items-center">
+          <span class="ml-2">📎</span> קבצים מצורפים
+        </h2>
+        <ul class="list-none p-0 space-y-3 text-lg">
+          <li>
+            <a href="files/ORIAN-flights.pdf" target="_blank" class="text-blue-700 hover:underline">ORIAN-flights.pdf</a>
+            <div class="text-sm text-gray-600">אישורי טיסות (אל על) — TLV↔FCO, 08/11/2026 ו-11/11/2026. PNR: 9XQR9P.</div>
+          </li>
+          <li>
+            <a href="files/rome-kosher-by-area.png" target="_blank" class="text-blue-700 hover:underline">rome-kosher-by-area.png</a>
+            <div class="text-sm text-gray-600">אוכל כשר ברומא לפי אזורים.</div>
+          </li>
+        </ul>
+      </section>
+  </main>
+  </div>
+  <footer class="text-center text-sm text-gray-600 py-6 px-4">
+    <a href="accessibility-statement.html" class="underline hover:text-cyan-700">הצהרת נגישות</a>
+    <span class="mx-2">•</span>
+    <span>הודיה אוריאן טרוול</span>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const KIT_EXPIRY = new Date('2026-11-13T00:00:00+02:00');
+      const loadingScreen = document.getElementById('loadingScreen');
+      const loadingLogo = document.getElementById('loadingLogo');
+      const loadingPlane = document.getElementById('loadingPlane');
+      const mainContent = document.getElementById('mainContent');
+      const headerLogo = document.querySelector('.logo-container');
+      const aiDisclaimerOverlay = document.getElementById('aiDisclaimerOverlay');
+      const aiDisclaimerConfirm = document.getElementById('aiDisclaimerConfirm');
+
+      aiDisclaimerConfirm.addEventListener('click', () => {
+        aiDisclaimerOverlay.classList.remove('visible');
+      });
+
+      // Generate random loading duration between 2-7 seconds
+      const loadingDuration = Math.random() * 5000 + 2000; // 2000-7000ms
+
+      // Set CSS variable for plane animation
+      loadingPlane.style.setProperty('--loading-duration', loadingDuration + 'ms');
+
+      // Start loading
+      setTimeout(() => {
+        // Start logo animation to header position
+        loadingLogo.classList.add('animating');
+
+        // Hide loading screen with 0.5s fade during animation
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+        }, 700); // Hide loading screen 0.5s before animation completes
+
+        // Show main content after animation completes
+        setTimeout(() => {
+          if (new Date() >= KIT_EXPIRY) {
+            let agentAccess = false;
+            try { agentAccess = localStorage.getItem('hoTravelAgent') === '1'; } catch (e) {}
+            if (!agentAccess) {
+              window.location.replace('../thank-you.html');
+              return;
+            }
+          }
+          mainContent.classList.add('visible');
+          aiDisclaimerOverlay.classList.add('visible');
+
+          // Show the header logo after the animated logo reaches its position
+          setTimeout(() => {
+            headerLogo.classList.add('visible');
+            // Hide the loading logo with fade effect after header logo appears
+            setTimeout(() => {
+              loadingLogo.classList.add('fade-out');
+            }, 200);
+          }, 300);
+        }, 1200); // Match the logo animation duration
+      }, loadingDuration);
+    });
+  </script>
+</body>
+</html>
