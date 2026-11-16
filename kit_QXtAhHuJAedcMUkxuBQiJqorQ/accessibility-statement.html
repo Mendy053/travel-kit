@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>הצהרת נגישות | H.O Travel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+    body {
+      font-family: 'Varela Round', sans-serif;
+      direction: rtl;
+    }
+    .logo-circle {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background-color: #A89B73;
+      padding: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .logo-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+  </style>
+  <style id="a11y-styles">
+    #a11y-toggle {
+      position: fixed; bottom: 16px; left: 16px; z-index: 10050;
+      width: 52px; height: 52px; border-radius: 50%;
+      background-color: #756c50; color: #fff; border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      padding: 0;
+    }
+    #a11y-toggle:hover, #a11y-toggle:focus { background-color: #645d45; outline: 3px solid #0e7490; outline-offset: 2px; }
+    #a11y-panel {
+      position: fixed; bottom: 78px; left: 16px; z-index: 10050;
+      width: 280px; max-width: calc(100vw - 32px);
+      background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      padding: 18px 16px 16px; display: none; direction: rtl;
+      font-family: 'Varela Round', sans-serif; color: #1f2937;
+    }
+    #a11y-panel.open { display: block; }
+    #a11y-panel h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #0e7490; }
+    .a11y-btn {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      text-align: right; padding: 10px 12px; margin-bottom: 8px;
+      background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px;
+      cursor: pointer; font-size: 15px; color: #1f2937; font-family: inherit;
+    }
+    .a11y-btn:hover, .a11y-btn:focus { background: #e5e7eb; outline: 2px solid #0e7490; }
+    .a11y-btn[aria-pressed="true"] { background: #5c5540; color: #fff; border-color: #5c5540; }
+    .a11y-btn[aria-pressed="true"]:hover, .a11y-btn[aria-pressed="true"]:focus { background: #46402f; }
+    #a11y-close {
+      position: absolute; top: 10px; left: 10px; background: none; border: none;
+      font-size: 18px; line-height: 1; cursor: pointer; color: #6b7280; padding: 6px;
+    }
+    #a11y-close:hover, #a11y-close:focus { color: #1f2937; outline: 2px solid #0e7490; }
+    .a11y-statement-link { text-align: center; justify-content: center; text-decoration: none !important; }
+
+    html.a11y-fs-2 { font-size: 112.5%; }
+    html.a11y-fs-3 { font-size: 125%; }
+    html.a11y-fs-4 { font-size: 137.5%; }
+
+    html.a11y-contrast body,
+    html.a11y-contrast body :not(#a11y-toggle):not(#a11y-toggle *):not(#a11y-panel):not(#a11y-panel *) {
+      background-color: #000 !important;
+      background-image: none !important;
+      color: #fff !important;
+      border-color: #555 !important;
+    }
+    html.a11y-contrast body a:not(#a11y-panel a) { color: #ffeb3b !important; }
+    html.a11y-contrast body img:not(#a11y-panel img) { filter: grayscale(1) contrast(1.2); }
+
+    html.a11y-links a:not(#a11y-panel a) {
+      text-decoration: underline !important;
+      font-weight: bold !important;
+      background-color: #fff59d !important;
+      color: #000 !important;
+    }
+
+    html.a11y-no-motion *, html.a11y-no-motion *::before, html.a11y-no-motion *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  </style>
+</head>
+<body class="bg-blue-50 text-gray-800 antialiased">
+  <!-- Accessibility Toolbar (IS 5568 / WCAG 2.1 AA) -->
+  <button id="a11y-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="a11y-panel" aria-label="תפריט נגישות" title="תפריט נגישות"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="7.2" r="1.9"/><path d="M12 9.6c-2.7 0-5.9.6-5.9 2.2 0 .6.5 1 1.1 1 1-.1 2.3-.5 3.3-.6l-.6 2.3-3 3.4c-.4.5-.4 1.2.1 1.6.5.4 1.2.4 1.6-.1l2.4-2.8h1.9l2.4 2.8c.4.5 1.1.5 1.6.1.5-.4.5-1.1.1-1.6l-3-3.4-.6-2.3c1 .1 2.3.5 3.3.6.6 0 1.1-.4 1.1-1 0-1.6-3.2-2.2-5.9-2.2z"/></svg></button>
+  <div id="a11y-panel" role="dialog" aria-label="אפשרויות נגישות">
+    <button id="a11y-close" type="button" aria-label="סגירת תפריט נגישות">✕</button>
+    <h2>נגישות</h2>
+    <button class="a11y-btn" id="a11y-inc-font" type="button" aria-pressed="false">א+ הגדלת טקסט</button>
+    <button class="a11y-btn" id="a11y-dec-font" type="button" aria-pressed="false">א- הקטנת טקסט</button>
+    <button class="a11y-btn" id="a11y-contrast" type="button" aria-pressed="false">◐ ניגודיות גבוהה</button>
+    <button class="a11y-btn" id="a11y-links" type="button" aria-pressed="false">🔗 הדגשת קישורים</button>
+    <button class="a11y-btn" id="a11y-motion" type="button" aria-pressed="false">⏸ עצירת אנימציות</button>
+    <button class="a11y-btn" id="a11y-reset" type="button" aria-pressed="false">↺ איפוס הגדרות</button>
+    <a href="accessibility-statement.html" class="a11y-btn a11y-statement-link">📄 הצהרת נגישות</a>
+  </div>
+  <script>
+  (function() {
+    var html = document.documentElement;
+    var fsLevel = 1;
+    var STORAGE_KEY = 'a11yPrefs';
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          fsLevel: fsLevel,
+          contrast: html.classList.contains('a11y-contrast'),
+          links: html.classList.contains('a11y-links'),
+          motion: html.classList.contains('a11y-no-motion')
+        }));
+      } catch (e) {}
+    }
+
+    function applyFontSize() {
+      html.classList.remove('a11y-fs-2', 'a11y-fs-3', 'a11y-fs-4');
+      if (fsLevel > 1) html.classList.add('a11y-fs-' + fsLevel);
+    }
+
+    function updatePressed(id, state) {
+      var btn = document.getElementById(id);
+      if (btn) btn.setAttribute('aria-pressed', state ? 'true' : 'false');
+    }
+
+    function loadState() {
+      try {
+        var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        fsLevel = saved.fsLevel || 1;
+        applyFontSize();
+        if (saved.contrast) { html.classList.add('a11y-contrast'); updatePressed('a11y-contrast', true); }
+        if (saved.links) { html.classList.add('a11y-links'); updatePressed('a11y-links', true); }
+        if (saved.motion) { html.classList.add('a11y-no-motion'); updatePressed('a11y-motion', true); }
+      } catch (e) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var toggleBtn = document.getElementById('a11y-toggle');
+      var panel = document.getElementById('a11y-panel');
+      var closeBtn = document.getElementById('a11y-close');
+
+      loadState();
+
+      function openPanel() {
+        panel.classList.add('open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        closeBtn.focus();
+      }
+      function closePanel() {
+        panel.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.focus();
+      }
+
+      toggleBtn.addEventListener('click', function() {
+        if (panel.classList.contains('open')) closePanel(); else openPanel();
+      });
+      closeBtn.addEventListener('click', closePanel);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+      });
+
+      document.getElementById('a11y-inc-font').addEventListener('click', function() {
+        fsLevel = Math.min(fsLevel + 1, 4);
+        applyFontSize();
+        saveState();
+      });
+      document.getElementById('a11y-dec-font').addEventListener('click', function() {
+        fsLevel = Math.max(fsLevel - 1, 1);
+        applyFontSize();
+        saveState();
+      });
+      document.getElementById('a11y-contrast').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-contrast');
+        updatePressed('a11y-contrast', active);
+        saveState();
+      });
+      document.getElementById('a11y-links').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-links');
+        updatePressed('a11y-links', active);
+        saveState();
+      });
+      document.getElementById('a11y-motion').addEventListener('click', function() {
+        var active = html.classList.toggle('a11y-no-motion');
+        updatePressed('a11y-motion', active);
+        saveState();
+      });
+      document.getElementById('a11y-reset').addEventListener('click', function() {
+        fsLevel = 1;
+        applyFontSize();
+        html.classList.remove('a11y-contrast', 'a11y-links', 'a11y-no-motion');
+        updatePressed('a11y-contrast', false);
+        updatePressed('a11y-links', false);
+        updatePressed('a11y-motion', false);
+        saveState();
+      });
+    });
+  })();
+  </script>
+  <!-- End Accessibility Toolbar -->
+
+  <main class="max-w-3xl mx-auto p-6 md:p-10">
+    <div class="flex items-center gap-4 mb-8">
+      <div class="logo-circle">
+        <img src="logo.jpg" alt="H.O Travel">
+      </div>
+      <h1 class="text-3xl font-bold text-cyan-700">הצהרת נגישות</h1>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 space-y-6 text-lg leading-relaxed">
+      <section>
+        <h2 class="text-xl font-bold text-cyan-700 mb-2">כללי</h2>
+        <p>הודיה אוריאן טרוול (H.O Travel) רואה חשיבות רבה במתן שירות שוויוני ונגיש לכלל לקוחותיה, לרבות אנשים עם מוגבלות. אתר זה (קיטי הטיול המקוונים) פועל לעמידה בדרישות תקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע"ג-2013, ובהתאם לתקן הישראלי ת"י 5568 המבוסס על הנחיות WCAG 2.1 ברמת AA.</p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-cyan-700 mb-2">אמצעי הנגישות שהוטמעו באתר</h2>
+        <ul class="list-disc pr-6 space-y-1">
+          <li>תפריט נגישות צף (סמל נגישות) הזמין בכל עמוד, המאפשר:</li>
+          <ul class="list-disc pr-6 space-y-1 mt-1">
+            <li>הגדלה והקטנה של גודל הטקסט</li>
+            <li>מעבר לתצוגת ניגודיות גבוהה (שחור-לבן)</li>
+            <li>הדגשת קישורים בעמוד</li>
+            <li>עצירת אנימציות ומעברים</li>
+            <li>איפוס כלל ההתאמות בלחיצה אחת</li>
+          </ul>
+          <li>תמיכה בניווט וניתוב תפריט הנגישות באמצעות מקלדת (כולל סגירה באמצעות מקש Escape)</li>
+          <li>תגיות ARIA ותיאורים מילוליים לרכיבי הממשק המרכזיים</li>
+          <li>מבנה עמוד סמנטי עם כותרות היררכיות</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-cyan-700 mb-2">הגבלות ידועות</h2>
+        <p>חרף מאמצינו, ייתכן שיתגלו חלקים באתר שטרם הונגשו במלואם. אנו ממשיכים לפעול לשיפור הנגישות באופן שוטף.</p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-cyan-700 mb-2">פנייה בנושא נגישות</h2>
+        <p>נתקלתם בבעיית נגישות באתר, או שיש לכם הצעות לשיפור? נשמח שתפנו אלינו:</p>
+        <ul class="list-none space-y-1 mt-2">
+          <li><strong>רכזת נגישות:</strong> הודיה אוריאן</li>
+          <li><strong>טלפון:</strong> <span dir="ltr">054-8792582</span></li>
+          <li><strong>דוא"ל:</strong> hodaya869@gmail.com</li>
+          <li><strong>WhatsApp:</strong> <a href="https://wa.me/972525923563" target="_blank" class="text-blue-700 hover:underline">972525923563+</a></li>
+        </ul>
+        <p class="mt-2">אנו נעשה כמיטב יכולתנו לטפל בכל פנייה בהקדם האפשרי.</p>
+      </section>
+
+      <section>
+        <p class="text-sm text-gray-500">הצהרת נגישות זו עודכנה לאחרונה בתאריך 11/08/2026.</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
